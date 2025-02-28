@@ -80,7 +80,7 @@ We can find the relationship between the distribution of electric fields within 
 <span style="float: right;">(5.12)</span>
 </div>
 <div align="center">
-<image src="images/13.png" height="50px" width="auto">
+<image src="images/13.png" height="45px" width="auto">
 <span style="float: right;">(5.13)</span>
 </div>
 Before the junction is formed, the Fermi levels in the extrinsic semiconductors can be calculated individually by considering the shift from the intrinsic Fermi level. This is given by
@@ -89,7 +89,7 @@ Before the junction is formed, the Fermi levels in the extrinsic semiconductors 
 <span style="float: right;">(5.14)</span>
 </div>
 <div align="center">
-<image src="images/15.png" height="40px" width="auto">
+<image src="images/15.png" height="45px" width="auto">
 <span style="float: right;">(5.15)</span>
 </div>
 For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the di erence in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the di erence in Fermi level positions and is given by
@@ -110,7 +110,7 @@ The electric field is related to electric potential by
 <span style="float: right;">(5.18)</span>
 </div>
 <div align="center">
-<image src="images/19.png" height="50px" width="auto">
+<image src="images/19.png" height="40px" width="auto">
 <span style="float: right;">(5.19)</span>
 </div>
 Since the electric field is continuous, both these equations should be equal at x = 0
@@ -119,15 +119,15 @@ Since the electric field is continuous, both these equations should be equal at 
 <span style="float: right;">(5.20)</span>
 </div>
 <div align="center">
-<image src="images/21.png" height="30px" width="auto">
+<image src="images/21.png" height="40px" width="auto">
 <span style="float: right;">(5.21)</span>
 </div>
 <div align="center">
-<image src="images/22.png" height="30px" width="auto">
+<image src="images/22.png" height="40px" width="auto">
 <span style="float: right;">(5.22)</span>
 </div>
 <div align="center">
-<image src="images/23.png" height="30px" width="auto">
+<image src="images/23.png" height="40px" width="auto">
 <span style="float: right;">(5.23)</span>
 </div>
 <div align="center">
@@ -162,12 +162,12 @@ Where a is the gradient of the net impurity concentration. The electric field an
 </div>
 The electric field in the linearly graded junction is a quadratic function of distance rather than the linear function found in the uniformly doped junction.The potential is again found by integrating the electric field as 
 <div align="center">
-<image src="images/29.png" height="50px" width="auto">
+<image src="images/29.png" height="30px" width="auto">
 <span style="float: right;">(5.29)</span>
 </div>
 Say &phi;(x) = 0  at x = -x<sub>0</sub>
 <div align="center">
-<image src="images/30.png" height="20px" width="auto">
+<image src="images/30.png" height="50px" width="auto">
 <span style="float: right;">(5.30)</span>
 </div>
 The magnitude of the potential at x = +.ro will equal the built-in potential barrier for this function. We then have that 
@@ -179,7 +179,7 @@ The magnitude of the potential at x = +.ro will equal the built-in potential bar
 #### Hyperabrupt Junctions
 The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 7.15 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
 <div align="center">
-<image src="images/32.png" height="50px" width="auto">
+<image src="images/32.png" height="30px" width="auto">
 <span style="float: right;">(5.32)</span>
 </div> 
 When the value of m is negative, we have what is referred to as a hyperabrupt junction. In this case, the n-type doping is larger near the metallurgical junction than in the bulk semiconductor. The above equation is used to approximate the n-type doping over a small region near x = xu and does not hold at x = 0 when m is negative.
