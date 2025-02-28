@@ -2,21 +2,21 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
+      "question": "A 1D semiconductor of length l is uniformly doped with n-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What is the electric field E(x) in the undoped region (l/2 ≤ x ≤ l)?",
+        "answers": {
+          "a": "E(x) = (e * N_d / ε) * (l / 2)",
+          "b": "E(x) = (e * N_d / ε) * x",
+          "c": "E(x) = 0",
+          "d": "E(x) = (e * N_d / ε) * l"
+        },
+        "explanations": {
+          "a": "In the undoped region, the electric field is constant and equal to the value at the boundary x = l/2, which is (e * N_d / ε) * (l / 2). This is because there is no charge density in the undoped region to modify the field further. Please refer to theory part for hints on deriving the answer.",
+          "b": "This describes the electric field in the doped region (0 ≤ x ≤ l/2), where the field increases linearly with x. Please refer to theory part for hints on deriving the answer.",
+          "c": "The electric field is not zero in the undoped region; it remains constant due to the absence of charge density. Please refer to theory part for hints on deriving the answer.",
+          "d": "This is incorrect because the electric field does not depend on the total length l in the undoped region. Please refer to theory part for hints on deriving the answer."
+        },
+        "correctAnswer": "a",
+        "difficulty": "beginner"
     },
     {
       "question": "This is a Sample Question 2?",

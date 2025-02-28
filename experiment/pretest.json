@@ -2,38 +2,90 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "What are the majority charge carriers of a p-type semiconductor and the minority charge carriers of an n-type semiconductor?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "electrons; electrons",
+        "b": "holes; holes",
+        "c": "holes; electrons",
+        "d": "electrons;  holes"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "This is incorrect. In a p-type semiconductor, holes (not electrons) are the majority carriers. In an n-type semiconductor, electrons are the majority carriers, not the minority carriers." ,
+        "b": "This is correct. In a p-type semiconductor, holes are the majority carriers due to acceptor doping. In an n-type semiconductor, holes are the minority carriers because electrons are the majority carriers.",
+        "c": "This is incorrect. While holes are the majority carriers in a p-type semiconductor, electrons (not holes) are the minority carriers in an n-type semiconductor.",
+        "d": "This is incorrect. Electrons are not the majority carriers in a p-type semiconductor, and holes are not the minority carriers in an n-type semiconductor."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "What is the primary difference between the Fermi level and the Fermi function?",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "The Fermi level and Fermi function are identical concepts in quantum mechanics.",
+        "b": "The Fermi level is the probability of an energy state being occupied, while the Fermi function is the energy level at which the probability of occupancy is 50%.",
+        "c": "The Fermi level changes with temperature, whereas the Fermi function remains constant.",
+        "d": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature."
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "b": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "c": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
+        "d": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature."
       },
-      "correctAnswer": "c",
+      "correctAnswer": "d",
       "difficulty": "beginner"
+    },
+    
+    {
+        "question": "A 1D semiconductor of length l is uniformly doped with p-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. Will there be a drift current at point 'l/2'?",
+        "answers": {
+          "a": "Yes, because of the abrupt change in doping at x = l/2.",
+          "b": "No, because the electric field is zero at x = l/2.",
+          "c": "Yes, because there is an electric field at x = l/2.",
+          "d": "No, because there are no charge carriers at x = l/2."
+        },
+        "explanations": {
+          "a": "While the doping changes abruptly at x = l/2, the drift current is caused by the electric field, not the doping change itself." ,
+          "b": "This is incorrect. The electric field is not zero at x = l/2 because of the abrupt change in doping.",
+          "c": "There is an electric field at x = l/2 due to the difference in doping between the p-type and undoped regions. This electric field can cause a drift current.",
+          "d": "This is incorrect. There are charge carriers (holes) in the p-type region, and the electric field at x = l/2 can cause a drift current."
+        },
+        "correctAnswer": "c",
+        "difficulty": "medium"
+    },
+    {
+      "question": "Will the Fermi function in the semiconductor in the previous question be continuous at length x = l/2?",
+      "answers": {
+        "a": "Yes, the Fermi function is always continuous at material boundaries.",
+        "b": "No, the Fermi function will have a discontinuity at x = l/2 due to the doping change.",
+        "c": "Yes, because the Fermi level adjusts to maintain equilibrium across the boundary.",
+        "d": "No, because the undoped region has no free carriers to align the Fermi level."
+      },
+      "explanations": {
+        "a": "This is incorrect. The Fermi function is not always continuous at material boundaries when there is an abrupt change in doping or material properties.",
+        "b": "This is correct. The Fermi function will have a discontinuity at x = l/2 because the doping changes abruptly, leading to a mismatch in the Fermi levels of the doped and undoped regions.",
+        "c": "This is incorrect. While the Fermi level adjusts in equilibrium, the abrupt doping change at x = l/2 can cause a discontinuity in the Fermi function.",
+        "d": "This is incorrect. The undoped region does have some free carriers (intrinsic carriers), but the abrupt doping change still causes a discontinuity in the Fermi function."
+      },
+      "correctAnswer": "b",
+      "difficulty": "medium"
+    },
+    {
+        "question": "Now the same semiconductor is doped with n-type dopants from length x = l/2 to x = l. How will the rate of diffusion change?",
+        "answers": {
+          "a": "The rate of diffusion will increase due to the higher concentration gradient of electrons.",
+          "b": "The rate of diffusion will decrease because the doping is now uniform.",
+          "c": "The rate of diffusion will remain the same as there is no change in the doping profile.",
+          "d": "The rate of diffusion will decrease due to the absence of holes."
+        },
+        "explanations": {
+          "a": "The rate of diffusion depends on the concentration gradient of charge carriers. Adding n-type dopants from x = l/2 to x = l creates a higher concentration gradient of electrons, increasing the rate of diffusion.",
+          "b": "This is incorrect. The doping is not uniform; there is a transition from p-type to n-type doping, creating a concentration gradient.",
+          "c": "This is incorrect. The doping profile changes significantly, as the semiconductor now has p-type doping in one region and n-type doping in the other.",
+          "d": "This is incorrect. While holes are absent in the n-type region, the rate of diffusion is determined by the concentration gradient of electrons, which increases."
+        },
+        "correctAnswer": "a",
+        "difficulty": "advanced"
     }
   ]
 }

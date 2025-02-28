@@ -24,7 +24,7 @@ The junction acts like a wall, not letting electrons from the n region pass thro
 <image src="images/2.png" height="50px" width="auto">
 <span style="float: right;">(5.2)</span>
 </div>
-Similarly, the electron(nn0) and hole(pn0) concentrations in the n region are
+Similarly, the electron(n<sub>n0</sub>) and hole(p<sub>n0</sub>) concentrations in the n region are
 <div align="center">
 <image src="images/3.png" height="30px" width="auto">
 <span style="float: right;">(5.3)</span>
@@ -35,7 +35,7 @@ Similarly, the electron(nn0) and hole(pn0) concentrations in the n region are
 </div>
 To derive the expression for the junction potential, we must realize that the potential prevents further motion of carriers once equilibrium is reached. Thus, the electron (or hole) concentrations on either side of the junction can be written in terms of the contact potential (V<sub>0</sub>) as
 <div align="center">
-<image src="images/5.png" height="50px" width="auto">
+<image src="images/5.png" height="55px" width="auto">
 <span style="float: right;">(5.5)</span>
 </div>
 <div align="center">
@@ -62,7 +62,7 @@ The depletion width typically extends on both the n and p side with relative wid
 Where width of the depletion region in the p side is w<sub>p</sub> and that of the n side is w<sub>n</sub>.
 We can find the relationship between the distribution of electric fields within the depletion region and the net charge. In a one dimension interface,
 <div align="center">
-<image src="images/9.png" height="50px" width="auto">
+<image src="images/9.png" height="45px" width="auto">
 <span style="float: right;">(5.9)</span>
 </div>
 
@@ -76,25 +76,25 @@ We can find the relationship between the distribution of electric fields within 
 <span style="float: right;">(5.11)</span>
 </div>
 <div align="center">
-<image src="images/12.png" height="50px" width="auto">
+<image src="images/12.png" height="40px" width="auto">
 <span style="float: right;">(5.12)</span>
 </div>
 <div align="center">
-<image src="images/13.png" height="45px" width="auto">
+<image src="images/13.png" height="35px" width="auto">
 <span style="float: right;">(5.13)</span>
 </div>
 Before the junction is formed, the Fermi levels in the extrinsic semiconductors can be calculated individually by considering the shift from the intrinsic Fermi level. This is given by
 <div align="center">
-<image src="images/14.png" height="40px" width="auto">
+<image src="images/14.png" height="35px" width="auto">
 <span style="float: right;">(5.14)</span>
 </div>
 <div align="center">
-<image src="images/15.png" height="45px" width="auto">
+<image src="images/15.png" height="40px" width="auto">
 <span style="float: right;">(5.15)</span>
 </div>
 For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the di erence in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the di erence in Fermi level positions and is given by
 <div align="center">
-<image src="images/16.png" height="40px" width="auto">
+<image src="images/16.png" height="35px" width="auto">
 <span style="float: right;">(5.16)</span>
 </div>
 Thus, the contact potential developed in a pn junction due to the motion of the charge carriers is nothing but the shift in Fermi levels to achieve equilibrium. This is related to another definition of the Fermi level which is the work done to remove or add an electron to a material.
@@ -102,20 +102,20 @@ Thus, the contact potential developed in a pn junction due to the motion of the 
 ### Depletion Width
 The electric field is related to electric potential by
 <div align="center">
-<image src="images/17.png" height="30px" width="auto">
+<image src="images/17.png" height="35px" width="auto">
 <span style="float: right;">(5.17)</span>
 </div>
 <div align="center">
-<image src="images/18.png" height="50px" width="auto">
+<image src="images/18.png" height="45px" width="auto">
 <span style="float: right;">(5.18)</span>
 </div>
 <div align="center">
-<image src="images/19.png" height="40px" width="auto">
+<image src="images/19.png" height="35px" width="auto">
 <span style="float: right;">(5.19)</span>
 </div>
 Since the electric field is continuous, both these equations should be equal at x = 0
 <div align="center">
-<image src="images/20.png" height="50px" width="auto">
+<image src="images/20.png" height="40px" width="auto">
 <span style="float: right;">(5.20)</span>
 </div>
 <div align="center">
@@ -123,11 +123,11 @@ Since the electric field is continuous, both these equations should be equal at 
 <span style="float: right;">(5.21)</span>
 </div>
 <div align="center">
-<image src="images/22.png" height="40px" width="auto">
+<image src="images/22.png" height="30px" width="auto">
 <span style="float: right;">(5.22)</span>
 </div>
 <div align="center">
-<image src="images/23.png" height="40px" width="auto">
+<image src="images/23.png" height="30px" width="auto">
 <span style="float: right;">(5.23)</span>
 </div>
 <div align="center">
@@ -148,7 +148,7 @@ If we start with a uniformly doped n-type semiconductor, for example, and diffus
 </div>
 For convenience the junction is placed at x=0. The space charge density can be written as 
 <div align="center">
-<image src="images/26.png" height="20px" width="auto">
+<image src="images/26.png" height="25px" width="auto">
 <span style="float: right;">(5.26)</span>
 </div>
 Where a is the gradient of the net impurity concentration. The electric field and concentration can be found by Poisson's equation. We can write
@@ -162,7 +162,7 @@ Where a is the gradient of the net impurity concentration. The electric field an
 </div>
 The electric field in the linearly graded junction is a quadratic function of distance rather than the linear function found in the uniformly doped junction.The potential is again found by integrating the electric field as 
 <div align="center">
-<image src="images/29.png" height="30px" width="auto">
+<image src="images/29.png" height="35px" width="auto">
 <span style="float: right;">(5.29)</span>
 </div>
 Say &phi;(x) = 0  at x = -x<sub>0</sub>
@@ -179,7 +179,7 @@ The magnitude of the potential at x = +.ro will equal the built-in potential bar
 #### Hyperabrupt Junctions
 The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 7.15 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
 <div align="center">
-<image src="images/32.png" height="30px" width="auto">
+<image src="images/32.png" height="35px" width="auto">
 <span style="float: right;">(5.32)</span>
 </div> 
 When the value of m is negative, we have what is referred to as a hyperabrupt junction. In this case, the n-type doping is larger near the metallurgical junction than in the bulk semiconductor. The above equation is used to approximate the n-type doping over a small region near x = xu and does not hold at x = 0 when m is negative.
