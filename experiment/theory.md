@@ -17,7 +17,7 @@ If we assume that no voltage is applied across the pn junction, then the junctio
 </div>
 The junction acts like a wall, not letting electrons from the n region pass through the barrier to the p region. It ensures that majority and minority carriers in the n and p region are in equilibrium. At equilibrium, the electron(n<sub>p0</sub>) and hole(p<sub>p0</sub>) concentrations in the p region are
 <div align="center">
-<image src="images/1.png" height="50px" width="auto">
+<image src="images/1.png" height="30px" width="auto">
 <span style="float: right;">(5.1)</span>
 </div>
 <div align="center">
@@ -26,7 +26,7 @@ The junction acts like a wall, not letting electrons from the n region pass thro
 </div>
 Similarly, the electron(nn0) and hole(pn0) concentrations in the n region are
 <div align="center">
-<image src="images/3.png" height="50px" width="auto">
+<image src="images/3.png" height="30px" width="auto">
 <span style="float: right;">(5.3)</span>
 </div>
 <div align="center">
@@ -67,12 +67,12 @@ We can find the relationship between the distribution of electric fields within 
 </div>
 
 <div align="center">
-<image src="images/10.png" height="50px" width="auto">
+<image src="images/10.png" height="30px" width="auto">
 <span style="float: right;">(5.10)</span>
 </div>
 
 <div align="center">
-<image src="images/11.png" height="50px" width="auto">
+<image src="images/11.png" height="30px" width="auto">
 <span style="float: right;">(5.11)</span>
 </div>
 <div align="center">
@@ -85,16 +85,16 @@ We can find the relationship between the distribution of electric fields within 
 </div>
 Before the junction is formed, the Fermi levels in the extrinsic semiconductors can be calculated individually by considering the shift from the intrinsic Fermi level. This is given by
 <div align="center">
-<image src="images/14.png" height="50px" width="auto">
+<image src="images/14.png" height="40px" width="auto">
 <span style="float: right;">(5.14)</span>
 </div>
 <div align="center">
-<image src="images/15.png" height="50px" width="auto">
+<image src="images/15.png" height="40px" width="auto">
 <span style="float: right;">(5.15)</span>
 </div>
 For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the di erence in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the di erence in Fermi level positions and is given by
 <div align="center">
-<image src="images/16.png" height="50px" width="auto">
+<image src="images/16.png" height="40px" width="auto">
 <span style="float: right;">(5.16)</span>
 </div>
 Thus, the contact potential developed in a pn junction due to the motion of the charge carriers is nothing but the shift in Fermi levels to achieve equilibrium. This is related to another definition of the Fermi level which is the work done to remove or add an electron to a material.
@@ -102,7 +102,7 @@ Thus, the contact potential developed in a pn junction due to the motion of the 
 ### Depletion Width
 The electric field is related to electric potential by
 <div align="center">
-<image src="images/17.png" height="50px" width="auto">
+<image src="images/17.png" height="30px" width="auto">
 <span style="float: right;">(5.17)</span>
 </div>
 <div align="center">
@@ -119,15 +119,15 @@ Since the electric field is continuous, both these equations should be equal at 
 <span style="float: right;">(5.20)</span>
 </div>
 <div align="center">
-<image src="images/21.png" height="50px" width="auto">
+<image src="images/21.png" height="30px" width="auto">
 <span style="float: right;">(5.21)</span>
 </div>
 <div align="center">
-<image src="images/22.png" height="50px" width="auto">
+<image src="images/22.png" height="30px" width="auto">
 <span style="float: right;">(5.22)</span>
 </div>
 <div align="center">
-<image src="images/23.png" height="50px" width="auto">
+<image src="images/23.png" height="30px" width="auto">
 <span style="float: right;">(5.23)</span>
 </div>
 <div align="center">
@@ -148,7 +148,7 @@ If we start with a uniformly doped n-type semiconductor, for example, and diffus
 </div>
 For convenience the junction is placed at x=0. The space charge density can be written as 
 <div align="center">
-<image src="images/26.png" height="50px" width="auto">
+<image src="images/26.png" height="20px" width="auto">
 <span style="float: right;">(5.26)</span>
 </div>
 Where a is the gradient of the net impurity concentration. The electric field and concentration can be found by Poisson's equation. We can write
@@ -167,12 +167,12 @@ The electric field in the linearly graded junction is a quadratic function of di
 </div>
 Say &phi;(x) = 0  at x = -x<sub>0</sub>
 <div align="center">
-<image src="images/30.png" height="50px" width="auto">
+<image src="images/30.png" height="20px" width="auto">
 <span style="float: right;">(5.30)</span>
 </div>
 The magnitude of the potential at x = +.ro will equal the built-in potential barrier for this function. We then have that 
 <div align="center">
-<image src="images/31.png" height="50px" width="auto">
+<image src="images/31.png" height="40px" width="auto">
 <span style="float: right;">(5.31)</span>
 </div>
 
