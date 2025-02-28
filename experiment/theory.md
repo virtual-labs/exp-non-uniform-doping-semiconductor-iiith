@@ -2,7 +2,7 @@
 It is important to realize that the entire semiconductor is a single-crystal material in which one region is doped with acceptor impurity atoms to form the p region and the adjacent region is doped with donor atoms to form the n region. The interface separating the n and p regions is referred to as the metallurgical junction.
 Initially, at the metallurgical junction, there is a very large density gradient in both the electron and hole concentrations. Majority carrier electrons in the n region will begin diffusing into the p region and majority carrier holes in the p region will begin diffusing into the n region. If we assume there are no external connections to the semiconductor, then this diffusion process cannot continue indefinitely. As electrons diffuse from the n region, positively charged donor atoms are left behind.
 <div align="center">
-<image src="images/fig_7.1.png" height="100px" width ="auto">
+<image src="images/fig_7.1.png" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.1)</span>
 </div>
 
@@ -12,7 +12,7 @@ The net positively and negatively charged regions are shown in Figure 5.1. These
 #### Built in potential Barrier
 If we assume that no voltage is applied across the pn junction, then the junction is in thermal equilibrium-the Fermi energy level is constant throughout the entire system. Figure 2 shows the energy-band diagram for the pn junction in thermal equilibrium. The conduction and valence band energies must bend as we go through the space charge region.
 <div align="center">
-<image src="images/fig_7.2.png" height="100px" width ="auto">
+<image src="images/fig_7.2.png" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.2)</span>
 </div>
 The junction acts like a wall, not letting electrons from the n region pass through the barrier to the p region. It ensures that majority and minority carriers in the n and p region are in equilibrium. At equilibrium, the electron(n<sub>p0</sub>) and hole(p<sub>p0</sub>) concentrations in the p region are
@@ -50,7 +50,7 @@ To derive the expression for the junction potential, we must realize that the po
 ### Electric Field
 An electric field is created in the depletion region by the separation of positive and negative space charge densities. Figure 3 shows the volume charge density distribution in the pn junction assuming uniform doping and assuming an abrupt junction approximation. 
 <div align="center">
-<image src="images/fig_7.3.png" height="100px" width ="auto">
+<image src="images/fig_7.3.png" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.3)</span>
 </div>
 The depletion width typically extends on both the n and p side with relative widths inversely proportional to the dopant concentration,
@@ -143,7 +143,7 @@ Since the electric field is continuous, both these equations should be equal at 
 #### Linearly Graded Junctions
 If we start with a uniformly doped n-type semiconductor, for example, and diffuse acceptor atoms through the surface, the impurity concentrations will tend to be like those shown in Figure Fig 4. The point x = x' on the figure corresponds to the metallurgical junction. The depletion region extends into the p and n regions from the metallurgical junction as we have discussed previously. The net p-type doping concentration near the metallurgical junction may be approximated as a linear function of distance from the metallurgical junction. Similarly the n type doping concentration isa linear function extending from the metallurgical junction
 <div align="center">
-<image src="images/fig_7.4.png" height="100px" width ="auto">
+<image src="images/fig_7.4.png" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.4)</span>
 </div>
 For convenience the junction is placed at x=0. The space charge density can be written as 
