@@ -165,24 +165,21 @@ The electric field in the linearly graded junction is a quadratic function of di
 <image src="images/29.png" height="50px" width="auto">
 <span style="float: right;">(5.29)</span>
 </div>
+Say &phi;(x) = 0  at x = -x<sub>0</sub>
 <div align="center">
 <image src="images/30.png" height="50px" width="auto">
 <span style="float: right;">(5.30)</span>
 </div>
+The magnitude of the potential at x = +.ro will equal the built-in potential barrier for this function. We then have that 
 <div align="center">
 <image src="images/31.png" height="50px" width="auto">
 <span style="float: right;">(5.31)</span>
 </div>
-The magnitude of the potential at x = +.ro will equal the built-in potential barrier for this function. We then have that 
-<div align="center">
-<image src="images/32.png" height="50px" width="auto">
-<span style="float: right;">(5.32)</span>
-</div>
 #### Hyperabrupt Junctions
 The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 7.15 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
 <div align="center">
-<image src="images/33.png" height="50px" width="auto">
-<span style="float: right;">(5.33)</span>
+<image src="images/32.png" height="50px" width="auto">
+<span style="float: right;">(5.32)</span>
 </div> 
 When the value of m is negative, we have what is referred to as a hyperabrupt junction. In this case, the n-type doping is larger near the metallurgical junction than in the bulk semiconductor. The above equation is used to approximate the n-type doping over a small region near x = xu and does not hold at x = 0 when m is negative.
 
