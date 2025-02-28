@@ -2,6 +2,57 @@
   "version": 2.0,
   "questions": [
     {
+      "question": "What kind of function is the space charge density in a uniformly doped p-n junction and a linearly graded junction?",
+      "answers": {
+        "a": "Uniformly doped p-n junction: Constant function; Linearly graded junction: Linear function.",
+        "b": "Uniformly doped p-n junction: Linear function; Linearly graded junction: Constant function.",
+        "c": "Uniformly doped p-n junction: Step function; Linearly graded junction: Linear function.",
+        "d": "Uniformly doped p-n junction: Quadratic function; Linearly graded junction: Exponential function."
+      },
+      "explanations": {
+        "a": "This is incorrect. The space charge density in a uniformly doped p-n junction is not constant; it is a step function due to the abrupt change in doping at the junction.",
+        "b": "This is incorrect. The space charge density is not linear in a uniformly doped p-n junction or constant in a linearly graded junction.",
+        "c": "This is correct. In a uniformly doped p-n junction, the space charge density is a step function due to the abrupt change in doping at the junction. In a linearly graded junction, the space charge density varies linearly with position.",
+        "d": "This is incorrect. The space charge density is not quadratic or exponential in these junctions."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the key difference between a uniformly doped p-n junction and a hyperabrupt junction?",
+      "answers": {
+        "a": "A uniformly doped p-n junction has a constant doping profile, while a hyperabrupt junction has a non-uniform doping profile.",
+        "b": "A hyperabrupt junction has a wider depletion region than a uniformly doped p-n junction.",
+        "c": "A uniformly doped p-n junction is used in varactor diodes, while a hyperabrupt junction is used in standard diodes.",
+        "d": "A hyperabrupt junction has a linear electric field, while a uniformly doped p-n junction has a non-linear electric field."
+      },
+      "explanations": {
+        "a": "This is correct. A uniformly doped p-n junction has a constant doping concentration in the p and n regions, while a hyperabrupt junction has a sharply varying doping profile.",
+        "b": "This is incorrect. The depletion region width depends on the doping profile and applied voltage, but it is not inherently wider in a hyperabrupt junction.",
+        "c": "This is incorrect. A hyperabrupt junction is used in varactor diodes due to its non-uniform doping profile, while a uniformly doped p-n junction is used in standard diodes.",
+        "d": "This is incorrect. A uniformly doped p-n junction has a linear electric field, while a hyperabrupt junction has a non-linear electric field due to its non-uniform doping."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Calculate the depletion width w0 of a pn junction given the following parameters: ε = 11.7 * 8.854 * 10^-12 F/m, V0 = 0.7 V, NA = 10^18 cm^-3, ND = 10^16 cm^-3, and e = 1.6 * 10^-19 C. Use the formula: w0 = sqrt((2 * ε * V0 / e) * ((NA + ND) / (NA * ND))).",
+      "answers": {
+        "a": "1.2 * 10^-6 m",
+        "b": "2.5 * 10^-6 m",
+        "c": "3.7 * 10^-6 m",
+        "d": "4.9 * 10^-6 m"
+      },
+      "explanations": {
+        "a": "This value is too low. Check the calculation of the depletion width using the given formula and parameters.",
+        "b": "This value is close to the correct depletion width. Ensure the units are consistent and the formula is applied correctly.",
+        "c": "This value is too high. Re-evaluate the calculation of the depletion width using the given formula and parameters.",
+        "d": "This value is incorrect. Verify the calculation and ensure all parameters are correctly substituted into the formula."
+      },
+      "correctAnswer": "b",
+      "difficulty": "medium"
+    },
+    {
       "question": "A 1D semiconductor of length l is uniformly doped with n-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What is the electric field E(x) in the undoped region (l/2 ≤ x ≤ l)?",
         "answers": {
           "a": "E(x) = (e * N_d / ε) * (l / 2)",
@@ -16,24 +67,7 @@
           "d": "This is incorrect because the electric field does not depend on the total length l in the undoped region. Please refer to theory part for hints on deriving the answer."
         },
         "correctAnswer": "a",
-        "difficulty": "beginner"
-    },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
+        "difficulty": "medium"
     }
   ]
 }
