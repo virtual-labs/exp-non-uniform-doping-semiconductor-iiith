@@ -1,12 +1,12 @@
 ### The PN Junction
 It is important to realize that the entire semiconductor is a single-crystal material in which one region is doped with acceptor impurity atoms to form the p region and the adjacent region is doped with donor atoms to form the n region. The interface separating the n and p regions is referred to as the metallurgical junction.
-Initially, at the metallurgical junction, there is a very large density gradient in both the electron and hole concentrations. Majority carrier electrons in the n region will begin diffusing into the p region and majority carrier holes in the p region will begin diffusing into the n region. If we assume there are no external connections to the semiconductor, then this diffusion process cannot continue indefinitely. As electrons diffuse from the n region, positively charged donor atoms are left behind.
+Initially, at the metallurgical junction, there is a very large density gradient in both the electron and hole concentrations. Majority carrier electrons in the n region will begin diffusing into the p region and majority carrier holes in the p region will begin diffusing into the n region. If we assume there are no external connections to the semiconductor, then this diffusion process cannot continue indefinitely. As electrons diffuse from the n to p region, they leave behind positively charged donor ions and as holes diffuse from the p to n region they leave negatively charged ions behind.
 <div align="center">
 <image src="images/fig_7.1.png" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.1)</span>
 </div>
 
-The net positively and negatively charged regions are shown in Figure 5.1. These two regions are referred to as the space charge region. Essentially all electrons and holes are swept out of the space charge region by the electric field. Since the space charge region is depleted of any mobile charge, this region is also referred to as the depletion region: these two terms will be used interchangeably. Density gradi- ents still exist in the majority carrier concentrations at each edge of the space charge region. We can think of a density gradient as producing a "diffusion force" that acts on the majority carriers.
+The net positively and negatively charged regions are shown in Figure 5.1. These two regions are referred to as the space charge region. Essentially all electrons and holes are swept out of the space charge region by the electric field. Since the space charge region is depleted of any mobile charge, this region is also referred to as the depletion region: these two terms will be used interchangeably. Density gradients still exist in the majority carrier concentrations at each edge of the space charge region. We can think of a density gradient as producing a "diffusion force" that acts on the majority carriers.
 
 ### No applied Bias
 #### Built in potential Barrier
@@ -75,6 +75,7 @@ We can find the relationship between the distribution of electric fields within 
 <image src="images/11.png" height="30px" width="auto">
 <span style="float: right;">(5.11)</span>
 </div>
+here "e" is elemental charge which is 1.602*10<sup>-19</sup> and &rho; is the charge density
 <div align="center">
 <image src="images/12.png" height="40px" width="auto">
 <span style="float: right;">(5.12)</span>
@@ -92,7 +93,7 @@ Before the junction is formed, the Fermi levels in the extrinsic semiconductors 
 <image src="images/15.png" height="40px" width="auto">
 <span style="float: right;">(5.15)</span>
 </div>
-For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the di erence in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the di erence in Fermi level positions and is given by
+For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the difference in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the difference in Fermi level positions and is given by
 <div align="center">
 <image src="images/16.png" height="35px" width="auto">
 <span style="float: right;">(5.16)</span>
@@ -139,9 +140,11 @@ Since the electric field is continuous, both these equations should be equal at 
 <span style="float: right;">(5.25)</span>
 </div>
 
+Here, w<sub>0</sub> is the depletion width and V<sub>0</sub> refers to the built in potential.
+
 ### Non-uniformly Doped Junctions
 #### Linearly Graded Junctions
-If we start with a uniformly doped n-type semiconductor, for example, and diffuse acceptor atoms through the surface, the impurity concentrations will tend to be like those shown in Figure Fig 4. The point x = x' on the figure corresponds to the metallurgical junction. The depletion region extends into the p and n regions from the metallurgical junction as we have discussed previously. The net p-type doping concentration near the metallurgical junction may be approximated as a linear function of distance from the metallurgical junction. Similarly the n type doping concentration isa linear function extending from the metallurgical junction
+If we start with a uniformly doped n-type semiconductor, for example, and diffuse acceptor atoms through the surface, the impurity concentrations will tend to be like those shown in Figure Fig 5.4. The point x = x' on the figure corresponds to the metallurgical junction. The depletion region extends into the p and n regions from the metallurgical junction as we have discussed previously. The net p-type doping concentration near the metallurgical junction may be approximated as a linear function of distance from the metallurgical junction. Similarly the n type doping concentration is a linear function extending from the metallurgical junction
 <div align="center">
 <image src="images/fig_7.4.png" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.4)</span>
@@ -177,7 +180,7 @@ The magnitude of the potential at x = +.ro will equal the built-in potential bar
 </div>
 
 #### Hyperabrupt Junctions
-The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 7.15 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
+The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 5.5 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
 <div align="center">
 <image src="images/32.png" height="35px" width="auto">
 <span style="float: right;">(5.32)</span>
