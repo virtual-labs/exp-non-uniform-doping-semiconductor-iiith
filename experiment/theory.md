@@ -16,36 +16,39 @@ If we assume that no voltage is applied across the pn junction, then the junctio
 <span style="float: right;">(Fig 5.2)</span>
 </div>
 The junction acts like a wall, not letting electrons from the n region pass through the barrier to the p region. It ensures that majority and minority carriers in the n and p region are in equilibrium. At equilibrium, the electron(n<sub>p0</sub>) and hole(p<sub>p0</sub>) concentrations in the p region are
-<div align="center">
-<image src="images/1.png" height="30px" width="auto">
-<span style="float: right;">(5.1)</span>
-</div>
-<div align="center">
-<image src="images/2.png" height="50px" width="auto">
-<span style="float: right;">(5.2)</span>
-</div>
+
+$$
+p_{p0} = N_{A}
+$$
+
+$$
+n_{p0} = \frac{n_{i}^{2}}{N_{A}}
+$$
+
 Similarly, the electron(n<sub>n0</sub>) and hole(p<sub>n0</sub>) concentrations in the n region are
-<div align="center">
-<image src="images/3.png" height="30px" width="auto">
-<span style="float: right;">(5.3)</span>
-</div>
-<div align="center">
-<image src="images/4.png" height="50px" width="auto">
-<span style="float: right;">(5.4)</span>
-</div>
+
+$$
+n_{n0} = N_{D}
+$$
+
+$$
+p_{n0} = \frac{n_{i}^{2}}{N_{D}}
+$$
+
 To derive the expression for the junction potential, we must realize that the potential prevents further motion of carriers once equilibrium is reached. Thus, the electron (or hole) concentrations on either side of the junction can be written in terms of the contact potential (V<sub>0</sub>) as
-<div align="center">
-<image src="images/5.png" height="55px" width="auto">
-<span style="float: right;">(5.5)</span>
-</div>
-<div align="center">
-<image src="images/6.png" height="50px" width="auto">
-<span style="float: right;">(5.6)</span>
-</div>
-<div align="center">
-<image src="images/7.png" height="50px" width="auto">
-<span style="float: right;">(5.7)</span>
-</div>
+$$
+\frac{n_{p0}}{n_{n0}} = \frac{p_{n0}}{p_{p0}} = e^{\frac{eV_{0}}{k_{B}T}}
+$$
+
+$$
+V_{0} = \frac{k_{B}T}{e} ln(\frac{N_{A}N_{D}}{n_{i}^{2}})
+$$
+
+$$
+V_{0} = V_{i} ln(\frac{N_{A}N_{D}}{n_{i}^{2}})
+$$
+
+Where V <sub>i</sub> is the contact potential.
 
 ### Electric Field
 An electric field is created in the depletion region by the separation of positive and negative space charge densities. Figure 3 shows the volume charge density distribution in the pn junction assuming uniform doping and assuming an abrupt junction approximation. 
@@ -55,90 +58,85 @@ An electric field is created in the depletion region by the separation of positi
 </div>
 The depletion width typically extends on both the n and p side with relative widths inversely proportional to the dopant concentration,
  
-<div align="center">
-<image src="images/8.png" height="50px" width="auto">
-<span style="float: right;">(5.8)</span>
-</div>
+$$
+\frac{w_{p}}{w_{n}} = \frac{N_{D}}{N_{A}}
+$$
+
 Where width of the depletion region in the p side is w<sub>p</sub> and that of the n side is w<sub>n</sub>.
 We can find the relationship between the distribution of electric fields within the depletion region and the net charge. In a one dimension interface,
-<div align="center">
-<image src="images/9.png" height="45px" width="auto">
-<span style="float: right;">(5.9)</span>
-</div>
 
-<div align="center">
-<image src="images/10.png" height="30px" width="auto">
-<span style="float: right;">(5.10)</span>
-</div>
+$$
+\frac{DE}{dx} = \frac{\rho _{net}}{\epsilon}
+$$
 
-<div align="center">
-<image src="images/11.png" height="30px" width="auto">
-<span style="float: right;">(5.11)</span>
-</div>
-here "e" is elemental charge which is 1.602*10<sup>-19</sup> and &rho; is the charge density
-<div align="center">
-<image src="images/12.png" height="40px" width="auto">
-<span style="float: right;">(5.12)</span>
-</div>
-<div align="center">
-<image src="images/13.png" height="35px" width="auto">
-<span style="float: right;">(5.13)</span>
-</div>
+$$
+\rho _{net} = -eN_{A} \quad for \quad -w_{p} < x < 0
+$$
+
+$$
+\rho _{net} = eN_{D} \quad for \quad 0 < x < w_{n}
+$$
+
+Here "e" is elemental charge which is 1.602*10<sup>-19</sup> and &rho; is the charge density
+
+$$
+E(x) = -\frac{eN_{A}}{\epsilon}(x+w_{p})  \quad for \quad -w_{p} < x < 0
+$$
+
+$$
+E(x) = -\frac{eN_{A}}{\epsilon}(x+w_{p})  \quad for \quad -w_{p} < x < 0
+$$
+
 Before the junction is formed, the Fermi levels in the extrinsic semiconductors can be calculated individually by considering the shift from the intrinsic Fermi level. This is given by
-<div align="center">
-<image src="images/14.png" height="35px" width="auto">
-<span style="float: right;">(5.14)</span>
-</div>
-<div align="center">
-<image src="images/15.png" height="40px" width="auto">
-<span style="float: right;">(5.15)</span>
-</div>
+$$
+E_{Fn} - E_{Fi} = k_{B}T ln(\frac{N_{D}}{n_{i}}) = 0.36eV
+$$
+$$
+E_{Fp} - E_{Fi} = -k_{B}T ln(\frac{N_{A}}{n_{i}}) = -0.42eV
+$$
 For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the difference in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the difference in Fermi level positions and is given by
-<div align="center">
-<image src="images/16.png" height="35px" width="auto">
-<span style="float: right;">(5.16)</span>
-</div>
+$$
+Shift = E_{Fn} - E_{Fp} = 0.36eV -(-0.42) = 0.78eV
+$$
 Thus, the contact potential developed in a pn junction due to the motion of the charge carriers is nothing but the shift in Fermi levels to achieve equilibrium. This is related to another definition of the Fermi level which is the work done to remove or add an electron to a material.
 
 ### Depletion Width
 The electric field is related to electric potential by
-<div align="center">
-<image src="images/17.png" height="35px" width="auto">
-<span style="float: right;">(5.17)</span>
-</div>
-<div align="center">
-<image src="images/18.png" height="45px" width="auto">
-<span style="float: right;">(5.18)</span>
-</div>
-<div align="center">
-<image src="images/19.png" height="35px" width="auto">
-<span style="float: right;">(5.19)</span>
-</div>
+$$
+E(x) = -\frac{dV}{dx}
+$$
+
+$$
+E(x) = -\frac{eN_{A}}{\epsilon}(x+w_{p})^{2} \quad for \quad -w_{p} < x < 0
+$$
+
+$$
+E(x) = V_{0}-\frac{eN_{D}}{\epsilon}(x-w_{n})^{2} \quad for \quad 0 < x < w_{n}
+$$
 Since the electric field is continuous, both these equations should be equal at x = 0
-<div align="center">
-<image src="images/20.png" height="40px" width="auto">
-<span style="float: right;">(5.20)</span>
-</div>
-<div align="center">
-<image src="images/21.png" height="40px" width="auto">
-<span style="float: right;">(5.21)</span>
-</div>
-<div align="center">
-<image src="images/22.png" height="30px" width="auto">
-<span style="float: right;">(5.22)</span>
-</div>
-<div align="center">
-<image src="images/23.png" height="30px" width="auto">
-<span style="float: right;">(5.23)</span>
-</div>
-<div align="center">
-<image src="images/24.png" height="50px" width="auto">
-<span style="float: right;">(5.24)</span>
-</div> 
-<div align="center">
-<image src="images/25.png" height="50px" width="auto">
-<span style="float: right;">(5.25)</span>
-</div>
+$$
+V_{0}-\frac{eN_{D}}{\epsilon}(w_{n})^{2} = -\frac{eN_{A}}{\epsilon}(w_{p})^{2}
+$$
+
+$$
+V_{0} = \frac{eN_{D}}{\epsilon}((w_{n})^{2} (w_{p})^{2})
+$$
+
+$$
+w_{p}+w_{n} = w_{0}
+$$
+
+$$
+w_{p}N_{A} = w_{n}N_{D}
+$$
+
+$$
+V_{0} = \frac{2}{2\epsilon} w_{0}^{2} \frac{N_{A}N_{D}}{N_{A}+N_{D}}
+$$
+
+$$
+w_{0} = \frac{2\epsilon v_{0}}{e} \frac{N_{A}+N_{D}} {N_{A}N_{D}}
+$$
 
 Here, w<sub>0</sub> is the depletion width and V<sub>0</sub> refers to the built in potential.
 
@@ -150,41 +148,43 @@ If we start with a uniformly doped n-type semiconductor, for example, and diffus
 <span style="float: right;">(Fig 5.4)</span>
 </div>
 For convenience the junction is placed at x=0. The space charge density can be written as 
-<div align="center">
-<image src="images/26.png" height="25px" width="auto">
-<span style="float: right;">(5.26)</span>
-</div>
+$$
+\rho(x) = eax
+$$
+
 Where a is the gradient of the net impurity concentration. The electric field and concentration can be found by Poisson's equation. We can write
-<div align="center">
-<image src="images/27.png" height="50px" width="auto">
-<span style="float: right;">(5.27)</span>
-</div>
-<div align="center">
-<image src="images/28.png" height="50px" width="auto">
-<span style="float: right;">(5.28)</span>
-</div>
+
+$$
+\frac{dE}{dx} = \frac{\rho(x)}{\epsilon} = \frac{eax}{\epsilon}
+$$
+
+$$
+E = \int \frac{eax}{\epsilon}dx = \frac{ea}{2\epsilon}(x^{2})
+$$
 The electric field in the linearly graded junction is a quadratic function of distance rather than the linear function found in the uniformly doped junction.The potential is again found by integrating the electric field as 
-<div align="center">
-<image src="images/29.png" height="35px" width="auto">
-<span style="float: right;">(5.29)</span>
-</div>
+
+$$
+\phi(x) = - \int Edx
+$$
 Say &phi;(x) = 0  at x = -x<sub>0</sub>
-<div align="center">
-<image src="images/30.png" height="50px" width="auto">
-<span style="float: right;">(5.30)</span>
-</div>
+
+$$
+\phi(x) = \frac{ea}{2\epsilon}(\frac{x^{2}}{3} - x_{0}^{2}x) + \frac{ea}{3\epsilon}x_{0}^{3}
+$$
+
 The magnitude of the potential at x = +.ro will equal the built-in potential barrier for this function. We then have that 
-<div align="center">
-<image src="images/31.png" height="40px" width="auto">
-<span style="float: right;">(5.31)</span>
-</div>
+
+$$
+\phi(x) = \frac{2ea}{3\epsilon}x_{0}^{3} = V_{0}
+$$
 
 #### Hyperabrupt Junctions
 The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 5.5 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
-<div align="center">
-<image src="images/32.png" height="35px" width="auto">
-<span style="float: right;">(5.32)</span>
-</div> 
+
+$$
+N = Bx^{m}
+$$
+
 When the value of m is negative, we have what is referred to as a hyperabrupt junction. In this case, the n-type doping is larger near the metallurgical junction than in the bulk semiconductor. The above equation is used to approximate the n-type doping over a small region near x = xu and does not hold at x = 0 when m is negative.
 
 ## References
