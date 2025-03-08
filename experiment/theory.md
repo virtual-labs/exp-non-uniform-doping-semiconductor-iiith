@@ -19,8 +19,8 @@ bottom of below. <br>
 In summary, when we have a region of high doping concentration next to a region of low doping concentration in equilibrium, then we will wind up with a built in electric field (and a built in potential), and the drift current will be equal and opposite to the diffusion current.<br>
 
 <div align="center">
-<image src="images/fig_7.4.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.5)</span>
+<image src="images/fig_7.1.png" height="300px" width ="auto">
+<span style="float: right;">(Fig 5.1)</span>
 </div>
 
 The net (total) current equation will be
@@ -66,7 +66,7 @@ $$
 If we start with a uniformly doped n-type semiconductor, for example, and diffuse acceptor atoms through the surface, the impurity concentrations will tend to be like those shown in Figure Fig 5.4. The point x = x' on the figure corresponds to the metallurgical junction. The depletion region extends into the p and n regions from the metallurgical junction as we have discussed previously. The net p-type doping concentration near the metallurgical junction may be approximated as a linear function of distance from the metallurgical junction. Similarly the n type doping concentration is a linear function extending from the metallurgical junction
 <div align="center">
 <image src="images/fig_7.4.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.5)</span>
+<span style="float: right;">(Fig 5.2)</span>
 </div>
 For convenience the junction is placed at x=0. The space charge density can be written as 
 $$
