@@ -1,151 +1,72 @@
-### The PN Junction
-It is important to realize that the entire semiconductor is a single-crystal material in which one region is doped with acceptor impurity atoms to form the p region and the adjacent region is doped with donor atoms to form the n region. The interface separating the n and p regions is referred to as the metallurgical junction.
-Initially, at the metallurgical junction, there is a very large density gradient in both the electron and hole concentrations. Majority carrier electrons in the n region will begin diffusing into the p region and majority carrier holes in the p region will begin diffusing into the n region. If we assume there are no external connections to the semiconductor, then this diffusion process cannot continue indefinitely. As electrons diffuse from the n to p region, they leave behind positively charged donor ions and as holes diffuse from the p to n region they leave negatively charged ions behind.
-<div align="center">
-<image src="images/fig_7.1.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.1)</span>
-</div>
-
-The net positively and negatively charged regions are shown in Figure 5.1. These two regions are referred to as the space charge region. Essentially all electrons and holes are swept out of the space charge region by the electric field. Since the space charge region is depleted of any mobile charge, this region is also referred to as the depletion region: these two terms will be used interchangeably. Density gradients still exist in the majority carrier concentrations at each edge of the space charge region. We can think of a density gradient as producing a "diffusion force" that acts on the majority carriers.
-
-### No applied Bias
-#### Built in potential Barrier
-If we assume that no voltage is applied across the pn junction, then the junction is in thermal equilibrium-the Fermi energy level is constant throughout the entire system. Figure 2 shows the energy-band diagram for the pn junction in thermal equilibrium. The conduction and valence band energies must bend as we go through the space charge region.
-<div align="center">
-<image src="images/fig_7.2.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.2)</span>
-</div>
-The junction acts like a wall, not letting electrons from the n region pass through the barrier to the p region. It ensures that majority and minority carriers in the n and p region are in equilibrium. At equilibrium, the electron(n<sub>p0</sub>) and hole(p<sub>p0</sub>) concentrations in the p region are
+### Einstein’s relationship
+This equation relates the diffusivity and mobility together.
 
 $$
-p_{p0} = N_{A}
+D_{n} = \frac{KT}{q} \mu _{n} = V_{T}\mu _{n}
 $$
 
-$$
-n_{p0} = \frac{n_{i}^{2}}{N_{A}}
-$$
-
-Similarly, the electron(n<sub>n0</sub>) and hole(p<sub>n0</sub>) concentrations in the n region are
-
-$$
-n_{n0} = N_{D}
-$$
-
-$$
-p_{n0} = \frac{n_{i}^{2}}{N_{D}}
-$$
-
-To derive the expression for the junction potential, we must realize that the potential prevents further motion of carriers once equilibrium is reached. Thus, the electron (or hole) concentrations on either side of the junction can be written in terms of the contact potential (V<sub>0</sub>) as
-$$
-\frac{n_{p0}}{n_{n0}} = \frac{p_{n0}}{p_{p0}} = e^{\frac{eV_{0}}{k_{B}T}}
-$$
-
-$$
-V_{0} = \frac{k_{B}T}{e} ln(\frac{N_{A}N_{D}}{n_{i}^{2}})
-$$
-
-$$
-V_{0} = V_{i} ln(\frac{N_{A}N_{D}}{n_{i}^{2}})
-$$
-
-Where V <sub>i</sub> is the contact potential.
-
-### Electric Field
-An electric field is created in the depletion region by the separation of positive and negative space charge densities. Figure 3 shows the volume charge density distribution in the pn junction assuming uniform doping and assuming an abrupt junction approximation. 
-<div align="center">
-<image src="images/fig_7.3.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.3)</span>
-</div>
-The depletion width typically extends on both the n and p side with relative widths inversely proportional to the dopant concentration,
- 
-$$
-\frac{w_{p}}{w_{n}} = \frac{N_{D}}{N_{A}}
-$$
-
-Where width of the depletion region in the p side is w<sub>p</sub> and that of the n side is w<sub>n</sub>.
-We can find the relationship between the distribution of electric fields within the depletion region and the net charge. In a one dimension interface,
-
-$$
-\frac{DE}{dx} = \frac{\rho _{net}}{\epsilon}
-$$
-
-$$
-\rho _{net} = -eN_{A} \quad for \quad -w_{p} < x < 0
-$$
-
-$$
-\rho _{net} = eN_{D} \quad for \quad 0 < x < w_{n}
-$$
-
-Here "e" is elemental charge which is 1.602*10<sup>-19</sup> and &rho; is the charge density
-
-$$
-E(x) = -\frac{eN_{A}}{\epsilon}(x+w_{p})  \quad for \quad -w_{p} < x < 0
-$$
-
-$$
-E(x) = -\frac{eN_{A}}{\epsilon}(x+w_{p})  \quad for \quad -w_{p} < x < 0
-$$
-
-Before the junction is formed, the Fermi levels in the extrinsic semiconductors can be calculated individually by considering the shift from the intrinsic Fermi level. This is given by
-$$
-E_{Fn} - E_{Fi} = k_{B}T ln(\frac{N_{D}}{n_{i}}) = 0.36eV
-$$
-$$
-E_{Fp} - E_{Fi} = -k_{B}T ln(\frac{N_{A}}{n_{i}}) = -0.42eV
-$$
-For the n type semiconductor the Fermi level is located above the intrinsic level while for the p type semiconductor it is located below the intrinsic level. When the junction is formed, as shown in the energy band diagram, the Fermi levels line up. For this to happen, either the p Fermi level can be considered to have shifted up or the n level can be considered to have shifted down or both. The magnitude of the shift is given by the difference in the work functions, which is proportional to the Fermi level positions. So the shift is equal to the difference in Fermi level positions and is given by
-$$
-Shift = E_{Fn} - E_{Fp} = 0.36eV -(-0.42) = 0.78eV
-$$
-Thus, the contact potential developed in a pn junction due to the motion of the charge carriers is nothing but the shift in Fermi levels to achieve equilibrium. This is related to another definition of the Fermi level which is the work done to remove or add an electron to a material.
-
-### Depletion Width
-The electric field is related to electric potential by
-$$
-E(x) = -\frac{dV}{dx}
-$$
-
-$$
-E(x) = -\frac{eN_{A}}{\epsilon}(x+w_{p})^{2} \quad for \quad -w_{p} < x < 0
-$$
-
-$$
-E(x) = V_{0}-\frac{eN_{D}}{\epsilon}(x-w_{n})^{2} \quad for \quad 0 < x < w_{n}
-$$
-Since the electric field is continuous, both these equations should be equal at x = 0
-$$
-V_{0}-\frac{eN_{D}}{\epsilon}(w_{n})^{2} = -\frac{eN_{A}}{\epsilon}(w_{p})^{2}
-$$
-
-$$
-V_{0} = \frac{eN_{D}}{\epsilon}((w_{n})^{2} (w_{p})^{2})
-$$
-
-$$
-w_{p}+w_{n} = w_{0}
-$$
-
-$$
-w_{p}N_{A} = w_{n}N_{D}
-$$
-
-$$
-V_{0} = \frac{2}{2\epsilon} w_{0}^{2} \frac{N_{A}N_{D}}{N_{A}+N_{D}}
-$$
-
-$$
-w_{0} = \frac{2\epsilon v_{0}}{e} \frac{N_{A}+N_{D}} {N_{A}N_{D}}
-$$
-
-Here, w<sub>0</sub> is the depletion width and V<sub>0</sub> refers to the built in potential.
+K is the Boltzmann's constant =  1.3*10^(-23) J/K <br>
+T temperature in K<br>
+q is charge = 1.6 * 10^(-19) Coloumbs<br>
 
 ### Non-uniformly Doped Junctions
+Assume a semiconductor bar divided into two parts (say, part 1 & part 2) such that each part is doped with n type of dopant ( or both with p type) but at different concentrations: lets say, N<sub>D1</sub> and N<sub>D2</sub> respectively such that N<sub>D1</sub>>N<sub>D2</sub>. Whole silicon as well as each individual part is neutral (has no net charge) right after doping.<br>
+
+As part1 has higher concentration of mobile electrons than part 2, the 
+mobile electrons from part 1 will diffuse to part 2 (diffusion from higher gradient to lower gradient). Now, part 1 will become positively charged as it has lost electrons, and part 2 will gain some electrons. Since part 1 is positively charged, and part 2 is negatively charged, an electric field will arise that points from part 1 to part 2. This is called the <b>Built-In Electric Field<b>. Built in field results drift current which opposes the diffusion current. The charge separation and the built-in field are shown in the 
+bottom of below. <br>
+
+In summary, when we have a region of high doping concentration next to a region of low doping concentration in equilibrium, then we will wind up with a built in electric field (and a built in potential), and the drift current will be equal and opposite to the diffusion current.<br>
+
+<div align="center">
+<image src="images/fig_7.4.png" height="300px" width ="auto">
+<span style="float: right;">(Fig 5.5)</span>
+</div>
+
+The net (total) current equation will be
+$$
+J_{nT} = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx}
+$$
+ 
+Where n is the electron concentration, dn/dx is the electron gradient and &phi; is the potential gradient (d&phi;/dx is the electric field). Since in equilibrium, net current is zero,
+
+$$
+0 = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx}
+$$
+
+Using Einstein’s relationship and rearranging the terms, we get
+
+$$
+\frac{1}{V_{T}} \frac{d \phi}{dx} = \frac{1}{x}\frac{dn}{dx}
+$$
+
+When integrated from x1 to x2,
+$$
+\frac{1}{V_{T}} \int_{\phi(x_{1})}^{\phi(x_{2})} d\phi = \int_{n(x_{1})}^{n(x_{2})} \frac{1}{n}dn
+$$
+
+We obtain,
+$$
+n_{1} = n_{2} e^{\frac{\phi_{1}-\phi_{2}}{V_{T}}}
+$$
+
+If n1= N<sub>D1</sub> and n2=N<sub>D2</sub> as in case of the semiconductor bar, we get built in potential &phi<sub>BI</sub>; as
+
+$$
+\phi_{BI} = V_{T} ln \frac{N_{D1}}{N_{D2}}
+$$
+
+Corollary, this can be applied for finding potential built up between any two doping concentrations. If one of the dopings is intrinsic value, we get
+
+$$
+n(x) = n_{i} e^{\phi(x)}{V_{T}}
+$$
+
 #### Linearly Graded Junctions
 If we start with a uniformly doped n-type semiconductor, for example, and diffuse acceptor atoms through the surface, the impurity concentrations will tend to be like those shown in Figure Fig 5.4. The point x = x' on the figure corresponds to the metallurgical junction. The depletion region extends into the p and n regions from the metallurgical junction as we have discussed previously. The net p-type doping concentration near the metallurgical junction may be approximated as a linear function of distance from the metallurgical junction. Similarly the n type doping concentration is a linear function extending from the metallurgical junction
 <div align="center">
 <image src="images/fig_7.4.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.4)</span>
+<span style="float: right;">(Fig 5.5)</span>
 </div>
 For convenience the junction is placed at x=0. The space charge density can be written as 
 $$

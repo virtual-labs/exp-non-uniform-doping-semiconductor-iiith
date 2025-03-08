@@ -1,1 +1,1 @@
-# The P-N Junction
+# Non uniformly doped semiconductor
