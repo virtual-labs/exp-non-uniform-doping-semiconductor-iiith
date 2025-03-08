@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "What are the majority charge carriers of a p-type semiconductor and the minority charge carriers of an n-type semiconductor?",
+      "question": "1. What are the majority charge carriers of a p-type semiconductor and the minority charge carriers of an n-type semiconductor?",
       "answers": {
         "a": "electrons; electrons",
         "b": "holes; holes",
@@ -18,45 +18,28 @@
       "correctAnswer": "b",
       "difficulty": "beginner"
     },
-    {
-      "question": "What is the primary difference between the Fermi level and the Fermi function?",
-      "answers": {
-        "a": "The Fermi level and Fermi function are identical concepts in quantum mechanics.",
-        "b": "The Fermi level is the probability of an energy state being occupied, while the Fermi function is the energy level at which the probability of occupancy is 50%.",
-        "c": "The Fermi level changes with temperature, whereas the Fermi function remains constant.",
-        "d": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature."
-      },
-      "explanations": {
-        "a": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "b": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "c": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature.",
-        "d": "The Fermi level represents the highest occupied energy level at absolute zero, while the Fermi function gives the probability of an energy state being occupied at a given temperature."
-      },
-      "correctAnswer": "d",
-      "difficulty": "beginner"
-    },
     
     {
-        "question": "A 1D semiconductor of length l is uniformly doped with p-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. Will there be a drift current at point 'l/2'?",
+        "question": "2. A 1D semiconductor of length l , placed along positive x axis (0 at left and L at right), is uniformly doped with p-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What will the direction of Drift current at x=L/2 will be?",
         "answers": {
-          "a": "Yes, because of the abrupt change in doping at x = l/2.",
-          "b": "No, because the electric field is zero at x = l/2.",
-          "c": "Yes, because there is an electric field at x = l/2.",
-          "d": "No, because there are no charge carriers at x = l/2."
+          "a": "Left to right",
+          "b": "Right to left ",
+          "c": "No drift current will flow",
+          "d": "Drift current direction cannot be determined "
         },
         "explanations": {
-          "a": "While the doping changes abruptly at x = l/2, the drift current is caused by the electric field, not the doping change itself." ,
-          "b": "This is incorrect. The electric field is not zero at x = l/2 because of the abrupt change in doping.",
-          "c": "There is an electric field at x = l/2 due to the difference in doping between the p-type and undoped regions. This electric field can cause a drift current.",
-          "d": "This is incorrect. There are charge carriers (holes) in the p-type region, and the electric field at x = l/2 can cause a drift current."
+          "a": "This is incorrect. The electric field points from the undoped region (positive) to the p-type region (negative). Holes, being positively charged, move in the opposite direction of the electric field, i.e., from right to left." ,
+          "b": "This is correct. The electric field points from the undoped region to the p-type region, and holes move in the opposite direction, i.e., from right to left.",
+          "c": "This is incorrect. There is an electric field at x=L/2 due to the doping gradient, and this field drives a drift current.",
+          "d": "This is incorrect. The direction of the drift current can be determined based on the doping gradient and the resulting electric field."
         },
         "correctAnswer": "c",
         "difficulty": "medium"
     },
     {
-      "question": "Will the Fermi function in the semiconductor in the previous question be continuous at length x = l/2?",
+      "question": "3. Will the Fermi function in the semiconductor in the previous question be continuous at length x = l/2 under equilibrium?",
       "answers": {
-        "a": "Yes, the Fermi function is always continuous at material boundaries.",
+        "a": "Yes, the Fermi function will drop by kt/q at the junction.",
         "b": "No, the Fermi function will have a discontinuity at x = l/2 due to the doping change.",
         "c": "Yes, because the Fermi level adjusts to maintain equilibrium across the boundary.",
         "d": "No, because the undoped region has no free carriers to align the Fermi level."
@@ -71,12 +54,12 @@
       "difficulty": "medium"
     },
     {
-        "question": "Now the same semiconductor is doped with n-type dopants from length x = l/2 to x = l. How will the rate of diffusion change?",
+        "question": "4. Now the same semiconductor is doped with n-type dopants from length x = l/2 to x = l. How will the net diffusion current change?",
         "answers": {
-          "a": "The rate of diffusion will increase due to the higher concentration gradient of electrons.",
-          "b": "The rate of diffusion will decrease because the doping is now uniform.",
-          "c": "The rate of diffusion will remain the same as there is no change in the doping profile.",
-          "d": "The rate of diffusion will decrease due to the absence of holes."
+          "a": "The diffusion current will increase due to the higher concentration gradient of electrons.",
+          "b": "The diffusion current will decrease because the doping is now uniform.",
+          "c": "The diffusion current will remain the same as there is no change in the doping profile.",
+          "d": "The diffusion current will decrease due to the absence of holes."
         },
         "explanations": {
           "a": "The rate of diffusion depends on the concentration gradient of charge carriers. Adding n-type dopants from x = l/2 to x = l creates a higher concentration gradient of electrons, increasing the rate of diffusion.",
