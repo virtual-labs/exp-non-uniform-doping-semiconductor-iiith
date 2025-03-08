@@ -2,58 +2,58 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "What kind of function is the space charge density in a uniformly doped p-n junction and a linearly graded junction?",
+      "question": "1. Which of the following will be true for a semiconductor where two neighboring regions have different doping concentrations of n-type dopant?",
       "answers": {
-        "a": "Uniformly doped p-n junction: Constant function; Linearly graded junction: Linear function.",
-        "b": "Uniformly doped p-n junction: Linear function; Linearly graded junction: Constant function.",
-        "c": "Uniformly doped p-n junction: Step function; Linearly graded junction: Linear function.",
-        "d": "Uniformly doped p-n junction: Quadratic function; Linearly graded junction: Exponential function."
+        "a": "Immobile dopant atoms will diffuse due to concentration gradient.",
+        "b": "A small local electric field appears between the two regions.",
+        "c": "The semiconductor gains a net negative charge.",
+        "d": "The device behaves like a battery."
       },
       "explanations": {
-        "a": "This is incorrect. The space charge density in a uniformly doped p-n junction is not constant; it is a step function due to the abrupt change in doping at the junction.",
-        "b": "This is incorrect. The space charge density is not linear in a uniformly doped p-n junction or constant in a linearly graded junction.",
-        "c": "This is correct. In a uniformly doped p-n junction, the space charge density is a step function due to the abrupt change in doping at the junction. In a linearly graded junction, the space charge density varies linearly with position.",
-        "d": "This is incorrect. The space charge density is not quadratic or exponential in these junctions."
+        "a": "This is incorrect. Dopant atoms are immobile and do not diffuse due to concentration gradients. Only free charge carriers (electrons and holes) can diffuse.",
+        "b": "This is correct. A concentration gradient of dopants leads to a diffusion of free electrons from the higher-doped region to the lower-doped region. This creates a separation of charge, resulting in a small local electric field.",
+        "c": "This is incorrect. The semiconductor does not gain a net negative charge. The charge neutrality is maintained overall, even though there may be local charge imbalances due to the diffusion of electrons.",
+        "d": "This is incorrect. The device does not behave like a battery. While a local electric field is created, it is not sufficient to generate a voltage like a battery."
       },
-      "correctAnswer": "c",
+      "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "What is the key difference between a uniformly doped p-n junction and a hyperabrupt junction?",
+      "question": "2. What does the built-in potential between two adjacent locations depend on?",
       "answers": {
-        "a": "A uniformly doped p-n junction has a constant doping profile, while a hyperabrupt junction has a non-uniform doping profile.",
-        "b": "A hyperabrupt junction has a wider depletion region than a uniformly doped p-n junction.",
-        "c": "A uniformly doped p-n junction is used in varactor diodes, while a hyperabrupt junction is used in standard diodes.",
-        "d": "A hyperabrupt junction has a linear electric field, while a uniformly doped p-n junction has a non-linear electric field."
+        "a": "It is independent of temperature.",
+        "b": "Ratio of doping concentration between the two regions.",
+        "c": "Difference of doping concentration between the two locations.",
+        "d": "Width of depletion region."
       },
       "explanations": {
-        "a": "This is correct. A uniformly doped p-n junction has a constant doping concentration in the p and n regions, while a hyperabrupt junction has a sharply varying doping profile.",
-        "b": "This is incorrect. The depletion region width depends on the doping profile and applied voltage, but it is not inherently wider in a hyperabrupt junction.",
-        "c": "This is incorrect. A hyperabrupt junction is used in varactor diodes due to its non-uniform doping profile, while a uniformly doped p-n junction is used in standard diodes.",
-        "d": "This is incorrect. A uniformly doped p-n junction has a linear electric field, while a hyperabrupt junction has a non-linear electric field due to its non-uniform doping."
+        "a": "This is incorrect. The built-in potential depends on temperature because the intrinsic carrier concentration (ni) is temperature-dependent. As temperature increases, ni increases, which affects the built-in potential.",
+        "b": "This is correct. The built-in potential depends on the ratio of doping concentrations between the two regions. It is given by the formula: V_bi = (kT/q) * ln(N_A * N_D / ni²), where N_A and N_D are the doping concentrations of the p and n regions, respectively.",
+        "c": "This is incorrect. The built-in potential depends on the ratio of doping concentrations, not the absolute difference between them. The difference in doping concentrations alone does not determine the built-in potential.",
+        "d": "This is incorrect. The width of the depletion region is a result of the built-in potential and doping concentrations, not a factor that determines the built-in potential itself."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "b",
       "difficulty": "beginner"
     },
     {
-      "question": "Calculate the depletion width w0 of a pn junction given the following parameters: ε = 11.7 * 8.854 * 10^-12 F/m, V0 = 0.7 V, NA = 10^18 cm^-3, ND = 10^16 cm^-3, and e = 1.6 * 10^-19 C. Use the formula: w0 = sqrt((2 * ε * V0 / e) * ((NA + ND) / (NA * ND))).",
+      "question": "3. What will be built in potential value at 25 C between two locations with doping 5x10^12 and 2*10^15?",
       "answers": {
-        "a": "1.2 * 10^-6 m",
-        "b": "2.5 * 10^-6 m",
-        "c": "3.7 * 10^-6 m",
-        "d": "4.9 * 10^-6 m"
+        "a": "0.023 V",
+        "b": "0.056 V",
+        "c": "0.9 V",
+        "d": "0.7 V"
       },
       "explanations": {
-        "a": "This value is too low. Check the calculation of the depletion width using the given formula and parameters.",
-        "b": "This value is close to the correct depletion width. Ensure the units are consistent and the formula is applied correctly.",
-        "c": "This value is too high. Re-evaluate the calculation of the depletion width using the given formula and parameters.",
-        "d": "This value is incorrect. Verify the calculation and ensure all parameters are correctly substituted into the formula."
+        "a": "Refer to theory",
+        "b": "Refer to theory",
+        "c": "Refer to theory",
+        "d": "Refer to theory"
       },
       "correctAnswer": "b",
       "difficulty": "medium"
     },
     {
-      "question": "A 1D semiconductor of length l is uniformly doped with n-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What is the electric field E(x) in the undoped region (l/2 ≤ x ≤ l)?",
+      "question": "4. A 1D semiconductor of length l is uniformly doped with n-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What is the electric field E(x) in the undoped region (l/2 ≤ x ≤ l)?",
         "answers": {
           "a": "E(x) = (e * N_d / ε) * (l / 2)",
           "b": "E(x) = (e * N_d / ε) * x",

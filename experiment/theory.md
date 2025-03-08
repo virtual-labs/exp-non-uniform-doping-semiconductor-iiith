@@ -62,58 +62,10 @@ $$
 n(x) = n_{i} e^{\phi(x)}{V_{T}}
 $$
 
-#### Linearly Graded Junctions
-If we start with a uniformly doped n-type semiconductor, for example, and diffuse acceptor atoms through the surface, the impurity concentrations will tend to be like those shown in Figure Fig 5.4. The point x = x' on the figure corresponds to the metallurgical junction. The depletion region extends into the p and n regions from the metallurgical junction as we have discussed previously. The net p-type doping concentration near the metallurgical junction may be approximated as a linear function of distance from the metallurgical junction. Similarly the n type doping concentration is a linear function extending from the metallurgical junction
-<div align="center">
-<image src="images/fig_7.4.png" height="300px" width ="auto">
-<span style="float: right;">(Fig 5.2)</span>
-</div>
-For convenience the junction is placed at x=0. The space charge density can be written as 
-$$
-\rho(x) = eax
-$$
+### Space Charge Region or Depletion region.
+ When mobile majority carriers diffuse out from doped semiconductor, immobile charged dopant atoms remain behind. The region from where mobile carriers have diffused away is devoid of mobile charges and is called the Depletion region. Width of the depletion region will depend on doping concentration.
 
-Where a is the gradient of the net impurity concentration. The electric field and concentration can be found by Poisson's equation. We can write
-
-$$
-\frac{dE}{dx} = \frac{\rho(x)}{\epsilon} = \frac{eax}{\epsilon}
-$$
-
-$$
-E = \int \frac{eax}{\epsilon}dx = \frac{ea}{2\epsilon}(x^{2})
-$$
-The electric field in the linearly graded junction is a quadratic function of distance rather than the linear function found in the uniformly doped junction.The potential is again found by integrating the electric field as 
-
-$$
-\phi(x) = - \int Edx
-$$
-Say &phi;(x) = 0  at x = -x<sub>0</sub>
-
-$$
-\phi(x) = \frac{ea}{2\epsilon}(\frac{x^{2}}{3} - x_{0}^{2}x) + \frac{ea}{3\epsilon}x_{0}^{3}
-$$
-
-The magnitude of the potential at x = +.ro will equal the built-in potential barrier for this function. We then have that 
-
-$$
-\phi(x) = \frac{2ea}{3\epsilon}x_{0}^{3} = V_{0}
-$$
-
-#### Hyperabrupt Junctions
-The uniformly doped junction and linearly graded junction are not the only possible doping profiles. Figure 5.5 shows a generalized one-sided p+n junction where the generalized n-type doping concentration for x > 0 is given by
-
-$$
-N = Bx^{m}
-$$
-
-When the value of m is negative, we have what is referred to as a hyperabrupt junction. In this case, the n-type doping is larger near the metallurgical junction than in the bulk semiconductor. The above equation is used to approximate the n-type doping over a small region near x = xu and does not hold at x = 0 when m is negative.
-
-## References
-1. S.M. Sze, "Physics of Semiconductor Devices"
-2. Robert F. Pierret, "Semiconductor Device Fundamentals"
-3. Ben G. Streetman, "Solid State Electronic Devices"
-
-## Additional Resources
-- [Interactive Semiconductor Simulations](https://www.semiconductors.org)
-- [Online Calculator Tools](https://www.electronics-tutorials.com)
-- [Video Lectures and Demonstrations](https://www.nptel.ac.in)
+### Other junctions:
+<b> (a) PN junction</b>: When semiconductor junction is doped, such that one side is p-type and other side is n-type, it is called a PN junction. Diffusion and Drift happen similar to as in a non-uniformly doped junction. (We will go into more detail in the next module). <br>
+<b>(b)  Linearly graded junction,</b> as the name implies is a special PN junction, where doping concentration changing linearly with location. 
+<b>(c) Hyper-abrupt junctions,</b> are PN junctions where doping profile on one side decreases away from the metallurgical junction.
