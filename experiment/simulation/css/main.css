@@ -366,3 +366,18 @@
         left: 70%;
     }
 }
+
+/* Add this to your main.css file or in a <style> block in the <head> */
+.button-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Add space between buttons */
+  margin-top: 20px; /* Add some top margin */
+}
+
+#result-message {
+  text-align: center; /* Center the result message */
+  margin-top: 20px; /* Add some top margin */
+  font-size: 1.2em; /* Adjust font size */
+  color: #333; /* Set text color */
+}

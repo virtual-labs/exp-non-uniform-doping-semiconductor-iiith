@@ -36,7 +36,7 @@
       "difficulty": "beginner"
     },
     {
-      "question": "3. What will be built in potential value at 25 C between two locations with doping 5x10^12 and 2*10^15?",
+      "question": "3. What will be built in potential value at 25 C between two locations with doping 5x10<sup>12</sup> and 2*10<sup>15</sup>?",
       "answers": {
         "a": "0.023 V",
         "b": "0.056 V",
@@ -49,7 +49,7 @@
         "c": "Refer to theory",
         "d": "Refer to theory"
       },
-      "correctAnswer": "b",
+      "correctAnswer": "a",
       "difficulty": "medium"
     },
     {

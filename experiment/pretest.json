@@ -33,7 +33,7 @@
           "c": "This is incorrect. There is an electric field at x=L/2 due to the doping gradient, and this field drives a drift current.",
           "d": "This is incorrect. The direction of the drift current can be determined based on the doping gradient and the resulting electric field."
         },
-        "correctAnswer": "c",
+        "correctAnswer": "b",
         "difficulty": "medium"
     },
     {
@@ -46,11 +46,11 @@
       },
       "explanations": {
         "a": "This is incorrect. The Fermi function is not always continuous at material boundaries when there is an abrupt change in doping or material properties.",
-        "b": "This is correct. The Fermi function will have a discontinuity at x = l/2 because the doping changes abruptly, leading to a mismatch in the Fermi levels of the doped and undoped regions.",
-        "c": "This is incorrect. While the Fermi level adjusts in equilibrium, the abrupt doping change at x = l/2 can cause a discontinuity in the Fermi function.",
+        "b": "This is incorrect. While the Fermi level adjusts in equilibrium, the abrupt doping change at x = l/2 can cause a discontinuity in the Fermi function.",
+        "c": "This is correct. The Fermi function will have a discontinuity at x = l/2 because the doping changes abruptly, leading to a mismatch in the Fermi levels of the doped and undoped regions.",
         "d": "This is incorrect. The undoped region does have some free carriers (intrinsic carriers), but the abrupt doping change still causes a discontinuity in the Fermi function."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "c",
       "difficulty": "medium"
     },
     {
