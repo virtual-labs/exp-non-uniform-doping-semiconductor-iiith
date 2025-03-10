@@ -19,7 +19,7 @@ bottom of below. <br>
 In summary, when we have a region of high doping concentration next to a region of low doping concentration in equilibrium, then we will wind up with a built in electric field (and a built in potential), and the drift current will be equal and opposite to the diffusion current.<br>
 
 <div align="center">
-<image src="images/fig_7.1.png" height="300px" width ="auto">
+<image src="images/fig_7.1.jpeg" height="300px" width ="auto">
 <span style="float: right;">(Fig 5.1)</span>
 </div>
 
