@@ -44,10 +44,10 @@
         "d": "0.7 V"
       },
       "explanations": {
-        "a": "Refer to theory",
-        "b": "Refer to theory",
-        "c": "Refer to theory",
-        "d": "Refer to theory"
+        "a": "This is correct. Refer to theory",
+        "b": "This is incorrect. Refer to theory",
+        "c": "This is incorrect. Refer to theory",
+        "d": "This is incorrect. Refer to theory"
       },
       "correctAnswer": "a",
       "difficulty": "medium"
@@ -61,10 +61,10 @@
           "d": "E(x) = (e * N_d / ε) * l"
         },
         "explanations": {
-          "a": "In the undoped region, the electric field is constant and equal to the value at the boundary x = l/2, which is (e * N_d / ε) * (l / 2). This is because there is no charge density in the undoped region to modify the field further. Please refer to theory part for hints on deriving the answer.",
-          "b": "This describes the electric field in the doped region (0 ≤ x ≤ l/2), where the field increases linearly with x. Please refer to theory part for hints on deriving the answer.",
-          "c": "The electric field is not zero in the undoped region; it remains constant due to the absence of charge density. Please refer to theory part for hints on deriving the answer.",
-          "d": "This is incorrect because the electric field does not depend on the total length l in the undoped region. Please refer to theory part for hints on deriving the answer."
+          "a": "This is correct. In the undoped region, the electric field is constant and equal to the value at the boundary x = l/2, which is (e * N_d / ε) * (l / 2). This is because there is no charge density in the undoped region to modify the field further. Please refer to theory part for hints on deriving the answer.",
+          "b": "This is incorrect. This describes the electric field in the doped region (0 ≤ x ≤ l/2), where the field increases linearly with x. Please refer to theory part for hints on deriving the answer.",
+          "c": "This is incorrect. The electric field is not zero in the undoped region; it remains constant due to the absence of charge density. Please refer to theory part for hints on deriving the answer.",
+          "d": "This is incorrect. This is incorrect because the electric field does not depend on the total length l in the undoped region. Please refer to theory part for hints on deriving the answer."
         },
         "correctAnswer": "a",
         "difficulty": "medium"

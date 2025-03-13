@@ -131,3 +131,83 @@ body {
   font-size: 1.2em; /* Adjust font size */
   color: #333; /* Set text color */
 }
+/* General Styles */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Match Container */
+.match-container {
+  display: flex;
+  flex-direction: row; /* Ensure side-by-side layout */
+  gap: 20px; /* Space between plots and text boxes */
+}
+
+/* Plots Section */
+.plots {
+  flex: 1; /* Take up available space */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between plots */
+}
+
+.plots canvas {
+  max-width: 100%; /* Ensure plots don't overflow */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Text Boxes Section */
+.text-boxes {
+  flex: 1; /* Take up available space */
+  margin-top: 40%;
+}
+
+.text-boxes ul {
+  list-style: none;
+  padding: 0;
+  
+}
+
+.text-boxes li {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.text-boxes li:hover {
+  background-color: #e0e0e0;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .match-container {
+      flex-direction: row; /* Ensure side-by-side layout even on small screens */
+  }
+
+  .plots {
+      flex: 1; /* Plots take up half the width */
+  }
+
+  .text-boxes {
+      flex: 1; /* Text boxes take up half the width */
+  }
+}

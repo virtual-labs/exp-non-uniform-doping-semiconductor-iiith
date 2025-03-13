@@ -28,14 +28,16 @@
 
     <div class="container">
         <h1>Match the Following</h1>
-        <div class="column1">
-            <div class="left-column">
+        <div class="match-container">
+            <!-- Left Column: Plots -->
+            <div class="plots">
                 <canvas id="plot1" width="400" height="300"></canvas>
                 <canvas id="plot2" width="400" height="300"></canvas>
                 <canvas id="plot3" width="400" height="300"></canvas>
             </div>
-            <svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
-            <div class="right-column">
+
+            <!-- Right Column: Text Boxes -->
+            <div class="text-boxes">
                 <ul>
                     <li data-id="1">Uniformly doped Junction</li>
                     <li data-id="2">Linearly graded Junction</li>
@@ -43,9 +45,11 @@
                 </ul>
             </div>
         </div>
+
+        <!-- Buttons -->
         <div class="button-container">
-            <button id="submit">Submit</button>
-            <button id="refresh">Refresh</button>
+            <button id="submit" class="button is-primary">Submit</button>
+            <button id="refresh" class="button is-info">Refresh</button>
         </div>
         <p id="result"></p>
     </div>
