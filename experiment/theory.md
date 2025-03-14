@@ -37,7 +37,7 @@ $$
 Using Einstein’s relationship and rearranging the terms, we get
 
 $$
-\frac{1}{V_{T}} \frac{d \phi}{dx} = \frac{1}{x}\frac{dn}{dx} \tag{5.4}
+\frac{1}{V_{T}} \frac{d \phi}{dx} = \frac{1}{n}\frac{dn}{dx} \tag{5.4}
 $$
 
 When integrated from x1 to x2,
