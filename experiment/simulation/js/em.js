@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  const rightItems = document.querySelectorAll('.right-column li');
+  const rightItems = document.querySelectorAll('.text-boxes li');
   const svg = document.getElementById('lines');
   let selectedLeft = null;
   let selectedRight = null;
@@ -44,38 +44,47 @@ document.addEventListener("DOMContentLoaded", () => {
       return data;
   }
 
-  // Function to create a plot
-  function createPlot(canvasId, label, type, color) {
-      const ctx = document.getElementById(canvasId).getContext('2d');
-      new Chart(ctx, {
-          type: 'line',
-          data: {
-              datasets: [
-                  {
-                      label: canvasId,
-                      data: generateSpaceChargeData(type),
-                      borderColor: color,
-                      borderWidth: 2,
-                      fill: false,
-                      pointRadius: 0,
-                  }
-              ]
+ // Modify your createPlot function to make charts responsive
+function createPlot(canvasId, label, type, color) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        datasets: [{
+          label: canvasId,
+          data: generateSpaceChargeData(type),
+          borderColor: color,
+          borderWidth: 2,
+          fill: false,
+          pointRadius: 0,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            type: "linear",
+            title: { display: false},
           },
-          options: {
-              responsive: false,
-              scales: {
-                  x: {
-                      type: "linear",
-                      title: { display: true, text: "Position (x)" },
-                  },
-                  y: {
-                      title: { display: true, text: "Space Charge Density (ρ)" },
-                  }
-              }
+          y: {
+            title: { display: false},
           }
-      });
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+    
+    // Make chart responsive
+    function resizeChart() {
+      chart.resize();
+    }
+    window.addEventListener('resize', resizeChart);
   }
-
   // Create the plots
   createPlot('plot1', 'Unbiased PN Junction', 'unbiased', 'blue');
   createPlot('plot2', 'Linearly Graded PN Junction', 'linearly-graded', 'green');
@@ -176,3 +185,24 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById('result').innerText = ''; // Clear result message
   });
 });
+
+function drawLine(leftPlot, rightItem) {
+    const leftRect = leftPlot.getBoundingClientRect();
+    const rightRect = rightItem.getBoundingClientRect();
+    const containerRect = document.querySelector('.match-container').getBoundingClientRect();
+
+    const x1 = leftRect.right - containerRect.left;
+    const y1 = leftRect.top + leftRect.height / 2 - containerRect.top;
+    const x2 = rightRect.left - containerRect.left;
+    const y2 = rightRect.top + rightRect.height / 2 - containerRect.top;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', '#4caf50');
+    line.setAttribute('stroke-width', '2');
+
+    document.getElementById('lines').appendChild(line);
+}

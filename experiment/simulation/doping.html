@@ -31,20 +31,28 @@
         <div class="match-container">
             <!-- Left Column: Plots -->
             <div class="plots">
-                <canvas id="plot1" width="400" height="300"></canvas>
-                <canvas id="plot2" width="400" height="300"></canvas>
-                <canvas id="plot3" width="400" height="300"></canvas>
+              <canvas id="plot1" width="400" height="200"></canvas>
+              <canvas id="plot2" width="400" height="200"></canvas>
+              <canvas id="plot3" width="400" height="200"></canvas>
             </div>
-
+          
             <!-- Right Column: Text Boxes -->
             <div class="text-boxes">
-                <ul>
-                    <li data-id="1">Uniformly doped Junction</li>
-                    <li data-id="2">Linearly graded Junction</li>
-                    <li data-id="3">Hyperabrupt Junction</li>
-                </ul>
+              <ul>
+                <li data-id="1">Uniformly doped Junction</li>
+                <li data-id="2">Linearly graded Junction</li>
+                <li data-id="3">Hyperabrupt Junction</li>
+              </ul>
             </div>
+            
+            <svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+            
+            <!-- Add this SVG element -->
+            <svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
+
+        
 
         <!-- Buttons -->
         <div class="button-container">

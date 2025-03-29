@@ -2,8 +2,11 @@
 This equation relates the diffusivity and mobility together.
 
 $$
-D_{n} = \frac{KT}{q} \mu _{n} = V_{T}\mu _{n} \tag{5.1}
+D_{n} = \frac{KT}{q} \mu _{n} = V_{T}\mu _{n} 
 $$
+$$
+\tag{5.1}
+$$<br>
 
 K is the Boltzmann's constant =  1.3*10<sup>-23</sup> J/K <br>
 T temperature in K<br>
@@ -25,42 +28,63 @@ In summary, when we have a region of high doping concentration next to a region 
 
 The net (total) current equation will be
 $$
-J_{nT} = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx} \tag{5.2}
+J_{nT} = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx} 
 $$
+$$
+\tag{5.2}
+$$<br>
  
 Where n is the electron concentration, dn/dx is the electron gradient and &phi; is the potential gradient (d&phi;/dx is the electric field). Since in equilibrium, net current is zero,
 
 $$
-0 = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx} \tag{5.3}
+0 = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx} 
 $$
+$$
+\tag{5.3}
+$$<br>
 
 Using Einstein’s relationship and rearranging the terms, we get
 
 $$
-\frac{1}{V_{T}} \frac{d \phi}{dx} = \frac{1}{n}\frac{dn}{dx} \tag{5.4}
+\frac{1}{V_{T}} \frac{d \phi}{dx} = \frac{1}{n}\frac{dn}{dx} 
 $$
+$$
+\tag{5.4}
+$$<br>
 
 When integrated from x1 to x2,
 $$
-\frac{1}{V_{T}} \int_{\phi(x_{1})}^{\phi(x_{2})} d\phi = \int_{n(x_{1})}^{n(x_{2})} \frac{1}{n}dn \tag{5.5}
+\frac{1}{V_{T}} \int_{\phi(x_{1})}^{\phi(x_{2})} d\phi = \int_{n(x_{1})}^{n(x_{2})} \frac{1}{n}dn 
 $$
+$$
+\tag{5.5}
+$$<br>
 
 We obtain,
 $$
-n_{1} = n_{2} e^{\frac{\phi_{1}-\phi_{2}}{V_{T}}} \tag{5.6}
+n_{1} = n_{2} e^{\frac{\phi_{1}-\phi_{2}}{V_{T}}} 
 $$
+$$
+\tag{5.6}
+$$<br>
 
 If n1= N<sub>D1</sub> and n2=N<sub>D2</sub> as in case of the semiconductor bar, we get built in potential &phi<sub>BI</sub>; as
 
 $$
-\phi_{BI} = V_{T} ln \frac{N_{D1}}{N_{D2}} \tag{5.7}
+\phi_{BI} = V_{T} ln \frac{N_{D1}}{N_{D2}} 
 $$
+$$
+\tag{5.7}
+$$<br>
 
 Corollary, this can be applied for finding potential built up between any two doping concentrations. If one of the dopings is intrinsic value, we get
 
 $$
-n(x) = n_{i} e^{\phi(x)}{V_{T}} \tag{5.8}
+n(x) = n_{i} e^{\phi(x)}{V_{T}} 
 $$
+$$
+\tag{5.8}
+$$<br>
 
 ### Space Charge Region or Depletion region.
  When mobile majority carriers diffuse out from doped semiconductor, immobile charged dopant atoms remain behind. The region from where mobile carriers have diffused away is devoid of mobile charges and is called the Depletion region. Width of the depletion region will depend on doping concentration.
