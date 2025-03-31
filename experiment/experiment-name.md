@@ -1,1 +1,1 @@
-# Non uniform doping of semiconductor
+# Non Uniform doped semiconductor
