@@ -68,7 +68,7 @@ $$
 \tag{5.6}
 $$<br>
 
-If n1= N<sub>D1</sub> and n2=N<sub>D2</sub> as in case of the semiconductor bar, we get built in potential &phi<sub>BI</sub>; as
+If n1= N<sub>D1</sub> and n2=N<sub>D2</sub> as in case of the semiconductor bar, we get built in potential &phi;<sub>BI</sub> as
 
 $$
 \phi_{BI} = V_{T} ln \frac{N_{D1}}{N_{D2}} 
