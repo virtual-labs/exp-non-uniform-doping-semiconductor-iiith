@@ -1,55 +1,4486 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- Add CSS at the head of HTML file -->
-    <link rel="stylesheet" href="./css/main.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/virtual-labs/virtual-style@0.0.8-b/css/style.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semiconductor Physics Simulator</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --secondary-gradient: linear-gradient(135deg, #e879f9 0%, #c084fc 100%);
+            --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(229, 231, 235, 0.8);
+            --dark-bg: rgba(248, 250, 252, 0.95);
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --plot-bg: rgba(248, 250, 252, 0.9);
+            --plot-border: rgba(229, 231, 235, 0.8);
+            --control-bg: rgba(255, 255, 255, 0.9);
+            --control-border: rgba(229, 231, 235, 0.6);
+            --input-bg: rgba(243, 244, 246, 0.8);
+            --input-focus: rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            height: 100vh;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.challenges-active {
+            overflow-y: hidden;
+        }
+
+        body.simulation-active {
+            overflow-y: hidden;
+        }
+
+        .particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            height: calc(100vh - 80px);
+            padding: 10px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 15px;
+        }
+
+        .graphs-section {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .carrier-plot {
+            grid-column: 1 / -1;
+        }
+
+        .controls-section {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .controls-title {
+            color: var(--text-primary);
+            font-size: 1.1em;
+            font-weight: 600;
+            text-align: center;
+            background: var(--control-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--control-border);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls {
+            background: var(--control-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--control-border);
+            border-radius: 15px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-group {
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            font-size: 0.8em;
+        }
+
+        .control-wrapper {
+            position: relative;
+        }
+
+        .control-group select,
+        .control-group input[type="range"] {
+            width: 100%;
+            padding: 6px 10px;
+            background: var(--input-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px var(--input-focus);
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .range-display {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 4px auto;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7em;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .range-display:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .plot-container {
+            background: var(--plot-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--plot-border);
+            border-radius: 20px;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .plot-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .plot-container:hover::before {
+            left: 100%;
+        }
+
+        .plot-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .plot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .plot-title {
+            color: var(--text-primary);
+            font-size: 1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .plot-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7em;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .plot-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .plot-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--input-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+
+        .plot-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: scale(1.05);
+            border-color: #6366f1;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: calc(100% - 50px);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--plot-border);
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 11px;
+        }
+
+        .realtime-data {
+            background: var(--control-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--control-border);
+            border-radius: 15px;
+            padding: 8px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-card {
+            background: var(--input-bg);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--control-border);
+        }
+
+        .data-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .data-value {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.6em;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(51, 65, 85, 0.8);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating-particles {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 6s ease-in-out infinite;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto;
+                max-height: calc(100vh - 80px);
+            }
+            .controls-section {
+                width: 100%;
+                order: -1;
+            }
+            .graphs-section {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 250px);
+            }
+            .carrier-plot {
+                grid-column: 1;
+            }
+            body {
+                overflow-y: auto;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .realtime-data {
+                grid-template-columns: 1fr;
+            }
+            .challenges-full-container {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
+                gap: 10px;
+            }
+            
+            .controls {
+                padding: 10px;
+            }
+            
+            .canvas-container {
+                height: 200px;
+            }
+            
+            .graphs-section {
+                grid-template-rows: repeat(3, 200px);
+            }
+            
+            .realtime-data {
+                grid-template-columns: 1fr;
+            }
+
+            .challenges-full-container {
+                padding: 10px;
+            }
+
+            .challenge-section {
+                margin-bottom: 20px;
+                padding: 15px;
+            }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: linear-gradient(135deg, #ffffff, #f3f4f6);
+            color: #1f2937;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tab Navigation Styles */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 6px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(229, 231, 235, 0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0 4px;
+        }
+
+        .tab-button.active {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* CHALLENGES SECTION STYLES */
+        .challenges-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .challenges-section.active {
+            display: flex;
+        }
+
+        .challenges-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            background: var(--control-bg);
+            border-radius: 20px;
+            border: 1px solid var(--control-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .challenges-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .challenges-header h2 {
+            font-size: 1.8em;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .challenges-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .challenges-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .challenges-tabs {
+            display: flex;
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--control-border);
+        }
+
+        .challenge-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .challenge-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .challenges-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .challenge-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--glass-bg);
+            border-radius: 12px;
+            border: 1px solid var(--control-border);
+            transition: all 0.3s ease;
+        }
+
+        .challenge-section:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+        }
+
+        .challenge-section.completed {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .challenge-header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .challenge-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--primary-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .challenge-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .challenge-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .quiz-question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--input-bg);
+            border-radius: 8px;
+            border: 1px solid var(--control-border);
+        }
+
+        .quiz-question h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quiz-option {
+            padding: 12px 15px;
+            background: var(--glass-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .quiz-option:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: #8b5cf6;
+        }
+
+        .quiz-option.selected {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            color: var(--text-primary);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .quiz-explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            font-size: 0.85em;
+            color: #92400e;
+            display: none;
+        }
+
+        .quiz-explanation.show {
+            display: block;
+        }
+
+        .quiz-explanation-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #78350f;
+        }
+
+        .fill-blank-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--input-bg);
+            border-radius: 8px;
+            border: 1px solid var(--control-border);
+        }
+
+        .fill-blank-text {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .fill-blank-input {
+            background: var(--glass-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 4px;
+            padding: 5px 10px;
+            color: var(--text-primary);
+            margin: 0 5px;
+            min-width: 80px;
+        }
+
+        .fill-blank-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+        }
+
+        .fill-blank-input.correct {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .fill-blank-input.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .matching-column {
+            background: var(--input-bg);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--control-border);
+        }
+
+        .matching-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: var(--glass-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .matching-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: #6366f1;
+        }
+
+        .matching-item.selected {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: #6366f1;
+            color: var(--text-primary);
+        }
+
+        .matching-item.matched {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: #6366f1;
+            color: var(--text-primary);
+        }
+
+        .matching-item.correct-match {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: #6366f1;
+            color: var(--text-primary);
+        }
+
+        .matching-item.incorrect-match {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .challenge-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .challenge-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .challenge-btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .challenge-btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--control-border);
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .challenge-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .challenge-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .challenge-feedback.success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        .challenge-feedback.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+
+        .challenge-progress {
+            background: var(--glass-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--input-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .challenge-progress-fill {
+            height: 100%;
+            background: var(--secondary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .challenge-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .floating-challenge-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-challenge-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        .challenge-hint {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            color: #f59e0b;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .challenge-hint.active {
+            display: block;
+        }
+
+        .explanation-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .explanation-panel.active {
+            display: block;
+        }
+
+        .explanation-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .matching-connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #a855f7);
+            border-radius: 1px;
+            box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .connection-line.correct {
+            background: linear-gradient(90deg, #8b5cf6, #a855f7);
+            box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+        }
+
+        .connection-line.incorrect {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+
+        .matching-item.paired {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matching-item.paired::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .matching-item.paired:hover::after {
+            left: 100%;
+        }
+
+        .challenge-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .challenge-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .challenge-btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .challenge-btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-secondary);
+            border: 1px solid var(--control-border);
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .challenge-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .challenge-feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .challenge-feedback.success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        .challenge-feedback.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+
+        .challenge-progress {
+            background: var(--glass-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--input-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .challenge-progress-fill {
+            height: 100%;
+            background: var(--secondary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .challenge-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .floating-challenge-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-challenge-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        .challenge-hint {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            color: #f59e0b;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .challenge-hint.active {
+            display: block;
+        }
+
+        .explanation-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .explanation-panel.active {
+            display: block;
+        }
+
+        .explanation-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .explanation-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Challenges Full Page Layout */
+        .challenges-full-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .challenges-full-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .challenges-full-container::-webkit-scrollbar-track {
+            background: var(--input-bg);
+            border-radius: 4px;
+        }
+
+        .challenges-full-container::-webkit-scrollbar-thumb {
+            background: var(--secondary-gradient);
+            border-radius: 4px;
+        }
+
+        .challenges-full-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gradient);
+        }
+
+        /* Compact simulation layout */
+        .container {
+            height: calc(100vh - 80px);
+            padding: 10px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 15px;
+        }
+
+        .graphs-section {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .carrier-plot {
+            grid-column: 1 / -1;
+        }
+
+        .controls-section {
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .plot-container {
+            background: var(--plot-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--plot-border);
+            border-radius: 15px;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: calc(100% - 40px);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--plot-border);
+        }
+
+        .controls {
+            background: var(--control-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--control-border);
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls-title {
+            color: var(--text-primary);
+            font-size: 1em;
+            font-weight: 600;
+            text-align: center;
+            background: var(--control-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--control-border);
+            border-radius: 15px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .realtime-data {
+            background: var(--control-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--control-border);
+            border-radius: 15px;
+            padding: 6px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .data-card {
+            background: var(--input-bg);
+            border-radius: 6px;
+            padding: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--control-border);
+        }
+
+        .data-value {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1px;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.55em;
+            font-weight: 500;
+        }
+
+        .control-group {
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+            font-size: 0.75em;
+        }
+
+        .control-group select,
+        .control-group input[type="range"] {
+            width: 100%;
+            padding: 4px 8px;
+            background: var(--input-bg);
+            border: 1px solid var(--control-border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.75em;
+            transition: all 0.3s ease;
+        }
+
+        .plot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .plot-title {
+            color: var(--text-primary);
+            font-size: 0.9em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .plot-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6em;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+
+        /* GUIDED TOUR STYLES */
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1000;
+            display: none;
+            pointer-events: none;
+        }
+
+        .tour-overlay.active {
+            display: block;
+        }
+
+        .tour-spotlight {
+            position: absolute;
+            border: 3px solid #8b5cf6;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+            animation: spotlight-pulse 2s infinite;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes spotlight-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
+            }
+        }
+
+        .tour-popup {
+            position: fixed;
+            width: 350px;
+            max-width: 90vw;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: all;
+        }
+
+        .tour-popup.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .tour-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .tour-step-number {
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tour-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 8px 0;
+        }
+
+        .tour-content {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tour-progress {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tour-progress-bar {
+            height: 100%;
+            background: var(--secondary-gradient);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .tour-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tour-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .tour-btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+        }
+
+        .tour-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .tour-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .tour-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .floating-tour-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-tour-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.6);
+        }
+
+        .tour-interactive {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .tour-interactive-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .tour-interactive-content {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .highlight-element {
+            animation: highlight-pulse 2s infinite;
+            position: relative;
+            z-index: 1002;
+        }
+
+        @keyframes highlight-pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 0 6px rgba(139, 92, 246, 0.3);
+            }
+        }
+
+        .tour-achievement {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            text-align: center;
+        }
+
+        .tour-achievement-icon {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+
+        .tour-achievement-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Tour popup arrow */
+        .tour-popup::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .tour-popup.position-bottom::before {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+
+        .tour-popup.position-top::before {
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        .tour-popup.position-left::before {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid white;
+        }
+
+        .tour-popup.position-right::before {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+
+        .reset-challenges-container {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid var(--control-border);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-challenges-btn {
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .reset-challenges-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .reset-challenges-btn:active {
+            transform: translateY(0);
+        }
+
+        .reset-challenges-description {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin: 0;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <body>
-	<!-- Instructions Section -->
-	<div class="columns is-centered">
-		<div class="column">
-			<div class="v-instruction-container">
-				<div class="v-collapsible is-size-5" id="task-description">
-					Instructions
-				</div>
-				<div class="v-content instruction-list">
-					<ul style="list-style: disc;">
-						<li>The plot below represents the spce charge density functions of a uniformly doped pn junction in unbiased, forward bias and reverse bias condition.</li>
-						<li>"a" denotes unbiased, "b" denotes forward biased and "c" denotes the reverse biased </li>
-						<li>Label the graph by typing"a", "b" or "c" (in lower case only) in the text boxes </li>
-						<li>Click "Submit" to check if the labeling is correct.</li>
-						<li>Hint:For an forward junction the depletion region shrinks and for a reverse biased junction the depletion region expands </li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="columns is-flex-direction-row is-flex-wrap-wrap centered-div  custom-container">
-		<!-- Left Sidebar: Function Plot -->
-		<div class="column is-6-desktop is-12-tablet is-12-mobile">
-		  	<div class="v-datalist-container" style="height:100%">
-				<div class="v-datalist-title">Function Plot</div>
-					  <!-- Input field inside the plot area -->
-					  <div id="function-plot" class="v-datalist-row center-content" style="height: 400px; width:600px; position: relative;">
-						<canvas id="plot1" style="width:100%; height:80%;"></canvas>
-						<input id="plot-input1" class="input-overlay input-overlay1" type="text" placeholder="Type here" />
-						<input id="plot-input2" class="input-overlay input-overlay2" type="text" placeholder="Type here" />
-						<input id="plot-input3" class="input-overlay input-overlay3" type="text" placeholder="Type here" />
-						<!-- Submit Button -->
-					</div>				
-				</div>
-				<div class="submit-quiz">
-					<div class="button-container">
-						<button type="button" class="button is-primary" id="submit-btn">Submit</button>
-						<button id="nextPage" class="button is-primary" onclick="location.href='doping.html'">Next Page</button>
-					</div>
-					<p id="result-message"></p>
-			</div>
-        </div>
-	</div>
+    <canvas class="particle-bg" id="particleBg"></canvas>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="js/main.js"></script>
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+        <button class="tab-button active" onclick="switchMainTab('simulation')">
+            📊 Simulation
+        </button>
+        <button class="tab-button" onclick="switchMainTab('challenges')">
+            🎯 Challenges
+        </button>
+    </div>
+
+    <!-- Simulation Tab Content -->
+    <div id="simulation" class="tab-content active">
+        <div class="container">
+            <div class="graphs-section">
+                <div class="plot-container">
+                    <div class="plot-header">
+                        <div class="plot-title">
+                            <div class="plot-icon">📈</div>
+                            Doping Concentration
+                        </div>
+                        <div class="plot-controls">
+                            <button class="plot-btn" title="Reset Zoom">🔍</button>
+                        </div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="dopingCanvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="plot-container">
+                    <div class="plot-header">
+                        <div class="plot-title">
+                            <div class="plot-icon">⚡</div>
+                            Electric Field
+                        </div>
+                        <div class="plot-controls">
+                            <button class="plot-btn" title="Reset Zoom">🔍</button>
+                        </div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="fieldCanvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="plot-container carrier-plot">
+                    <div class="plot-header">
+                        <div class="plot-title">
+                            <div class="plot-icon">🔄</div>
+                            Carrier Dynamics
+                        </div>
+                        <div class="plot-controls">
+                            <button class="plot-btn" title="Reset Zoom">🔍</button>
+                        </div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="carrierCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <h3 class="controls-title">🎛️ Simulation Parameters</h3>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="dopingType">Semiconductor Type:</label>
+                        <div class="control-wrapper">
+                            <select id="dopingType">
+                                <option value="n-type">N-type (Electron-rich)</option>
+                                <option value="p-type">P-type (Hole-rich)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="profileType">Doping Profile:</label>
+                        <div class="control-wrapper">
+                            <select id="profileType">
+                                <option value="uniform">Uniform Distribution</option>
+                                <option value="linear">Linear Gradient</option>
+                                <option value="exponential">Exponential Decay</option>
+                                <option value="step">Abrupt Junction</option>
+                                <option value="gaussian">Gaussian Profile</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="maxConcentration">Peak Concentration:</label>
+                        <span class="range-display" id="maxConcValue">10¹⁶</span>
+                        <div class="control-wrapper">
+                            <input type="range" id="maxConcentration" min="14" max="19" step="0.1" value="16">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="gradientStrength">Profile Strength:</label>
+                        <span class="range-display" id="gradientValue">2.0</span>
+                        <div class="control-wrapper">
+                            <input type="range" id="gradientStrength" min="0.1" max="5" step="0.1" value="2">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="temperature">Temperature:</label>
+                        <span class="range-display" id="tempValue">300K</span>
+                        <div class="control-wrapper">
+                            <input type="range" id="temperature" min="200" max="500" step="10" value="300">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="animationSpeed">Animation Speed:</label>
+                        <span class="range-display" id="speedValue">1.0×</span>
+                        <div class="control-wrapper">
+                            <input type="range" id="animationSpeed" min="0.5" max="3" step="0.1" value="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="realtime-data">
+                    <div class="data-card">
+                        <div class="data-value" id="thermalVoltage">26.0</div>
+                        <div class="data-label">Thermal Voltage (mV)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="thermalProgress"></div>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value" id="intrinsicCarrier">1.1e10</div>
+                        <div class="data-label">Intrinsic ni (cm⁻³)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="intrinsicProgress"></div>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value" id="bandGap">1.12</div>
+                        <div class="data-label">Band Gap (eV)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bandProgress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenges Tab Content -->
+    <div id="challenges" class="tab-content">
+        <div class="challenges-full-container">
+            <div class="challenge-progress">
+                <div class="challenge-progress-bar">
+                    <div class="challenge-progress-fill" id="challengeProgress"></div>
+                </div>
+                <div class="challenge-stats">
+                    <span>Progress: <span id="progressText">0/5</span></span>
+                    <span>Score: <span id="totalScore">0</span> pts</span>
+                </div>
+            </div>
+
+            <!-- Reset Challenges Button -->
+            <div class="reset-challenges-container">
+                <button class="reset-challenges-btn" onclick="resetAllChallenges()">
+                    🔄 Reset All Challenges
+                </button>
+                <p class="reset-challenges-description">Generate a new random set of questions to practice with</p>
+            </div>
+
+                <!-- Rapid Fire Tab -->
+                <div class="challenge-section">
+                    <div class="challenge-header-section">
+                        <div class="challenge-icon">⚡</div>
+                        <h3 class="challenge-title">Rapid Fire Quiz</h3>
+                    </div>
+                    <p class="challenge-description">Test your knowledge with quick multiple-choice questions about semiconductor physics and doping!</p>
+                    <div id="rapidFireQuestions"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showRapidFireHint()">💡 Hint</button>
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkRapidFireAnswers()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetRapidFire()">🔄 Reset</button>
+                    </div>
+                    <div class="challenge-hint" id="rapidFireHint"></div>
+                    <div class="challenge-feedback" id="rapidFireFeedback"></div>
+                </div>
+
+                <!-- Fill Blanks Tab -->
+                <div class="challenge-section">
+                    <div class="challenge-header-section">
+                        <div class="challenge-icon">📝</div>
+                        <h3 class="challenge-title">Fill in the Blanks</h3>
+                    </div>
+                    <p class="challenge-description">Complete the sentences with the correct semiconductor terminology!</p>
+                    <div id="fillBlanksQuestions"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showFillBlanksHint()">💡 Hint</button>
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkFillBlanks()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetFillBlanks()">🔄 Reset</button>
+                    </div>
+                    <div class="challenge-hint" id="fillBlanksHint"></div>
+                    <div class="challenge-feedback" id="fillBlanksFeedback"></div>
+                </div>
+
+                <!-- Matching Challenge -->
+                <div class="challenge-section">
+                    <div class="challenge-header-section">
+                        <div class="challenge-icon">🔗</div>
+                        <h3 class="challenge-title">Match the Following</h3>
+                    </div>
+                    <p class="challenge-description">Match semiconductor concepts with their correct descriptions!</p>
+                    <div id="matchingContainer" class="matching-container">
+                        <div class="matching-column">
+                            <h4 style="color: var(--text-primary); margin-bottom: 15px; text-align: center;">Concepts</h4>
+                            <div id="matchingLeft"></div>
+                        </div>
+                        <div class="matching-column">
+                            <h4 style="color: var(--text-primary); margin-bottom: 15px; text-align: center;">Descriptions</h4>
+                            <div id="matchingRight"></div>
+                        </div>
+                        <div class="matching-connections" id="matchingConnections"></div>
+                    </div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showMatchingHint()">💡 Hint</button>
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkMatching()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetMatching()">🔄 Reset</button>
+                    </div>
+                    <div class="challenge-hint" id="matchingHint"></div>
+                    <div class="challenge-feedback" id="matchingFeedback"></div>
+                </div>
+
+                <!-- Calculations Tab -->
+                <div class="challenge-section">
+                    <div class="challenge-header-section">
+                        <div class="challenge-icon">🧮</div>
+                        <h3 class="challenge-title">Calculation Challenges</h3>
+                    </div>
+                    <p class="challenge-description">Solve numerical problems related to semiconductor physics!</p>
+                    <div id="calculationsQuestions"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showCalculationsHint()">💡 Hint</button>
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkCalculations()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetCalculations()">🔄 Reset</button>
+                    </div>
+                    <div class="challenge-hint" id="calculationsHint"></div>
+                    <div class="challenge-feedback" id="calculationsFeedback"></div>
+                </div>
+
+                <!-- Advanced Tab -->
+                <div class="challenge-section">
+                    <div class="challenge-header-section">
+                        <div class="challenge-icon">🔬</div>
+                        <h3 class="challenge-title">Advanced Concepts</h3>
+                    </div>
+                    <p class="challenge-description">Test your understanding of complex semiconductor physics concepts!</p>
+                    <div id="advancedQuestions"></div>
+                    <div class="challenge-controls">
+                        <button class="challenge-btn challenge-btn-secondary" onclick="showAdvancedHint()">💡 Hint</button>
+                        <button class="challenge-btn challenge-btn-primary" onclick="checkAdvanced()">Check Answers</button>
+                        <button class="challenge-btn challenge-btn-secondary" onclick="resetAdvanced()">🔄 Reset</button>
+                    </div>
+                    <div class="challenge-hint" id="advancedHint"></div>
+                    <div class="challenge-feedback" id="advancedFeedback"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Tour Button -->
+    <button class="floating-tour-btn" onclick="startGuidedTour()" title="Start Guided Tour">
+        🎯
+    </button>
+
+    <!-- Tour Elements -->
+    <div class="tour-overlay" id="tourOverlay">
+        <div class="tour-spotlight" id="tourSpotlight"></div>
+    </div>
+
+    <div class="tour-popup" id="tourPopup">
+        <div class="tour-header">
+            <span class="tour-step-number" id="tourStepNumber">Step 1/8</span>
+        </div>
+        <div class="tour-progress">
+            <div class="tour-progress-bar" id="tourProgressBar"></div>
+        </div>
+        <h3 class="tour-title" id="tourTitle">Welcome to Semiconductor Physics Simulator</h3>
+        <div class="tour-content" id="tourContent">
+            Let's explore the fascinating world of semiconductor doping and carrier dynamics!
+        </div>
+        <div class="tour-controls">
+            <button class="tour-btn tour-btn-secondary" onclick="skipTour()">Skip Tour</button>
+            <div>
+                <button class="tour-btn tour-btn-secondary" onclick="prevTourStep()" id="prevBtn" disabled>Previous</button>
+                <button class="tour-btn tour-btn-primary" onclick="nextTourStep()" id="nextBtn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        class AdvancedSemiconductorSimulation {
+            constructor() {
+                this.initializeElements();
+                this.initializePhysics();
+                this.setupEventListeners();
+                this.createParticleBackground();
+                this.updateSimulation();
+                this.startAnimationLoop();
+                
+                // Initialize body class for proper overflow handling
+                document.body.classList.add('simulation-active');
+            }
+
+            initializeElements() {
+                this.dopingCanvas = document.getElementById('dopingCanvas');
+                this.fieldCanvas = document.getElementById('fieldCanvas');
+                this.carrierCanvas = document.getElementById('carrierCanvas');
+
+                this.dopingType = document.getElementById('dopingType');
+                this.profileType = document.getElementById('profileType');
+                this.maxConcentration = document.getElementById('maxConcentration');
+                this.gradientStrength = document.getElementById('gradientStrength');
+                this.temperature = document.getElementById('temperature');
+                this.animationSpeed = document.getElementById('animationSpeed');
+
+                this.maxConcValue = document.getElementById('maxConcValue');
+                this.gradientValue = document.getElementById('gradientValue');
+                this.tempValue = document.getElementById('tempValue');
+                this.speedValue = document.getElementById('speedValue');
+
+                this.setupCanvases();
+            }
+
+            initializePhysics() {
+                // Physical constants
+                this.q = 1.602e-19;              // Elementary charge (C)
+                this.k = 1.381e-23;              // Boltzmann constant (J/K)
+                this.epsilon_si = 11.7 * 8.854e-12; // Silicon permittivity (F/m)
+                this.Eg = 1.12;                  // Silicon band gap at 300K (eV)
+                this.time = 0;
+                this.animationId = null;
+                
+                // Arrays for storing calculated values
+                this.x = [];
+                this.doping = [];
+                this.electricField = [];
+                this.potential = [];
+                this.carriers = [];
+            }
+
+            setupCanvases() {
+                const canvases = [this.dopingCanvas, this.fieldCanvas, this.carrierCanvas];
+                canvases.forEach(canvas => {
+                    const rect = canvas.getBoundingClientRect();
+                    const dpr = window.devicePixelRatio || 1;
+                    
+                    canvas.width = rect.width * dpr;
+                    canvas.height = rect.height * dpr;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.scale(dpr, dpr);
+                    
+                    // Enable better anti-aliasing
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    // Set canvas display size
+                    canvas.style.width = rect.width + 'px';
+                    canvas.style.height = rect.height + 'px';
+                });
+            }
+
+            setupEventListeners() {
+                [this.dopingType, this.profileType].forEach(control => {
+                    control.addEventListener('change', () => {
+                        this.updateSimulation();
+                    });
+                });
+
+                [this.maxConcentration, this.gradientStrength, this.temperature, this.animationSpeed].forEach(control => {
+                    control.addEventListener('input', () => {
+                        this.updateSimulation();
+                    });
+                });
+
+                this.setupTooltips();
+            }
+
+            createParticleBackground() {
+                const particleBg = document.getElementById('particleBg');
+                const ctx = particleBg.getContext('2d');
+                
+                particleBg.width = window.innerWidth;
+                particleBg.height = window.innerHeight;
+                
+                this.particles = [];
+                for (let i = 0; i < 40; i++) {
+                    this.particles.push({
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: (Math.random() - 0.5) * 0.4,
+                        size: Math.random() * 2.5 + 1,
+                        opacity: Math.random() * 0.4 + 0.1
+                    });
+                }
+            }
+
+            updateParticleBackground() {
+                const particleBg = document.getElementById('particleBg');
+                const ctx = particleBg.getContext('2d');
+                
+                ctx.clearRect(0, 0, particleBg.width, particleBg.height);
+                
+                this.particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    
+                    if (particle.x < 0 || particle.x > particleBg.width) particle.vx = -particle.vx;
+                    if (particle.y < 0 || particle.y > particleBg.height) particle.vy = -particle.vy;
+                    
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(139, 92, 246, ${particle.opacity})`;
+                    ctx.fill();
+                });
+            }
+
+            updateSimulation() {
+                this.updateDisplayValues();
+                this.calculateProfiles();
+                this.drawPlots();
+                this.updateRealtimeData();
+                
+                // Force redraw of carrier dynamics to reflect new physics
+                this.drawCarrierDynamics();
+            }
+
+            updateDisplayValues() {
+                const maxConc = parseFloat(this.maxConcentration.value);
+                this.maxConcValue.textContent = `10${this.formatSuperscript(maxConc.toFixed(1))}`;
+                this.gradientValue.textContent = this.gradientStrength.value;
+                this.tempValue.textContent = this.temperature.value + 'K';
+                this.speedValue.textContent = this.animationSpeed.value + '×';
+            }
+
+            calculateProfiles() {
+                const points = 250;
+                this.x = [];
+                this.doping = [];
+                this.electricField = [];
+                this.potential = [];
+                this.carriers = [];
+
+                const L = 2.0e-6;  // Device length in meters (2 μm)
+                const maxConc = Math.pow(10, parseFloat(this.maxConcentration.value));
+                const gradient = parseFloat(this.gradientStrength.value);
+                const T = parseFloat(this.temperature.value);
+                const isDonor = this.dopingType.value === 'n-type';
+
+                // Calculate intrinsic carrier concentration (corrected formula for silicon)
+                const ni = this.calculateIntrinsicCarriers(T);
+                const kT_q = this.k * T / this.q; // Thermal voltage in volts
+
+                // Calculate doping profile
+                for (let i = 0; i < points; i++) {
+                    const x = (i / (points - 1)) * L - L/2;
+                    this.x.push(x * 1e6); // Convert to micrometers for display
+
+                    let N = this.calculateDopingProfile(x, maxConc, gradient, L);
+                    this.doping.push(N);
+                }
+
+                // Calculate electric field directly from doping gradients
+                this.calculateElectricFieldFromDoping(L, kT_q);
+
+                // Calculate potential (optional, for reference)
+                this.calculatePotentialProfile(maxConc, gradient, L, kT_q, isDonor);
+
+                // Initialize carriers array
+                for (let i = 0; i < points; i++) {
+                    this.carriers.push({ n: 0, p: 0 });
+                }
+
+                // Calculate carriers with built-in potential effects
+                this.calculateCarriersWithBuiltInPotential();
+            }
+
+            calculateIntrinsicCarriers(T) {
+                // Correct Misiakos formula for silicon intrinsic carrier concentration
+                // ni = 5.29×10^19 * (T/300)^2.54 * exp(-6726/T) cm^-3
+                return 5.29e19 * Math.pow(T/300, 2.54) * Math.exp(-6726/T);
+            }
+
+            calculateDopingProfile(x, maxConc, gradient, L) {
+                switch (this.profileType.value) {
+                    case 'uniform':
+                        return maxConc;
+                    case 'linear':
+                        // Ensure minimum concentration doesn't go below intrinsic level
+                        return Math.max(maxConc * (1 + gradient * x / L), maxConc * 0.01);
+                    case 'exponential':
+                        return maxConc * Math.exp(-gradient * Math.abs(x) / L);
+                    case 'step':
+                        return x < 0 ? maxConc : maxConc / Math.max(gradient, 1.01);
+                    case 'gaussian':
+                        return maxConc * Math.exp(-gradient * (x / L) * (x / L));
+                    default:
+                        return maxConc;
+                }
+            }
+
+            calculatePotentialProfile(maxConc, gradient, L, kT_q, isDonor) {
+                const points = this.doping.length;
+                this.potential = new Array(points).fill(0);
+
+                if (this.profileType.value === 'uniform') {
+                    // No built-in potential for uniform doping
+                    return;
+                }
+
+                // For non-uniform doping, calculate built-in potential
+                // Using the relationship: φ(x) = (kT/q) * ln(N(x)/N_ref)
+                const N_ref = maxConc; // Reference concentration
+
+                for (let i = 0; i < points; i++) {
+                    const x = (i / (points - 1)) * L - L/2;
+                    const ratio = this.doping[i] / N_ref;
+                    
+                    // Built-in potential due to doping variation
+                    let phi = kT_q * Math.log(Math.max(ratio, 0.01));
+                    
+                    // Apply proper sign for N-type vs P-type
+                    if (!isDonor) {
+                        phi = -phi;
+                    }
+                    
+                    this.potential[i] = phi;
+                }
+
+                // Smooth the potential to avoid numerical artifacts
+                this.smoothArray(this.potential);
+            }
+
+            calculateElectricFieldFromDoping(L, kT_q) {
+                // Direct calculation of built-in electric field from doping gradients
+                // E = -(kT/q) * (1/N) * dN/dx
+                
+                const points = this.doping.length;
+                this.electricField = new Array(points).fill(0);
+                const dx = L / (points - 1); // Spacing in meters
+
+                // Calculate electric field using central difference for dN/dx
+                for (let i = 1; i < points - 1; i++) {
+                    const N_current = this.doping[i];
+                    const dN_dx = (this.doping[i + 1] - this.doping[i - 1]) / (2 * dx);
+                    
+                    // Built-in electric field: E = -(kT/q) * (1/N) * dN/dx
+                    // Convert to V/cm by multiplying by 100 (since dx is in meters)
+                    this.electricField[i] = -(kT_q) * (dN_dx / N_current) * 100;
+                    
+                    // Limit maximum field to avoid numerical issues
+                    const maxField = 1e6; // 1 MV/cm maximum
+                    this.electricField[i] = Math.max(-maxField, Math.min(maxField, this.electricField[i]));
+                }
+
+                // Boundary conditions: use forward/backward differences
+                if (points > 2) {
+                    // Left boundary (forward difference)
+                    const N_0 = this.doping[0];
+                    const dN_dx_0 = (this.doping[1] - this.doping[0]) / dx;
+                    this.electricField[0] = -(kT_q) * (dN_dx_0 / N_0) * 100;
+                    
+                    // Right boundary (backward difference) 
+                    const N_end = this.doping[points - 1];
+                    const dN_dx_end = (this.doping[points - 1] - this.doping[points - 2]) / dx;
+                    this.electricField[points - 1] = -(kT_q) * (dN_dx_end / N_end) * 100;
+                    
+                    // Apply same field limits to boundaries
+                    const maxField = 1e6;
+                    this.electricField[0] = Math.max(-maxField, Math.min(maxField, this.electricField[0]));
+                    this.electricField[points - 1] = Math.max(-maxField, Math.min(maxField, this.electricField[points - 1]));
+                }
+
+                // Smooth the electric field to reduce numerical noise
+                this.smoothArray(this.electricField);
+            }
+
+            smoothArray(arr) {
+                // Simple 3-point smoothing
+                const smoothed = [...arr];
+                for (let i = 1; i < arr.length - 1; i++) {
+                    smoothed[i] = (arr[i - 1] + 2 * arr[i] + arr[i + 1]) / 4;
+                }
+                arr.splice(0, arr.length, ...smoothed);
+            }
+
+            calculateCarriers(N, ni, isDonor, T) {
+                // This is the original simplified approach - will be replaced
+                // by the more accurate method below
+                if (isDonor) {
+                    const discriminant = N * N + 4 * ni * ni;
+                    const n = (N + Math.sqrt(discriminant)) / 2;
+                    const p = (ni * ni) / n;
+                    return { n, p };
+                } else {
+                    const discriminant = N * N + 4 * ni * ni;
+                    const p = (N + Math.sqrt(discriminant)) / 2;
+                    const n = (ni * ni) / p;
+                    return { n, p };
+                }
+            }
+
+            calculateCarriersWithBuiltInPotential() {
+                // Temperature-robust carrier calculation
+                const T = parseFloat(this.temperature.value);
+                const isDonor = this.dopingType.value === 'n-type';
+                const ni = this.calculateIntrinsicCarriers(T);
+                
+                // Ensure ni is reasonable (avoid numerical issues)
+                const ni_safe = Math.max(ni, 1e-10); // Minimum 1e-10 cm^-3
+                const ni_limited = Math.min(ni_safe, 1e20); // Maximum 1e20 cm^-3
+                
+                for (let i = 0; i < this.doping.length; i++) {
+                    const N = this.doping[i]; // Doping concentration
+                    
+                    let n, p;
+                    
+                    // Compare doping to intrinsic concentration
+                    const ratio = N / ni_limited;
+                    
+                    if (ratio > 100) {
+                        // Heavy doping case: majority ≈ doping, minority from mass action
+                        if (isDonor) {
+                            n = N;
+                            p = (ni_limited * ni_limited) / n;
+                        } else {
+                            p = N;
+                            n = (ni_limited * ni_limited) / p;
+                        }
+                    } else if (ratio > 0.01) {
+                        // Moderate doping: solve quadratic equation
+                        if (isDonor) {
+                            const discriminant = N * N + 4 * ni_limited * ni_limited;
+                            n = (N + Math.sqrt(discriminant)) / 2;
+                            p = (ni_limited * ni_limited) / n;
+                        } else {
+                            const discriminant = N * N + 4 * ni_limited * ni_limited;
+                            p = (N + Math.sqrt(discriminant)) / 2;
+                            n = (ni_limited * ni_limited) / p;
+                        }
+                    } else {
+                        // Light doping or high temperature: near-intrinsic behavior
+                        n = ni_limited;
+                        p = ni_limited;
+                    }
+                    
+                    // Ensure reasonable bounds for plotting
+                    n = Math.max(1e-20, Math.min(1e25, n));
+                    p = Math.max(1e-20, Math.min(1e25, p));
+                    
+                    // Verify and correct mass action law if needed
+                    const np_product = n * p;
+                    const target_product = ni_limited * ni_limited;
+                    
+                    if (Math.abs(np_product - target_product) / target_product > 0.1) {
+                        // Correct to satisfy mass action law
+                        const correction_factor = Math.sqrt(target_product / np_product);
+                        if (isDonor) {
+                            // Keep majority carrier concentration, adjust minority
+                            p *= correction_factor * correction_factor;
+                        } else {
+                            // Keep majority carrier concentration, adjust minority
+                            n *= correction_factor * correction_factor;
+                        }
+                    }
+                    
+                    this.carriers[i] = { n, p };
+                }
+            }
+
+            drawPlots() {
+                this.drawDopingProfile();
+                this.drawElectricField();
+                this.drawCarrierDynamics();
+            }
+
+            drawDopingProfile() {
+                const ctx = this.dopingCanvas.getContext('2d');
+                const dpr = window.devicePixelRatio || 1;
+                const width = this.dopingCanvas.width / dpr;
+                const height = this.dopingCanvas.height / dpr;
+                
+                ctx.clearRect(0, 0, width, height);
+                
+                if (!this.doping || this.doping.length === 0) return;
+                
+                const margin = { top: 35, right: 25, bottom: 50, left: 60 };
+                const plotWidth = width - margin.left - margin.right;
+                const plotHeight = height - margin.top - margin.bottom;
+                
+                this.drawPlotBackground(ctx, margin, plotWidth, plotHeight);
+                
+                const minDoping = Math.min(...this.doping);
+                const maxDoping = Math.max(...this.doping);
+                const logMin = Math.log10(minDoping);
+                const logMax = Math.log10(maxDoping);
+                
+                const gradient = ctx.createLinearGradient(0, margin.top, 0, margin.top + plotHeight);
+                gradient.addColorStop(0, 'rgba(231, 76, 60, 0.7)');
+                gradient.addColorStop(1, 'rgba(231, 76, 60, 0.1)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.moveTo(margin.left, margin.top + plotHeight);
+                
+                for (let i = 0; i < this.x.length; i++) {
+                    const x = margin.left + (this.x[i] + 1) / 2 * plotWidth;
+                    const logN = Math.log10(this.doping[i]);
+                    const y = margin.top + plotHeight - (logN - logMin) / (logMax - logMin) * plotHeight;
+                    ctx.lineTo(x, y);
+                }
+                
+                ctx.lineTo(margin.left + plotWidth, margin.top + plotHeight);
+                ctx.closePath();
+                ctx.fill();
+                
+                ctx.strokeStyle = '#e74c3c';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                
+                for (let i = 0; i < this.x.length; i++) {
+                    const x = margin.left + (this.x[i] + 1) / 2 * plotWidth;
+                    const logN = Math.log10(this.doping[i]);
+                    const y = margin.top + plotHeight - (logN - logMin) / (logMax - logMin) * plotHeight;
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                
+                // Add legend for doping profile
+                this.drawDopingLegend(ctx, margin, plotWidth, plotHeight);
+                
+                this.drawAxesAndLabels(ctx, margin, plotWidth, plotHeight, width, height, 
+                    'Position (μm)', 'Doping Concentration (cm⁻³)', logMin, logMax);
+            }
+
+            drawDopingLegend(ctx, margin, plotWidth, plotHeight) {
+                const legendX = margin.left + 15;
+                const legendY = margin.top + 15;
+                const isDonor = this.dopingType.value === 'n-type';
+                
+                // Legend background
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(legendX - 8, legendY - 8, 180, 60);
+                ctx.strokeStyle = 'rgba(231, 76, 60, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(legendX - 8, legendY - 8, 180, 60);
+                
+                // Doping type indicator
+                ctx.fillStyle = '#e74c3c';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`${isDonor ? 'N-type' : 'P-type'} Doping Profile`, legendX, legendY + 5);
+                
+                // Profile type
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = '10px Arial';
+                ctx.fillText(`Profile: ${this.profileType.value}`, legendX, legendY + 20);
+                
+                // Concentration range with 10^x format
+                const minConc = Math.min(...this.doping);
+                const maxConc = Math.max(...this.doping);
+                const minExp = Math.round(Math.log10(minConc));
+                const maxExp = Math.round(Math.log10(maxConc));
+                ctx.fillText(`Range: 10${this.formatSuperscript(minExp)} - 10${this.formatSuperscript(maxExp)}`, legendX, legendY + 35);
+                
+                // Dopant type
+                ctx.fillStyle = isDonor ? '#3498db' : '#f39c12';
+                ctx.font = 'bold 9px Arial';
+                ctx.fillText(`Dopant: ${isDonor ? 'Donors (P, As)' : 'Acceptors (B, Al)'}`, legendX, legendY + 48);
+            }
+
+            drawElectricField() {
+                const ctx = this.fieldCanvas.getContext('2d');
+                const dpr = window.devicePixelRatio || 1;
+                const width = this.fieldCanvas.width / dpr;
+                const height = this.fieldCanvas.height / dpr;
+                
+                ctx.clearRect(0, 0, width, height);
+                
+                const margin = { top: 35, right: 25, bottom: 50, left: 60 };
+                const plotWidth = width - margin.left - margin.right;
+                const plotHeight = height - margin.top - margin.bottom;
+                
+                this.drawPlotBackground(ctx, margin, plotWidth, plotHeight);
+                
+                if (!this.electricField || this.electricField.length === 0) return;
+                
+                const maxField = Math.max(...this.electricField.map(Math.abs));
+                
+                if (maxField === 0) {
+                    ctx.fillStyle = '#cbd5e1';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('No Electric Field', width/2, height/2 - 8);
+                    ctx.font = '11px Arial';
+                    ctx.fillText('(Uniform Doping)', width/2, height/2 + 8);
+                    return;
+                }
+                
+                const zeroY = margin.top + plotHeight / 2;
+                
+                // Zero reference line
+                ctx.strokeStyle = 'rgba(203, 213, 225, 0.6)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([6, 3]);
+                ctx.beginPath();
+                ctx.moveTo(margin.left, zeroY);
+                ctx.lineTo(margin.left + plotWidth, zeroY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Add zero line label
+                ctx.fillStyle = 'rgba(203, 213, 225, 0.8)';
+                ctx.font = '9px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText('E = 0', margin.left - 5, zeroY + 3);
+                
+                ctx.shadowColor = '#a855f7';
+                ctx.shadowBlur = 12;
+                ctx.strokeStyle = '#a855f7';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                
+                for (let i = 0; i < this.x.length; i++) {
+                    const x = margin.left + (this.x[i] + 1) / 2 * plotWidth;
+                    const y = zeroY - (this.electricField[i] / maxField) * (plotHeight * 0.4);
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+                
+                // Add field direction indicators
+                this.drawFieldDirectionLegend(ctx, margin, plotWidth, plotHeight, maxField);
+                
+                this.drawAxesAndLabels(ctx, margin, plotWidth, plotHeight, width, height, 
+                    'Position (μm)', 'Electric Field (V/cm)', -maxField, maxField);
+            }
+
+            drawFieldDirectionLegend(ctx, margin, plotWidth, plotHeight, maxField) {
+                const legendX = margin.left + 15;
+                const legendY = margin.top + 15;
+                
+                // Legend background
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(legendX - 8, legendY - 8, 160, 90);
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(legendX - 8, legendY - 8, 160, 90);
+                
+                // Title
+                ctx.fillStyle = '#a855f7';
+                ctx.font = 'bold 11px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText('Electric Field', legendX, legendY + 5);
+                
+                // Direction indicators
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = '9px Arial';
+                ctx.fillText('Positive: →', legendX, legendY + 20);
+                ctx.fillText('Negative: ←', legendX, legendY + 33);
+                
+                // Field strength
+                ctx.fillStyle = '#cbd5e1';
+                ctx.fillText(`Max: ${maxField.toFixed(1)} V/cm`, legendX, legendY + 48);
+                
+                // Physical meaning
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '8px Arial';
+                ctx.fillText('E = -(kT/q)·(1/N)·dN/dx', legendX, legendY + 63);
+                ctx.fillText('Built-in field from doping gradients', legendX, legendY + 78);
+            }
+
+            drawCarrierDynamics() {
+                const ctx = this.carrierCanvas.getContext('2d');
+                const dpr = window.devicePixelRatio || 1;
+                const width = this.carrierCanvas.width / dpr;
+                const height = this.carrierCanvas.height / dpr;
+                
+                ctx.clearRect(0, 0, width, height);
+                
+                const margin = { top: 35, right: 25, bottom: 50, left: 60 };
+                const plotWidth = width - margin.left - margin.right;
+                const plotHeight = height - margin.top - margin.bottom;
+                
+                this.drawPlotBackground(ctx, margin, plotWidth, plotHeight);
+                
+                if (!this.carriers || this.carriers.length === 0) return;
+                
+                // Get all carrier values and calculate adaptive bounds
+                const allCarriers = this.carriers.flatMap(c => [c.n, c.p]);
+                const T = parseFloat(this.temperature.value);
+                const ni = this.calculateIntrinsicCarriers(T);
+                
+                // Include intrinsic concentration in bounds calculation
+                allCarriers.push(ni);
+                
+                // Filter out any invalid values
+                const validCarriers = allCarriers.filter(c => c > 0 && isFinite(c));
+                
+                if (validCarriers.length === 0) return;
+                
+                const minConc = Math.min(...validCarriers);
+                const maxConc = Math.max(...validCarriers);
+                
+                // Ensure reasonable bounds with some padding
+                const logMin_raw = Math.log10(minConc);
+                const logMax_raw = Math.log10(maxConc);
+                
+                // Add padding and ensure minimum range
+                const padding = 1.0; // 1 order of magnitude padding
+                const minRange = 6; // Minimum 6 orders of magnitude range
+                
+                let logMin = logMin_raw - padding;
+                let logMax = logMax_raw + padding;
+                
+                // Ensure minimum range
+                if (logMax - logMin < minRange) {
+                    const center = (logMax + logMin) / 2;
+                    logMin = center - minRange / 2;
+                    logMax = center + minRange / 2;
+                }
+                
+                // Absolute bounds to prevent extreme values
+                logMin = Math.max(logMin, -25); // Don't go below 1e-25
+                logMax = Math.min(logMax, 25);  // Don't go above 1e25
+                
+                // Ensure intrinsic concentration is visible
+                const logNi = Math.log10(ni);
+                if (logNi < logMin) logMin = logNi - 0.5;
+                if (logNi > logMax) logMax = logNi + 0.5;
+                
+                // Draw carrier concentration curves
+                this.drawCarrierCurve(ctx, margin, plotWidth, plotHeight, 'n', '#06b6d4', logMin, logMax);
+                this.drawCarrierCurve(ctx, margin, plotWidth, plotHeight, 'p', '#f59e0b', logMin, logMax);
+                
+                // Draw intrinsic carrier concentration reference
+                this.drawIntrinsicReference(ctx, margin, plotWidth, plotHeight, logMin, logMax);
+                
+                // Draw carrier animation
+                this.drawCarrierAnimation(ctx, margin, plotWidth, plotHeight);
+                
+                // Add comprehensive legend
+                this.drawCarrierLegend(ctx, margin, plotWidth, plotHeight);
+                
+                this.drawAxesAndLabels(ctx, margin, plotWidth, plotHeight, width, height, 
+                    'Position (μm)', 'Carrier Concentration (cm⁻³)', logMin, logMax);
+            }
+
+            drawIntrinsicReference(ctx, margin, plotWidth, plotHeight, logMin, logMax) {
+                const T = parseFloat(this.temperature.value);
+                const ni = this.calculateIntrinsicCarriers(T);
+                
+                // Ensure ni is valid
+                if (!ni || ni <= 0 || !isFinite(ni)) return;
+                
+                const logNi = Math.log10(ni);
+                
+                // Only draw if within visible range
+                if (logNi >= logMin && logNi <= logMax) {
+                    const y = margin.top + plotHeight - (logNi - logMin) / (logMax - logMin) * plotHeight;
+                    
+                    // Ensure y coordinate is reasonable
+                    if (!isFinite(y) || y < margin.top || y > margin.top + plotHeight) return;
+                    
+                    ctx.strokeStyle = 'rgba(156, 163, 175, 0.6)';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([10, 5]);
+                    ctx.beginPath();
+                    ctx.moveTo(margin.left, y);
+                    ctx.lineTo(margin.left + plotWidth, y);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Label with 10^x format
+                    ctx.fillStyle = 'rgba(156, 163, 175, 0.8)';
+                    ctx.font = '9px Arial';
+                    ctx.textAlign = 'right';
+                    const niExp = Math.round(logNi);
+                    ctx.fillText(`ni = 10${this.formatSuperscript(niExp)}`, margin.left + plotWidth - 5, y - 5);
+                }
+            }
+
+            drawCarrierLegend(ctx, margin, plotWidth, plotHeight) {
+                const legendWidth = 210;
+                const legendHeight = 120;
+                const legendX = margin.left + plotWidth - legendWidth - 10;
+                const legendY = margin.top + 15;
+                const isDonor = this.dopingType.value === 'n-type';
+                const T = parseFloat(this.temperature.value);
+                
+                // Legend background
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+                ctx.fillRect(legendX - 8, legendY - 8, legendWidth, legendHeight);
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(legendX - 8, legendY - 8, legendWidth, legendHeight);
+                
+                // Title
+                ctx.fillStyle = '#f8fafc';
+                ctx.font = 'bold 11px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText('Carrier Concentrations', legendX, legendY + 5);
+                
+                // Temperature indicator
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '9px Arial';
+                ctx.fillText(`T = ${T}K`, legendX + 140, legendY + 5);
+                
+                // Electron concentration
+                ctx.strokeStyle = '#06b6d4';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(legendX, legendY + 18);
+                ctx.lineTo(legendX + 18, legendY + 18);
+                ctx.stroke();
+                ctx.fillStyle = '#06b6d4';
+                ctx.font = '9px Arial';
+                ctx.fillText(`n (electrons) - ${isDonor ? 'majority' : 'minority'}`, legendX + 22, legendY + 22);
+                
+                // Hole concentration
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(legendX, legendY + 32);
+                ctx.lineTo(legendX + 18, legendY + 32);
+                ctx.stroke();
+                ctx.fillStyle = '#f59e0b';
+                ctx.fillText(`p (holes) - ${isDonor ? 'minority' : 'majority'}`, legendX + 22, legendY + 36);
+                
+                // Intrinsic level
+                ctx.strokeStyle = 'rgba(156, 163, 175, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(legendX, legendY + 46);
+                ctx.lineTo(legendX + 18, legendY + 46);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = 'rgba(156, 163, 175, 0.8)';
+                ctx.fillText('ni - Intrinsic level', legendX + 22, legendY + 50);
+                
+                // Physics explanation
+                ctx.fillStyle = '#cbd5e1';
+                ctx.font = '8px Arial';
+                ctx.fillText('Temperature effects:', legendX, legendY + 64);
+                ctx.fillText('↑T → ↑ni → ↑minority carriers', legendX, legendY + 76);
+                ctx.fillText('Mass Action: n × p = ni²', legendX, legendY + 88);
+                
+                // Temperature regime
+                const ni = this.calculateIntrinsicCarriers(T);
+                const maxDoping = Math.max(...this.doping);
+                const regime = ni / maxDoping;
+                
+                ctx.fillStyle = '#94a3b8';
+                if (regime > 0.1) {
+                    ctx.fillText('Regime: Near intrinsic', legendX, legendY + 100);
+                } else if (regime > 0.001) {
+                    ctx.fillText('Regime: Moderate doping', legendX, legendY + 100);
+                } else {
+                    ctx.fillText('Regime: Heavy doping', legendX, legendY + 100);
+                }
+                
+                // Animation note
+                ctx.fillStyle = '#a855f7';
+                ctx.fillText('Particles show carrier motion', legendX, legendY + 112);
+            }
+
+            drawCarrierCurve(ctx, margin, plotWidth, plotHeight, carrierType, color, logMin, logMax) {
+                if (!this.carriers || this.carriers.length === 0) return;
+                
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 8;
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                
+                let hasValidPoints = false;
+                
+                for (let i = 0; i < this.x.length; i++) {
+                    const x = margin.left + (this.x[i] + 1) / 2 * plotWidth;
+                    const concentration = this.carriers[i][carrierType];
+                    
+                    // Check for valid concentration value
+                    if (!concentration || concentration <= 0 || !isFinite(concentration)) {
+                        continue;
+                    }
+                    
+                    const logConc = Math.log10(concentration);
+                    
+                    // Check if point is within plotting bounds
+                    if (logConc < logMin || logConc > logMax) {
+                        continue;
+                    }
+                    
+                    const y = margin.top + plotHeight - (logConc - logMin) / (logMax - logMin) * plotHeight;
+                    
+                    // Check if y coordinate is reasonable
+                    if (!isFinite(y) || y < margin.top - 10 || y > margin.top + plotHeight + 10) {
+                        continue;
+                    }
+                    
+                    if (!hasValidPoints) {
+                        ctx.moveTo(x, y);
+                        hasValidPoints = true;
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                if (hasValidPoints) {
+                    ctx.stroke();
+                }
+                
+                ctx.shadowBlur = 0;
+            }
+
+            drawCarrierAnimation(ctx, margin, plotWidth, plotHeight) {
+                if (!this.carrierParticles) {
+                    this.carrierParticles = [];
+                    for (let i = 0; i < 20; i++) {
+                        this.carrierParticles.push({
+                            x: Math.random() * plotWidth,
+                            y: Math.random() * plotHeight,
+                            vx: (Math.random() - 0.5) * 2,
+                            vy: (Math.random() - 0.5) * 2,
+                            type: Math.random() > 0.5 ? 'electron' : 'hole',
+                            size: Math.random() * 3 + 2
+                        });
+                    }
+                }
+
+                const speed = parseFloat(this.animationSpeed.value);
+                
+                this.carrierParticles.forEach(particle => {
+                    particle.x += particle.vx * speed;
+                    particle.y += particle.vy * speed;
+                    
+                    if (particle.x < 0 || particle.x > plotWidth) particle.vx = -particle.vx;
+                    if (particle.y < 0 || particle.y > plotHeight) particle.vy = -particle.vy;
+                    
+                    const screenX = margin.left + particle.x;
+                    const screenY = margin.top + particle.y;
+                    
+                    ctx.beginPath();
+                    ctx.arc(screenX, screenY, particle.size, 0, Math.PI * 2);
+                    ctx.fillStyle = particle.type === 'electron' ? 
+                        'rgba(6, 182, 212, 0.8)' : 'rgba(245, 158, 11, 0.8)';
+                    ctx.fill();
+                    
+                    // Add charge symbol
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 8px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(particle.type === 'electron' ? '-' : '+', screenX, screenY + 2);
+                });
+            }
+
+            drawPlotBackground(ctx, margin, plotWidth, plotHeight) {
+                // Background grid
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+                ctx.lineWidth = 1;
+                
+                // Vertical grid lines
+                for (let i = 0; i <= 10; i++) {
+                    const x = margin.left + (i / 10) * plotWidth;
+                    ctx.beginPath();
+                    ctx.moveTo(x, margin.top);
+                    ctx.lineTo(x, margin.top + plotHeight);
+                    ctx.stroke();
+                }
+                
+                // Horizontal grid lines
+                for (let i = 0; i <= 10; i++) {
+                    const y = margin.top + (i / 10) * plotHeight;
+                    ctx.beginPath();
+                    ctx.moveTo(margin.left, y);
+                    ctx.lineTo(margin.left + plotWidth, y);
+                    ctx.stroke();
+                }
+            }
+
+            // Helper function to convert number to superscript
+            formatSuperscript(num) {
+                const superscriptMap = {
+                    '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+                    '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+                    '-': '⁻', '.': '·'
+                };
+                return num.toString().split('').map(char => superscriptMap[char] || char).join('');
+            }
+
+            drawAxesAndLabels(ctx, margin, plotWidth, plotHeight, width, height, xLabel, yLabel, yMin, yMax) {
+                // Draw axes
+                ctx.strokeStyle = 'rgba(203, 213, 225, 0.8)';
+                ctx.lineWidth = 2;
+                
+                // X-axis
+                ctx.beginPath();
+                ctx.moveTo(margin.left, margin.top + plotHeight);
+                ctx.lineTo(margin.left + plotWidth, margin.top + plotHeight);
+                ctx.stroke();
+                
+                // Y-axis
+                ctx.beginPath();
+                ctx.moveTo(margin.left, margin.top);
+                ctx.lineTo(margin.left, margin.top + plotHeight);
+                ctx.stroke();
+                
+                // Labels
+                ctx.fillStyle = '#cbd5e1';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                
+                // X-axis label
+                ctx.fillText(xLabel, margin.left + plotWidth / 2, height - 15);
+                
+                // Y-axis label
+                ctx.save();
+                ctx.translate(15, margin.top + plotHeight / 2);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText(yLabel, 0, 0);
+                ctx.restore();
+                
+                // Tick marks and values
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                
+                // X-axis ticks
+                for (let i = 0; i <= 5; i++) {
+                    const x = margin.left + (i / 5) * plotWidth;
+                    const value = (-1 + (i / 5) * 2).toFixed(1);
+                    ctx.fillText(value, x, margin.top + plotHeight + 20);
+                }
+                
+                // Y-axis ticks - Handle log scale with 10^x notation
+                ctx.textAlign = 'right';
+                for (let i = 0; i <= 5; i++) {
+                    const y = margin.top + plotHeight - (i / 5) * plotHeight;
+                    
+                    // Check if this is a log scale (for carrier concentration plots)
+                    if (yLabel.includes('Carrier Concentration') || yLabel.includes('Doping Concentration')) {
+                        // Convert from log scale back to actual values and display as 10^x
+                        const logValue = yMin + (i / 5) * (yMax - yMin);
+                        const exponent = Math.round(logValue);
+                        ctx.fillText(`10${this.formatSuperscript(exponent)}`, margin.left - 5, y + 3);
+                    } else {
+                        // Linear scale (for electric field, energy, etc.)
+                        const value = (yMin + (i / 5) * (yMax - yMin)).toExponential(1);
+                        ctx.fillText(value, margin.left - 5, y + 3);
+                    }
+                }
+            }
+
+            updateRealtimeData() {
+                const T = parseFloat(this.temperature.value);
+                const ni = this.calculateIntrinsicCarriers(T);
+                const kT_q = this.k * T / this.q * 1000; // Convert to mV
+                
+                // Format intrinsic carrier concentration as 10^x with bounds checking
+                let niFormatted = '10⁰';
+                if (ni > 0 && isFinite(ni)) {
+                    const logNi = Math.log10(ni);
+                    if (isFinite(logNi)) {
+                        niFormatted = `10${this.formatSuperscript(logNi.toFixed(1))}`;
+                    }
+                }
+                
+                // Update display values with bounds checking
+                document.getElementById('thermalVoltage').textContent = isFinite(kT_q) ? kT_q.toFixed(1) : '26.0';
+                document.getElementById('intrinsicCarrier').textContent = niFormatted;
+                document.getElementById('bandGap').textContent = '1.12';
+                
+                // Update progress bars with bounds checking
+                const thermalProgress = Math.min(Math.max(0, kT_q / 50), 1) * 100;
+                const intrinsicProgress = isFinite(ni) && ni > 0 ? 
+                    Math.min(Math.max(0, Math.log10(ni) / 20), 1) * 100 : 50;
+                const bandProgress = 100; // Band gap is constant
+                
+                document.getElementById('thermalProgress').style.width = thermalProgress + '%';
+                document.getElementById('intrinsicProgress').style.width = intrinsicProgress + '%';
+                document.getElementById('bandProgress').style.width = bandProgress + '%';
+            }
+
+            setupTooltips() {
+                const tooltip = document.getElementById('tooltip');
+                const canvases = [this.dopingCanvas, this.fieldCanvas, this.carrierCanvas];
+                
+                canvases.forEach(canvas => {
+                    canvas.addEventListener('mousemove', (e) => {
+                        const rect = canvas.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        // Simple tooltip content based on canvas
+                        let content = '';
+                        if (canvas === this.dopingCanvas) {
+                            content = 'Doping concentration varies with position';
+                        } else if (canvas === this.fieldCanvas) {
+                            content = 'Built-in electric field from doping gradients';
+                        } else if (canvas === this.carrierCanvas) {
+                            content = 'Carrier concentrations follow charge neutrality';
+                        }
+                        
+                        tooltip.textContent = content;
+                        tooltip.style.left = (e.clientX + 10) + 'px';
+                        tooltip.style.top = (e.clientY - 30) + 'px';
+                        tooltip.classList.add('show');
+                    });
+                    
+                    canvas.addEventListener('mouseleave', () => {
+                        tooltip.classList.remove('show');
+                    });
+                });
+            }
+
+            startAnimationLoop() {
+                const animate = () => {
+                    this.time += 0.016 * parseFloat(this.animationSpeed.value);
+                    
+                    // Update particle background
+                    this.updateParticleBackground();
+                    
+                    // Redraw carrier dynamics with animation
+                    this.drawCarrierDynamics();
+                    
+                    this.animationId = requestAnimationFrame(animate);
+                };
+                
+                animate();
+            }
+        }
+
+        // Initialize the simulation when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new AdvancedSemiconductorSimulation();
+            initializeChallenges();
+            
+            // Auto-start tour for ALL users (removed first-time check)
+            setTimeout(() => {
+                startGuidedTour();
+            }, 1000);
+        });
+
+        // GUIDED TOUR SYSTEM
+        let tourActive = false;
+        let currentTourStep = 0;
+        let tourSteps = [
+            {
+                target: '.tab-navigation',
+                title: 'Welcome to Semiconductor Physics Simulator',
+                content: 'This interactive simulator helps you understand semiconductor doping and carrier dynamics. You can switch between the simulation and challenges using these tabs.',
+                position: 'bottom',
+                interactive: {
+                    title: 'Learning Objectives:',
+                    content: 'By the end of this tour, you will understand doping profiles, electric fields, carrier concentrations, and how temperature affects semiconductor behavior.'
+                }
+            },
+            {
+                target: '.plot-container:first-child',
+                title: 'Doping Concentration Profile',
+                content: 'This plot shows the doping concentration across the semiconductor device. The concentration determines the electrical properties of the material.',
+                position: 'right',
+                interactive: {
+                    title: 'Key Concept:',
+                    content: 'Higher doping concentrations create more free carriers but also affect mobility and other transport properties.'
+                }
+            },
+            {
+                target: '.plot-container:nth-child(2)',
+                title: 'Electric Field Distribution',
+                content: 'The electric field is created by non-uniform doping profiles. It shows the built-in electric field due to doping gradients.',
+                position: 'left',
+                interactive: {
+                    title: 'Mathematical Relation:',
+                    content: 'E = -(kT/q) × (1/N) × (dN/dx) - This shows how field depends on concentration gradient.'
+                }
+            },
+            {
+                target: '.plot-container.carrier-plot',
+                title: 'Carrier Dynamics',
+                content: 'This shows electron and hole concentrations throughout the device. The carrier concentrations depend on doping levels and temperature.',
+                position: 'top',
+                interactive: {
+                    title: 'Mass Action Law:',
+                    content: 'The product n·p = ni² must always be maintained in thermal equilibrium, regardless of doping.'
+                }
+            },
+            {
+                target: '.controls-section',
+                title: 'Simulation Controls',
+                content: 'Use these controls to modify the semiconductor properties and observe how they affect the carrier dynamics and electric field.',
+                position: 'left',
+                interactive: {
+                    title: 'Interactive Learning:',
+                    content: 'Try changing different parameters and observe how the plots respond in real-time.'
+                }
+            },
+            {
+                target: '#dopingType',
+                title: 'Semiconductor Type',
+                content: 'Choose between N-type (electron-rich) and P-type (hole-rich) semiconductors. This fundamentally changes the carrier behavior.',
+                position: 'left',
+                interactive: {
+                    title: 'Try This:',
+                    content: 'Switch between N-type and P-type to see how it affects the carrier concentrations.'
+                }
+            },
+            {
+                target: '#dopingLevel',
+                title: 'Doping Level Control',
+                content: 'Adjust the doping concentration to see how it affects carrier concentrations and electric field strength.',
+                position: 'left',
+                interactive: {
+                    title: 'Experiment:',
+                    content: 'Try different doping levels from 10¹⁴ to 10¹⁸ cm⁻³ and observe the changes in all three plots.'
+                }
+            },
+            {
+                target: '#temperature',
+                title: 'Temperature Control',
+                content: 'Temperature affects carrier generation and mobility. Higher temperatures increase intrinsic carrier concentration.',
+                position: 'left',
+                interactive: {
+                    title: 'Physics Fact:',
+                    content: 'Intrinsic carrier concentration follows ni ∝ T^2.54 · exp(-Eg/2kT)'
+                }
+            },
+            {
+                target: '.realtime-data',
+                title: 'Real-time Physics Parameters',
+                content: 'Watch how fundamental semiconductor parameters change as you adjust temperature and doping.',
+                position: 'top',
+                interactive: {
+                    title: 'Key Parameters:',
+                    content: 'Thermal voltage (kT/q), intrinsic carrier concentration (ni), and band gap energy are displayed here.'
+                }
+            },
+            {
+                target: '.animation-controls',
+                title: 'Animation Controls',
+                content: 'Control the particle animation to visualize carrier movement and understand transport phenomena.',
+                position: 'bottom',
+                interactive: {
+                    title: 'Visualization:',
+                    content: 'The moving particles represent electrons (-) and holes (+) in the semiconductor.'
+                }
+            },
+            {
+                target: '.tab-button:last-child',
+                title: 'Challenges Section',
+                content: 'Test your understanding with interactive challenges including quizzes, calculations, and matching exercises!',
+                position: 'bottom',
+                interactive: {
+                    title: 'Ready to Learn?',
+                    content: 'Click the Challenges tab to start testing your semiconductor physics knowledge.'
+                }
+            },
+            {
+                target: '.challenge-tab-navigation',
+                title: 'Challenge Categories',
+                content: 'Choose from different types of challenges to test various aspects of your semiconductor physics knowledge.',
+                position: 'bottom',
+                interactive: {
+                    title: 'Challenge Types:',
+                    content: 'Rapid Fire (quick concepts), Fill Blanks (terminology), Calculations (problem solving), Advanced (deep concepts), and Matching (relationships).'
+                },
+                action: () => {
+                    // Switch to challenges tab
+                    document.querySelector('.tab-button:last-child').click();
+                }
+            },
+            {
+                target: '.progress-section',
+                title: 'Track Your Progress',
+                content: 'Monitor your learning progress and score as you complete different challenges.',
+                position: 'left',
+                interactive: {
+                    title: 'Scoring System:',
+                    content: 'Each completed challenge gives you 20 points. Complete all 5 challenges to achieve mastery!'
+                }
+            },
+            {
+                target: '.hint-system',
+                title: 'Built-in Help System',
+                content: 'Use hints when you get stuck, and learn from detailed explanations after each challenge.',
+                position: 'right',
+                interactive: {
+                    title: 'Learning Support:',
+                    content: 'Every question has explanations and hints to help you understand the underlying physics.'
+                }
+            }
+        ];
+
+        function startGuidedTour() {
+            if (tourActive) return;
+            
+            tourActive = true;
+            currentTourStep = 0;
+            
+            // Switch to simulation tab if not already there
+            if (!document.getElementById('simulation').classList.contains('active')) {
+                switchMainTab('simulation');
+            }
+            
+            document.getElementById('tourOverlay').classList.add('active');
+            showTourStep();
+        }
+
+        function showTourStep() {
+            const step = tourSteps[currentTourStep];
+            const popup = document.getElementById('tourPopup');
+            const spotlight = document.getElementById('tourSpotlight');
+            
+            // Execute step action if it exists
+            if (step.action && typeof step.action === 'function') {
+                step.action();
+            }
+            
+            // Update step number and progress
+            document.getElementById('tourStepNumber').textContent = `Step ${currentTourStep + 1}/${tourSteps.length}`;
+            document.getElementById('tourProgressBar').style.width = `${(currentTourStep + 1) / tourSteps.length * 100}%`;
+            
+            // Update content
+            document.getElementById('tourTitle').textContent = step.title;
+            
+            let content = `<p>${step.content}</p>`;
+            if (step.interactive) {
+                content += `
+                    <div class="tour-interactive">
+                        <div class="tour-interactive-title">${step.interactive.title}</div>
+                        <div class="tour-interactive-content">${step.interactive.content}</div>
+                    </div>
+                `;
+            }
+            document.getElementById('tourContent').innerHTML = content;
+            
+            // Position spotlight and popup
+            positionTourElements(step);
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentTourStep === 0;
+            document.getElementById('nextBtn').textContent = currentTourStep === tourSteps.length - 1 ? 'Finish' : 'Next';
+            
+            // Show popup
+            popup.classList.add('active');
+            
+            // Highlight target element
+            const targetElement = document.querySelector(step.target);
+            if (targetElement) {
+                targetElement.classList.add('highlight-element');
+                setTimeout(() => {
+                    targetElement.classList.remove('highlight-element');
+                }, 3000);
+            }
+        }
+
+        function positionTourElements(step) {
+            const targetElement = document.querySelector(step.target);
+            const spotlight = document.getElementById('tourSpotlight');
+            const popup = document.getElementById('tourPopup');
+            
+            if (!targetElement) return;
+            
+            const rect = targetElement.getBoundingClientRect();
+            const padding = 10;
+            
+            // Position spotlight
+            spotlight.style.left = `${rect.left - padding}px`;
+            spotlight.style.top = `${rect.top - padding}px`;
+            spotlight.style.width = `${rect.width + 2 * padding}px`;
+            spotlight.style.height = `${rect.height + 2 * padding}px`;
+            
+            // Remove previous position classes
+            popup.classList.remove('position-top', 'position-bottom', 'position-left', 'position-right');
+            
+            // Position popup based on step position
+            const popupRect = popup.getBoundingClientRect();
+            let popupLeft, popupTop;
+            
+            switch (step.position) {
+                case 'right':
+                    popupLeft = rect.right + 20;
+                    popupTop = rect.top + rect.height / 2 - popupRect.height / 2;
+                    popup.classList.add('position-right');
+                    break;
+                case 'left':
+                    popupLeft = rect.left - popupRect.width - 20;
+                    popupTop = rect.top + rect.height / 2 - popupRect.height / 2;
+                    popup.classList.add('position-left');
+                    break;
+                case 'bottom':
+                    popupLeft = rect.left + rect.width / 2 - popupRect.width / 2;
+                    popupTop = rect.bottom + 20;
+                    popup.classList.add('position-bottom');
+                    break;
+                case 'top':
+                default:
+                    popupLeft = rect.left + rect.width / 2 - popupRect.width / 2;
+                    popupTop = rect.top - popupRect.height - 20;
+                    popup.classList.add('position-top');
+                    break;
+            }
+            
+            // Ensure popup stays within viewport
+            popupLeft = Math.max(20, Math.min(popupLeft, window.innerWidth - popupRect.width - 20));
+            popupTop = Math.max(20, Math.min(popupTop, window.innerHeight - popupRect.height - 20));
+            
+            popup.style.left = `${popupLeft}px`;
+            popup.style.top = `${popupTop}px`;
+        }
+
+        function nextTourStep() {
+            if (currentTourStep < tourSteps.length - 1) {
+                currentTourStep++;
+                showTourStep();
+            } else {
+                finishTour();
+            }
+        }
+
+        function prevTourStep() {
+            if (currentTourStep > 0) {
+                currentTourStep--;
+                showTourStep();
+            }
+        }
+
+        function finishTour() {
+            tourActive = false;
+            document.getElementById('tourOverlay').classList.remove('active');
+            document.getElementById('tourPopup').classList.remove('active');
+            
+            // Mark tour as completed
+            localStorage.setItem('tourCompleted', 'true');
+            
+            // Show completion message
+            showTourAchievement();
+        }
+
+        function skipTour() {
+            // Show confirmation dialog before skipping
+            showSkipTourConfirmation();
+        }
+
+        function showSkipTourConfirmation() {
+            const confirmationOverlay = document.createElement('div');
+            confirmationOverlay.className = 'skip-tour-confirmation-overlay';
+            confirmationOverlay.innerHTML = `
+                <div class="skip-tour-confirmation">
+                    <div class="skip-tour-icon">⚠️</div>
+                    <h3>Are you sure you want to skip the tour?</h3>
+                    <p>This guided tour will help you understand the semiconductor physics simulator and its features. Without the walkthrough, it might be difficult to understand how to use the simulator effectively.</p>
+                    <p><strong>The tour covers:</strong></p>
+                    <ul>
+                        <li>How to interpret the doping concentration plots</li>
+                        <li>Understanding electric field distributions</li>
+                        <li>Analyzing carrier dynamics and concentrations</li>
+                        <li>Using simulation controls effectively</li>
+                        <li>Working with real-time physics parameters</li>
+                        <li>Understanding animation controls</li>
+                    </ul>
+                    <p>We highly recommend completing the tour for the best learning experience.</p>
+                    <div class="skip-tour-buttons">
+                        <button class="continue-tour-btn" onclick="continueWithTour()">Continue Tour</button>
+                        <button class="skip-anyway-btn" onclick="skipTourAnyway()">Skip Anyway</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(confirmationOverlay);
+            
+            // Add styles for the confirmation dialog
+            const style = document.createElement('style');
+            style.textContent = `
+                .skip-tour-confirmation-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1005;
+                    backdrop-filter: blur(5px);
+                }
+                
+                .skip-tour-confirmation {
+                    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+                    border: 2px solid #3b82f6;
+                    border-radius: 15px;
+                    padding: 30px;
+                    max-width: 500px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    text-align: center;
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                }
+                
+                .skip-tour-icon {
+                    font-size: 48px;
+                    margin-bottom: 20px;
+                }
+                
+                .skip-tour-confirmation h3 {
+                    color: #f1f5f9;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                }
+                
+                .skip-tour-confirmation p {
+                    color: #cbd5e1;
+                    margin-bottom: 15px;
+                    line-height: 1.6;
+                    text-align: left;
+                }
+                
+                .skip-tour-confirmation ul {
+                    color: #cbd5e1;
+                    text-align: left;
+                    margin: 15px 0;
+                    padding-left: 20px;
+                }
+                
+                .skip-tour-confirmation li {
+                    margin-bottom: 8px;
+                }
+                
+                .skip-tour-buttons {
+                    display: flex;
+                    gap: 15px;
+                    justify-content: center;
+                    margin-top: 25px;
+                }
+                
+                .continue-tour-btn {
+                    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+                    color: white;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+                }
+                
+                .continue-tour-btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+                }
+                
+                .skip-anyway-btn {
+                    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+                    color: white;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+                
+                .skip-anyway-btn:hover {
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    transform: translateY(-2px);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function continueWithTour() {
+            // Remove the confirmation dialog
+            const confirmationOverlay = document.querySelector('.skip-tour-confirmation-overlay');
+            if (confirmationOverlay) {
+                confirmationOverlay.remove();
+            }
+            // Tour continues normally - no need to do anything else
+        }
+
+        function skipTourAnyway() {
+            // Remove the confirmation dialog
+            const confirmationOverlay = document.querySelector('.skip-tour-confirmation-overlay');
+            if (confirmationOverlay) {
+                confirmationOverlay.remove();
+            }
+            // Actually skip the tour
+            finishTour();
+        }
+
+        function showTourAchievement() {
+            const achievement = document.createElement('div');
+            achievement.className = 'tour-achievement';
+            achievement.innerHTML = `
+                <div class="tour-achievement-icon">🎉</div>
+                <div class="tour-achievement-text">Tour completed! You're ready to explore semiconductor physics!</div>
+            `;
+            
+            document.body.appendChild(achievement);
+            
+            // Position achievement
+            achievement.style.position = 'fixed';
+            achievement.style.top = '20px';
+            achievement.style.right = '20px';
+            achievement.style.zIndex = '1003';
+            achievement.style.maxWidth = '300px';
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                achievement.remove();
+            }, 3000);
+        }
+
+        // Handle window resize during tour
+        window.addEventListener('resize', () => {
+            if (tourActive) {
+                positionTourElements(tourSteps[currentTourStep]);
+            }
+        });
+
+        // TAB SWITCHING FUNCTIONALITY
+        let currentMainTab = 'simulation';
+
+        function switchMainTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update body class for proper overflow handling
+            document.body.className = '';
+            document.body.classList.add(tabName + '-active');
+            
+            currentMainTab = tabName;
+        }
+
+        // CHALLENGES SYSTEM
+        let currentChallengeTab = 'rapidFire';
+        let challengeAnswers = {
+            rapidFire: {},
+            fillBlanks: {},
+            calculations: {},
+            advanced: {},
+            matching: {}
+        };
+        let challengeStates = {
+            rapidFire: false,
+            fillBlanks: false,
+            calculations: false,
+            advanced: false,
+            matching: false
+        };
+        let selectedQuestions = {
+            rapidFire: [],
+            fillBlanks: [],
+            calculations: [],
+            advanced: [],
+            matching: []
+        };
+
+        // Matching challenge variables
+        let selectedMatchingItems = [];
+        let matchingConnections = {};
+        let currentConnectionId = 0;
+
+        // Enhanced question bank with semiconductor physics focus
+        const questionBank = {
+            rapidFire: [
+                {
+                    question: "What type of semiconductor is created when silicon is doped with phosphorus?",
+                    options: ["P-type", "N-type", "Intrinsic", "Compound"],
+                    correct: 1,
+                    explanation: "Phosphorus has 5 valence electrons, donating an extra electron to create N-type semiconductor."
+                },
+                {
+                    question: "What happens to carrier concentration as temperature increases?",
+                    options: ["Decreases exponentially", "Increases exponentially", "Remains constant", "Decreases linearly"],
+                    correct: 1,
+                    explanation: "Higher temperature provides more thermal energy, exciting more electrons across the band gap."
+                },
+                {
+                    question: "In a uniformly doped N-type semiconductor, what is the majority carrier?",
+                    options: ["Holes", "Electrons", "Ions", "Photons"],
+                    correct: 1,
+                    explanation: "N-type semiconductors have excess electrons from donor atoms, making electrons the majority carriers."
+                },
+                {
+                    question: "What creates the built-in electric field in a non-uniformly doped semiconductor?",
+                    options: ["External voltage", "Doping concentration gradient", "Temperature gradient", "Crystal defects"],
+                    correct: 1,
+                    explanation: "Concentration gradients create diffusion currents, which establish electric fields to maintain equilibrium."
+                },
+                {
+                    question: "What is the relationship between electron and hole concentrations in thermal equilibrium?",
+                    options: ["n = p", "n × p = ni²", "n + p = ni", "n - p = ni"],
+                    correct: 1,
+                    explanation: "The mass action law states that n × p = ni² in thermal equilibrium."
+                },
+                {
+                    question: "What effect does heavy doping have on the band gap?",
+                    options: ["Increases it", "Decreases it", "No effect", "Makes it zero"],
+                    correct: 1,
+                    explanation: "Heavy doping causes band gap narrowing due to many-body effects and impurity band formation."
+                },
+                {
+                    question: "Which element is commonly used as a P-type dopant in silicon?",
+                    options: ["Arsenic", "Phosphorus", "Boron", "Antimony"],
+                    correct: 2,
+                    explanation: "Boron has 3 valence electrons, creating holes when it replaces silicon atoms."
+                },
+                {
+                    question: "What is the typical range of doping concentrations in semiconductors?",
+                    options: ["10⁸ to 10¹² cm⁻³", "10¹⁴ to 10¹⁹ cm⁻³", "10²⁰ to 10²⁵ cm⁻³", "10² to 10⁶ cm⁻³"],
+                    correct: 1,
+                    explanation: "Practical doping concentrations range from 10¹⁴ to 10¹⁹ cm⁻³ for device applications."
+                },
+                {
+                    question: "At what temperature do intrinsic carriers dominate in silicon?",
+                    options: ["Below 200K", "Around 300K", "Above 500K", "Never"],
+                    correct: 2,
+                    explanation: "At high temperatures (>500K), intrinsic carrier concentration becomes significant compared to doping."
+                },
+                {
+                    question: "What is the main transport mechanism for carriers in semiconductors?",
+                    options: ["Tunneling", "Diffusion and drift", "Thermionic emission", "Recombination"],
+                    correct: 1,
+                    explanation: "Carriers move by diffusion (concentration gradients) and drift (electric fields)."
+                },
+                {
+                    question: "What happens to mobility as doping concentration increases?",
+                    options: ["Increases linearly", "Decreases due to scattering", "Remains constant", "Increases exponentially"],
+                    correct: 1,
+                    explanation: "Higher doping increases ionized impurity scattering, reducing carrier mobility."
+                },
+                {
+                    question: "In which direction does the electric field point in a P-N junction?",
+                    options: ["From N to P", "From P to N", "Perpendicular to junction", "No preferred direction"],
+                    correct: 1,
+                    explanation: "Built-in electric field points from P-side to N-side, opposing further diffusion."
+                }
+            ],
+            fillBlanks: [
+                {
+                    text: "In an N-type semiconductor, _______ are the majority carriers and _______ are the minority carriers.",
+                    blanks: ["electrons", "holes"],
+                    explanation: "N-type semiconductors have excess electrons from donor atoms."
+                },
+                {
+                    text: "The built-in electric field in a non-uniformly doped semiconductor is proportional to the _______ of the doping concentration.",
+                    blanks: ["gradient"],
+                    explanation: "E = -(kT/q) × (1/N) × (dN/dx), showing field depends on concentration gradient."
+                },
+                {
+                    text: "At room temperature, the thermal voltage kT/q is approximately _______ mV.",
+                    blanks: ["26"],
+                    explanation: "At 300K, kT/q = 26 mV, a fundamental parameter in semiconductor physics."
+                },
+                {
+                    text: "In thermal equilibrium, the product of electron and hole concentrations equals _______.",
+                    blanks: ["ni²"],
+                    explanation: "The mass action law: n × p = ni² in thermal equilibrium."
+                },
+                {
+                    text: "The intrinsic carrier concentration in silicon at 300K is approximately _______ cm⁻³.",
+                    blanks: ["1e10"],
+                    explanation: "At room temperature, ni ≈ 10¹⁰ cm⁻³ in silicon."
+                },
+                {
+                    text: "The band gap of silicon is approximately _______ eV at room temperature.",
+                    blanks: ["1.12"],
+                    explanation: "Silicon has a band gap of 1.12 eV at 300K."
+                },
+                {
+                    text: "When Na = 10¹⁶ cm⁻³ >> ni, the hole concentration is approximately _______ cm⁻³.",
+                    blanks: ["1e16"],
+                    explanation: "In heavily doped P-type material, p ≈ Na when Na >> ni."
+                },
+                {
+                    text: "The Fermi level in N-type material moves closer to the _______ band.",
+                    blanks: ["conduction"],
+                    explanation: "In N-type material, the Fermi level moves toward the conduction band."
+                },
+                {
+                    text: "The electric field in a uniformly doped semiconductor is _______.",
+                    blanks: ["zero"],
+                    explanation: "Uniform doping creates no concentration gradient, hence no built-in field."
+                }
+            ],
+            calculations: [
+                {
+                    question: "Calculate the thermal voltage at 350K. (kT/q = ?)",
+                    answer: "30.2",
+                    unit: "mV",
+                    tolerance: 0.5,
+                    explanation: "kT/q = (1.38×10⁻²³ × 350) / (1.602×10⁻¹⁹) = 30.2 mV"
+                },
+                {
+                    question: "If Na = 10¹⁶ cm⁻³ and ni = 10¹⁰ cm⁻³, what is the hole concentration?",
+                    answer: "1e16",
+                    unit: "cm⁻³",
+                    tolerance: 0.1,
+                    explanation: "In P-type: p ≈ Na = 10¹⁶ cm⁻³ when Na >> ni"
+                },
+                {
+                    question: "Calculate the minority carrier concentration if Nd = 10¹⁷ cm⁻³ and ni = 10¹⁰ cm⁻³.",
+                    answer: "1e3",
+                    unit: "cm⁻³",
+                    tolerance: 0.1,
+                    explanation: "p = ni²/n = (10¹⁰)²/(10¹⁷) = 10³ cm⁻³"
+                },
+                {
+                    question: "Calculate the thermal voltage at 77K (liquid nitrogen temperature).",
+                    answer: "6.6",
+                    unit: "mV",
+                    tolerance: 0.2,
+                    explanation: "kT/q = (1.38×10⁻²³ × 77) / (1.602×10⁻¹⁹) = 6.6 mV"
+                },
+                {
+                    question: "If ni = 1.5×10¹⁰ cm⁻³ and Nd = 10¹⁵ cm⁻³, calculate the electron concentration.",
+                    answer: "1e15",
+                    unit: "cm⁻³",
+                    tolerance: 0.1,
+                    explanation: "In N-type: n ≈ Nd = 10¹⁵ cm⁻³ when Nd >> ni"
+                },
+                {
+                    question: "Calculate the built-in potential for a junction with Na = 10¹⁶ cm⁻³, Nd = 10¹⁵ cm⁻³, ni = 10¹⁰ cm⁻³ at 300K.",
+                    answer: "0.64",
+                    unit: "V",
+                    tolerance: 0.05,
+                    explanation: "Vbi = (kT/q)ln(NaNd/ni²) = 0.026 × ln(10¹⁶×10¹⁵/(10¹⁰)²) = 0.64 V"
+                },
+                {
+                    question: "If the electric field is 1000 V/cm and kT/q = 26 mV, calculate the relative doping gradient (1/N)(dN/dx).",
+                    answer: "38.5",
+                    unit: "cm⁻¹",
+                    tolerance: 2,
+                    explanation: "(1/N)(dN/dx) = -qE/kT = -1000 V/cm / 0.026 V = -38,461 cm⁻¹ (magnitude)"
+                }
+            ],
+            advanced: [
+                {
+                    question: "In a Gaussian doping profile, how does the electric field vary with position?",
+                    options: ["Linearly", "Exponentially", "Following the derivative of the Gaussian", "Inversely proportional"],
+                    correct: 2,
+                    explanation: "E ∝ -dN/dx, so the field follows the derivative of the doping profile."
+                },
+                {
+                    question: "What is the primary mechanism for band gap narrowing in heavily doped semiconductors?",
+                    options: ["Impurity band formation", "Lattice expansion", "Increased phonon scattering", "Quantum confinement"],
+                    correct: 0,
+                    explanation: "Heavy doping creates impurity bands that merge with conduction/valence bands."
+                },
+                {
+                    question: "In a step junction, what determines the width of the depletion region?",
+                    options: ["Applied voltage only", "Doping concentrations only", "Both voltage and doping", "Temperature only"],
+                    correct: 2,
+                    explanation: "Depletion width depends on both applied voltage and doping concentrations on both sides."
+                },
+                {
+                    question: "What is the Einstein relation for semiconductors?",
+                    options: ["μ = qD/kT", "D = μkT/q", "E = mc²", "J = qnvd"],
+                    correct: 1,
+                    explanation: "Einstein relation: D = μkT/q, relating diffusion coefficient to mobility."
+                },
+                {
+                    question: "In a compensated semiconductor with Na = 10¹⁶ cm⁻³ and Nd = 10¹⁵ cm⁻³, what is the net doping?",
+                    options: ["9×10¹⁵ cm⁻³ P-type", "1.1×10¹⁶ cm⁻³ P-type", "10¹⁶ cm⁻³ N-type", "Zero"],
+                    correct: 0,
+                    explanation: "Net doping = Na - Nd = 10¹⁶ - 10¹⁵ = 9×10¹⁵ cm⁻³ P-type"
+                },
+                {
+                    question: "What causes the freeze-out effect in doped semiconductors?",
+                    options: ["High temperature", "Low temperature", "High electric field", "Light absorption"],
+                    correct: 1,
+                    explanation: "At low temperatures, dopant atoms are not fully ionized, causing freeze-out."
+                },
+                {
+                    question: "In a graded junction, how does the electric field vary with position?",
+                    options: ["Constant", "Linear", "Exponential", "Quadratic"],
+                    correct: 1,
+                    explanation: "In linearly graded junctions, the electric field varies linearly with position."
+                },
+                {
+                    question: "What is the main difference between direct and indirect bandgap semiconductors?",
+                    options: ["Band gap energy", "Momentum conservation in transitions", "Doping efficiency", "Temperature dependence"],
+                    correct: 1,
+                    explanation: "Direct bandgap: k-conservation allows direct transitions. Indirect: requires phonon assistance."
+                }
+            ],
+            matching: [
+                {
+                    left: ["N-type doping", "P-type doping", "Intrinsic carrier", "Thermal voltage", "Band gap"],
+                    right: ["Holes as majority carriers", "Electrons as majority carriers", "kT/q", "ni concentration", "Energy difference between bands"],
+                    correct: [1, 0, 3, 2, 4],
+                    explanation: "Match semiconductor concepts with their correct properties and definitions."
+                },
+                {
+                    left: ["Electric field", "Doping gradient", "Mass action law", "Depletion region", "Built-in potential"],
+                    right: ["n × p = ni²", "E = -(kT/q)(1/N)(dN/dx)", "Charge-free zone", "dN/dx", "Vbi = (kT/q)ln(NaNd/ni²)"],
+                    correct: [1, 3, 0, 2, 4],
+                    explanation: "Match physical phenomena with their mathematical expressions."
+                },
+                {
+                    left: ["Diffusion current", "Drift current", "Recombination", "Generation", "Mobility"],
+                    right: ["qμnE", "Rate of carrier creation", "Rate of carrier annihilation", "qD(dn/dx)", "v/E ratio"],
+                    correct: [3, 0, 2, 1, 4],
+                    explanation: "Match transport phenomena with their descriptions and equations."
+                },
+                {
+                    left: ["Donor atoms", "Acceptor atoms", "Fermi level", "Valence band", "Conduction band"],
+                    right: ["Contains holes", "Contains electrons", "Statistical energy level", "Provide holes", "Provide electrons"],
+                    correct: [4, 3, 2, 0, 1],
+                    explanation: "Match semiconductor terminology with their correct descriptions."
+                },
+                {
+                    left: ["Silicon", "Germanium", "GaAs", "Temperature coefficient", "Bandgap narrowing"],
+                    right: ["Direct bandgap", "Negative for bandgap", "Heavy doping effect", "Eg = 1.12 eV", "Eg = 0.67 eV"],
+                    correct: [3, 4, 0, 1, 2],
+                    explanation: "Match semiconductor materials and effects with their properties."
+                }
+            ]
+        };
+
+        function initializeChallenges() {
+            selectRandomQuestions();
+            generateChallengeContent();
+            updateChallengeProgress();
+        }
+
+        function selectRandomQuestions() {
+            selectedQuestions.rapidFire = getRandomItems(questionBank.rapidFire, 5);
+            selectedQuestions.fillBlanks = getRandomItems(questionBank.fillBlanks, 4);
+            selectedQuestions.calculations = getRandomItems(questionBank.calculations, 4);
+            selectedQuestions.advanced = getRandomItems(questionBank.advanced, 4);
+            selectedQuestions.matching = getRandomItems(questionBank.matching, 1);
+        }
+
+        function getRandomItems(array, count) {
+            const shuffled = [...array].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function generateChallengeContent() {
+            generateRapidFireQuiz();
+            generateFillBlanksQuiz();
+            generateCalculationsQuiz();
+            generateAdvancedQuiz();
+            generateMatchingQuiz();
+        }
+
+        function generateRapidFireQuiz() {
+            const container = document.getElementById('rapidFireQuestions');
+            container.innerHTML = '';
+            
+            selectedQuestions.rapidFire.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <h4>Question ${index + 1}: ${q.question}</h4>
+                    <div class="quiz-options">
+                        ${q.options.map((option, optIndex) => `
+                            <div class="quiz-option" onclick="selectRapidFireAnswer(${index}, ${optIndex}, this)">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="rapidfire-explanation-${index}">
+                        <div class="quiz-explanation-title">Explanation:</div>
+                        <div>${q.explanation}</div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function generateFillBlanksQuiz() {
+            const container = document.getElementById('fillBlanksQuestions');
+            container.innerHTML = '';
+            
+            selectedQuestions.fillBlanks.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'fill-blank-container';
+                
+                let processedText = q.text;
+                q.blanks.forEach((blank, blankIndex) => {
+                    const inputId = `blank_${index}_${blankIndex}`;
+                    processedText = processedText.replace('_______', 
+                        `<input type="text" class="fill-blank-input" id="${inputId}" placeholder="Answer ${blankIndex + 1}">`);
+                });
+                
+                questionDiv.innerHTML = `
+                    <div class="fill-blank-text">${processedText}</div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function generateCalculationsQuiz() {
+            const container = document.getElementById('calculationsQuestions');
+            container.innerHTML = '';
+            
+            selectedQuestions.calculations.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'fill-blank-container';
+                questionDiv.innerHTML = `
+                    <div class="fill-blank-text">${q.question}</div>
+                    <input type="number" class="fill-blank-input" id="calc_${index}" placeholder="Your answer" step="any">
+                    <span style="color: #cbd5e1; margin-left: 10px;">${q.unit}</span>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function generateAdvancedQuiz() {
+            const container = document.getElementById('advancedQuestions');
+            container.innerHTML = '';
+            
+            selectedQuestions.advanced.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <h4>Question ${index + 1}: ${q.question}</h4>
+                    <div class="quiz-options">
+                        ${q.options.map((option, optIndex) => `
+                            <div class="quiz-option" onclick="selectAdvancedAnswer(${index}, ${optIndex}, this)">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-explanation" id="advanced-explanation-${index}">
+                        <div class="quiz-explanation-title">Explanation:</div>
+                        <div>${q.explanation}</div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function generateMatchingQuiz() {
+            const leftContainer = document.getElementById('matchingLeft');
+            const rightContainer = document.getElementById('matchingRight');
+            leftContainer.innerHTML = '';
+            rightContainer.innerHTML = '';
+            
+            if (selectedQuestions.matching.length === 0) return;
+            
+            const matchingData = selectedQuestions.matching[0];
+            
+            // Create left column items
+            matchingData.left.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'matching-item';
+                div.textContent = item;
+                div.dataset.index = index;
+                div.dataset.side = 'left';
+                div.onclick = () => selectMatchingItem(div);
+                leftContainer.appendChild(div);
+            });
+            
+            // Create right column items (shuffled)
+            const shuffledRight = [...matchingData.right];
+            shuffledRight.sort(() => Math.random() - 0.5);
+            
+            shuffledRight.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'matching-item';
+                div.textContent = item;
+                div.dataset.originalIndex = matchingData.right.indexOf(item);
+                div.dataset.side = 'right';
+                div.onclick = () => selectMatchingItem(div);
+                rightContainer.appendChild(div);
+            });
+        }
+
+        function selectMatchingItem(element) {
+            // Remove previous selections from the same side
+            const side = element.dataset.side;
+            const siblings = element.parentElement.querySelectorAll('.matching-item');
+            siblings.forEach(sibling => {
+                if (sibling !== element) {
+                    sibling.classList.remove('selected');
+                }
+            });
+            
+            // Toggle selection
+            element.classList.toggle('selected');
+            
+            // Update selected items array
+            selectedMatchingItems = selectedMatchingItems.filter(item => item.dataset.side !== side);
+            if (element.classList.contains('selected')) {
+                selectedMatchingItems.push(element);
+            }
+            
+            // If we have one item from each side, create a connection
+            if (selectedMatchingItems.length === 2) {
+                createMatchingConnection();
+            }
+        }
+
+        function createMatchingConnection() {
+            const leftItem = selectedMatchingItems.find(item => item.dataset.side === 'left');
+            const rightItem = selectedMatchingItems.find(item => item.dataset.side === 'right');
+            
+            if (!leftItem || !rightItem) return;
+            
+            const connectionId = `conn_${currentConnectionId++}`;
+            
+            // Store the connection
+            matchingConnections[connectionId] = {
+                left: leftItem,
+                right: rightItem,
+                leftIndex: parseInt(leftItem.dataset.index),
+                rightIndex: parseInt(rightItem.dataset.originalIndex)
+            };
+            
+            // Visual feedback
+            leftItem.classList.add('matched');
+            rightItem.classList.add('matched');
+            leftItem.classList.remove('selected');
+            rightItem.classList.remove('selected');
+            
+            // Create visual connection line
+            drawConnectionLine(leftItem, rightItem, connectionId);
+            
+            // Clear selection
+            selectedMatchingItems = [];
+        }
+
+        function drawConnectionLine(leftItem, rightItem, connectionId) {
+            const connectionsContainer = document.getElementById('matchingConnections');
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            line.id = connectionId;
+            
+            const leftRect = leftItem.getBoundingClientRect();
+            const rightRect = rightItem.getBoundingClientRect();
+            const containerRect = connectionsContainer.getBoundingClientRect();
+            
+            const leftX = leftRect.right - containerRect.left;
+            const leftY = leftRect.top + leftRect.height / 2 - containerRect.top;
+            const rightX = rightRect.left - containerRect.left;
+            const rightY = rightRect.top + rightRect.height / 2 - containerRect.top;
+            
+            const width = rightX - leftX;
+            const height = rightY - leftY;
+            const angle = Math.atan2(height, width) * 180 / Math.PI;
+            const length = Math.sqrt(width * width + height * height);
+            
+            line.style.left = leftX + 'px';
+            line.style.top = leftY + 'px';
+            line.style.width = length + 'px';
+            line.style.transformOrigin = '0 50%';
+            line.style.transform = `rotate(${angle}deg)`;
+            
+            // Add click handler to remove connection
+            line.onclick = () => removeMatchingConnection(connectionId);
+            line.style.cursor = 'pointer';
+            line.title = 'Click to remove connection';
+            
+            connectionsContainer.appendChild(line);
+        }
+
+        function removeMatchingConnection(connectionId) {
+            const connection = matchingConnections[connectionId];
+            if (connection) {
+                connection.left.classList.remove('matched');
+                connection.right.classList.remove('matched');
+                delete matchingConnections[connectionId];
+                
+                const line = document.getElementById(connectionId);
+                if (line) {
+                    line.remove();
+                }
+            }
+        }
+
+        function selectRapidFireAnswer(questionIndex, answerIndex, element) {
+            // Remove previous selection
+            const siblings = element.parentElement.querySelectorAll('.quiz-option');
+            siblings.forEach(sibling => sibling.classList.remove('selected'));
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            challengeAnswers.rapidFire[questionIndex] = answerIndex;
+        }
+
+        function selectAdvancedAnswer(questionIndex, answerIndex, element) {
+            // Remove previous selection
+            const siblings = element.parentElement.querySelectorAll('.quiz-option');
+            siblings.forEach(sibling => sibling.classList.remove('selected'));
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            challengeAnswers.advanced[questionIndex] = answerIndex;
+        }
+
+        function checkRapidFireAnswers() {
+            let correct = 0;
+            const questions = selectedQuestions.rapidFire;
+            
+            questions.forEach((q, index) => {
+                const userAnswer = challengeAnswers.rapidFire[index];
+                const correctAnswer = q.correct;
+                const options = document.querySelectorAll(`#rapidFireQuestions .quiz-question:nth-child(${index + 1}) .quiz-option`);
+                const explanation = document.getElementById(`rapidfire-explanation-${index}`);
+                
+                options.forEach((option, optIndex) => {
+                    option.classList.remove('correct', 'incorrect');
+                    if (optIndex === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && userAnswer !== correctAnswer) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation if answer is wrong or if no answer selected
+                if (userAnswer !== correctAnswer || userAnswer === undefined) {
+                    explanation.classList.add('show');
+                } else {
+                    explanation.classList.remove('show');
+                }
+                
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                }
+            });
+            
+            const feedback = document.getElementById('rapidFireFeedback');
+            feedback.style.display = 'block';
+            if (correct === questions.length) {
+                feedback.className = 'challenge-feedback success';
+                feedback.textContent = `Perfect! You got all ${correct} questions correct! 🎉`;
+                challengeStates.rapidFire = true;
+            } else {
+                feedback.className = 'challenge-feedback error';
+                feedback.textContent = `You got ${correct} out of ${questions.length} questions correct. Review the explanations below and try again!`;
+            }
+            
+            updateChallengeProgress();
+        }
+
+        function checkFillBlanks() {
+            let correct = 0;
+            const questions = selectedQuestions.fillBlanks;
+            
+            questions.forEach((q, index) => {
+                let questionCorrect = true;
+                q.blanks.forEach((correctAnswer, blankIndex) => {
+                    const inputId = `blank_${index}_${blankIndex}`;
+                    const input = document.getElementById(inputId);
+                    const userAnswer = input.value.trim().toLowerCase();
+                    
+                    input.classList.remove('correct', 'incorrect');
+                    if (userAnswer === correctAnswer.toLowerCase()) {
+                        input.classList.add('correct');
+                    } else {
+                        input.classList.add('incorrect');
+                        questionCorrect = false;
+                    }
+                });
+                
+                if (questionCorrect) {
+                    correct++;
+                }
+            });
+            
+            const feedback = document.getElementById('fillBlanksFeedback');
+            feedback.style.display = 'block';
+            if (correct === questions.length) {
+                feedback.className = 'challenge-feedback success';
+                feedback.textContent = `Excellent! You filled all blanks correctly! 🎉`;
+                challengeStates.fillBlanks = true;
+            } else {
+                feedback.className = 'challenge-feedback error';
+                feedback.textContent = `You got ${correct} out of ${questions.length} questions correct. Check your answers!`;
+            }
+            
+            updateChallengeProgress();
+        }
+
+        function checkCalculations() {
+            let correct = 0;
+            const questions = selectedQuestions.calculations;
+            
+            questions.forEach((q, index) => {
+                const input = document.getElementById(`calc_${index}`);
+                const userAnswer = parseFloat(input.value);
+                const correctAnswer = parseFloat(q.answer);
+                
+                input.classList.remove('correct', 'incorrect');
+                
+                // Remove existing explanation if any
+                const existingExplanation = document.getElementById(`calc-explanation-${index}`);
+                if (existingExplanation) {
+                    existingExplanation.remove();
+                }
+                
+                if (Math.abs(userAnswer - correctAnswer) <= q.tolerance) {
+                    input.classList.add('correct');
+                    correct++;
+                } else {
+                    input.classList.add('incorrect');
+                    
+                    // Show correct answer and explanation
+                    const questionDiv = input.closest('.fill-blank-container');
+                    const explanationDiv = document.createElement('div');
+                    explanationDiv.id = `calc-explanation-${index}`;
+                    explanationDiv.className = 'quiz-explanation show';
+                    explanationDiv.innerHTML = `
+                        <div class="quiz-explanation-title">Correct Answer: ${q.answer} ${q.unit}</div>
+                        <div>${q.explanation}</div>
+                    `;
+                    questionDiv.appendChild(explanationDiv);
+                }
+            });
+            
+            const feedback = document.getElementById('calculationsFeedback');
+            feedback.style.display = 'block';
+            if (correct === questions.length) {
+                feedback.className = 'challenge-feedback success';
+                feedback.textContent = `Outstanding! All calculations are correct! 🎉`;
+                challengeStates.calculations = true;
+            } else {
+                feedback.className = 'challenge-feedback error';
+                feedback.textContent = `You got ${correct} out of ${questions.length} calculations correct. Review the explanations below!`;
+            }
+            
+            updateChallengeProgress();
+        }
+
+        function checkAdvanced() {
+            let correct = 0;
+            const questions = selectedQuestions.advanced;
+            
+            questions.forEach((q, index) => {
+                const userAnswer = challengeAnswers.advanced[index];
+                const correctAnswer = q.correct;
+                const options = document.querySelectorAll(`#advancedQuestions .quiz-question:nth-child(${index + 1}) .quiz-option`);
+                const explanation = document.getElementById(`advanced-explanation-${index}`);
+                
+                options.forEach((option, optIndex) => {
+                    option.classList.remove('correct', 'incorrect');
+                    if (optIndex === correctAnswer) {
+                        option.classList.add('correct');
+                    } else if (optIndex === userAnswer && userAnswer !== correctAnswer) {
+                        option.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation if answer is wrong or if no answer selected
+                if (userAnswer !== correctAnswer || userAnswer === undefined) {
+                    explanation.classList.add('show');
+                } else {
+                    explanation.classList.remove('show');
+                }
+                
+                if (userAnswer === correctAnswer) {
+                    correct++;
+                }
+            });
+            
+            const feedback = document.getElementById('advancedFeedback');
+            feedback.style.display = 'block';
+            if (correct === questions.length) {
+                feedback.className = 'challenge-feedback success';
+                feedback.textContent = `Brilliant! You've mastered advanced concepts! 🎉`;
+                challengeStates.advanced = true;
+            } else {
+                feedback.className = 'challenge-feedback error';
+                feedback.textContent = `You got ${correct} out of ${questions.length} questions correct. Review the explanations below and keep studying!`;
+            }
+            
+            updateChallengeProgress();
+        }
+
+        function checkMatching() {
+            let correct = 0;
+            const matchingData = selectedQuestions.matching[0];
+            if (!matchingData) return;
+            
+            const totalConnections = matchingData.left.length;
+            const connections = Object.values(matchingConnections);
+            
+            connections.forEach(connection => {
+                const leftIndex = connection.leftIndex;
+                const rightIndex = connection.rightIndex;
+                const correctRightIndex = matchingData.correct[leftIndex];
+                
+                const line = document.getElementById(connection.connectionId || `conn_${Object.keys(matchingConnections).indexOf(connection)}`);
+                
+                if (rightIndex === correctRightIndex) {
+                    correct++;
+                    connection.left.classList.add('correct-match');
+                    connection.right.classList.add('correct-match');
+                    if (line) line.classList.add('correct');
+                } else {
+                    connection.left.classList.add('incorrect-match');
+                    connection.right.classList.add('incorrect-match');
+                    if (line) line.classList.add('incorrect');
+                }
+            });
+            
+            const feedback = document.getElementById('matchingFeedback');
+            feedback.style.display = 'block';
+            if (correct === totalConnections && connections.length === totalConnections) {
+                feedback.className = 'challenge-feedback success';
+                feedback.textContent = `Perfect matching! You got all ${correct} connections correct! 🎉`;
+                challengeStates.matching = true;
+            } else {
+                feedback.className = 'challenge-feedback error';
+                feedback.textContent = `You got ${correct} out of ${totalConnections} connections correct. Review your matches!`;
+            }
+            
+            updateChallengeProgress();
+        }
+
+        function updateChallengeProgress() {
+            const completedChallenges = Object.values(challengeStates).filter(Boolean).length;
+            const totalChallenges = Object.keys(challengeStates).length;
+            const progress = (completedChallenges / totalChallenges) * 100;
+            
+            document.getElementById('challengeProgress').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${completedChallenges}/${totalChallenges}`;
+            
+            const totalScore = completedChallenges * 20; // 20 points per challenge
+            document.getElementById('totalScore').textContent = totalScore;
+        }
+
+        function showRapidFireHint() {
+            const hint = document.getElementById('rapidFireHint');
+            hint.classList.add('active');
+            hint.textContent = "Think about the fundamental properties of N-type and P-type semiconductors, and how temperature affects carrier generation.";
+        }
+
+        function showFillBlanksHint() {
+            const hint = document.getElementById('fillBlanksHint');
+            hint.classList.add('active');
+            hint.textContent = "Remember: N-type has excess electrons, P-type has excess holes. The built-in field depends on concentration gradients.";
+        }
+
+        function showCalculationsHint() {
+            const hint = document.getElementById('calculationsHint');
+            hint.classList.add('active');
+            hint.textContent = "Use kT/q = (1.38×10⁻²³ × T) / (1.602×10⁻¹⁹) for thermal voltage. Remember the mass action law: n × p = ni².";
+        }
+
+        function showAdvancedHint() {
+            const hint = document.getElementById('advancedHint');
+            hint.classList.add('active');
+            hint.textContent = "Consider how electric fields relate to concentration gradients, and how heavy doping affects energy bands.";
+        }
+
+        function showMatchingHint() {
+            const hint = document.getElementById('matchingHint');
+            hint.classList.add('active');
+            hint.textContent = "Click on items from both columns to create connections. Remember: N-type has electron majority, P-type has hole majority.";
+        }
+
+        function resetRapidFire() {
+            challengeAnswers.rapidFire = {};
+            challengeStates.rapidFire = false;
+            document.getElementById('rapidFireFeedback').style.display = 'none';
+            document.getElementById('rapidFireHint').classList.remove('active');
+            const options = document.querySelectorAll('#rapidFireQuestions .quiz-option');
+            options.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            // Hide all explanations
+            const explanations = document.querySelectorAll('#rapidFireQuestions .quiz-explanation');
+            explanations.forEach(explanation => {
+                explanation.classList.remove('show');
+            });
+            updateChallengeProgress();
+        }
+
+        function resetFillBlanks() {
+            challengeAnswers.fillBlanks = {};
+            challengeStates.fillBlanks = false;
+            document.getElementById('fillBlanksFeedback').style.display = 'none';
+            document.getElementById('fillBlanksHint').classList.remove('active');
+            const inputs = document.querySelectorAll('#fillBlanksQuestions .fill-blank-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+            updateChallengeProgress();
+        }
+
+        function resetCalculations() {
+            challengeAnswers.calculations = {};
+            challengeStates.calculations = false;
+            document.getElementById('calculationsFeedback').style.display = 'none';
+            document.getElementById('calculationsHint').classList.remove('active');
+            const inputs = document.querySelectorAll('#calculationsQuestions .fill-blank-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+            
+            // Remove all explanation divs
+            const explanations = document.querySelectorAll('[id^="calc-explanation-"]');
+            explanations.forEach(explanation => {
+                explanation.remove();
+            });
+            
+            updateChallengeProgress();
+        }
+
+        function resetAdvanced() {
+            challengeAnswers.advanced = {};
+            challengeStates.advanced = false;
+            document.getElementById('advancedFeedback').style.display = 'none';
+            document.getElementById('advancedHint').classList.remove('active');
+            const options = document.querySelectorAll('#advancedQuestions .quiz-option');
+            options.forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            // Hide all explanations
+            const explanations = document.querySelectorAll('#advancedQuestions .quiz-explanation');
+            explanations.forEach(explanation => {
+                explanation.classList.remove('show');
+            });
+            updateChallengeProgress();
+        }
+
+        function resetMatching() {
+            challengeAnswers.matching = {};
+            challengeStates.matching = false;
+            matchingConnections = {};
+            selectedMatchingItems = [];
+            currentConnectionId = 0;
+            
+            document.getElementById('matchingFeedback').style.display = 'none';
+            document.getElementById('matchingHint').classList.remove('active');
+            document.getElementById('matchingConnections').innerHTML = '';
+            
+            const items = document.querySelectorAll('.matching-item');
+            items.forEach(item => {
+                item.classList.remove('selected', 'matched', 'correct-match', 'incorrect-match');
+            });
+            
+            updateChallengeProgress();
+        }
+
+        function resetAllChallenges() {
+            // Reset all challenge states
+            challengeAnswers = {
+                rapidFire: {},
+                fillBlanks: {},
+                calculations: {},
+                advanced: {},
+                matching: {}
+            };
+            challengeStates = {
+                rapidFire: false,
+                fillBlanks: false,
+                calculations: false,
+                advanced: false,
+                matching: false
+            };
+            
+            // Reset matching variables
+            matchingConnections = {};
+            selectedMatchingItems = [];
+            currentConnectionId = 0;
+            
+            // Select new random questions
+            selectRandomQuestions();
+            
+            // Regenerate all challenge content
+            generateChallengeContent();
+            
+            // Hide all feedback messages
+            document.getElementById('rapidFireFeedback').style.display = 'none';
+            document.getElementById('fillBlanksFeedback').style.display = 'none';
+            document.getElementById('calculationsFeedback').style.display = 'none';
+            document.getElementById('advancedFeedback').style.display = 'none';
+            document.getElementById('matchingFeedback').style.display = 'none';
+            
+            // Hide all hints
+            document.getElementById('rapidFireHint').classList.remove('active');
+            document.getElementById('fillBlanksHint').classList.remove('active');
+            document.getElementById('calculationsHint').classList.remove('active');
+            document.getElementById('advancedHint').classList.remove('active');
+            document.getElementById('matchingHint').classList.remove('active');
+            
+            // Clear any existing explanations
+            const explanations = document.querySelectorAll('[id^="calc-explanation-"]');
+            explanations.forEach(explanation => {
+                explanation.remove();
+            });
+            
+            // Update progress
+            updateChallengeProgress();
+            
+            // Show confirmation message
+            const button = document.querySelector('.reset-challenges-btn');
+            const originalText = button.textContent;
+            button.textContent = '✅ New Questions Generated!';
+            button.style.background = 'var(--success-gradient)';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = 'var(--secondary-gradient)';
+            }, 2000);
+        }
+
+        // Style for challenge tab content
+        const challengeTabStyle = document.createElement('style');
+        challengeTabStyle.textContent = `
+            .challenge-tab-content {
+                display: none;
+            }
+            .challenge-tab-content.active {
+                display: block;
+            }
+        `;
+        document.head.appendChild(challengeTabStyle);
+    </script>
 </body>
 </html>
