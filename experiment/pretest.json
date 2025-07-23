@@ -2,73 +2,157 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. What are the majority charge carriers of a p-type semiconductor and the minority charge carriers of an n-type semiconductor?",
+      "question": "1. What does non-uniform doping in a semiconductor refer to?",
       "answers": {
-        "a": "electrons; electrons",
-        "b": "holes; holes",
-        "c": "holes; electrons",
-        "d": "electrons;  holes"
+        "a": "Same dopant atoms everywhere",
+        "b": "No doping at all",
+        "c": "Doping concentration changes with position",
+        "d": "Only intrinsic carriers are present"
       },
       "explanations": {
-        "a": "This is incorrect. In a p-type semiconductor, holes (not electrons) are the majority carriers. In an n-type semiconductor, electrons are the majority carriers, not the minority carriers." ,
-        "b": "This is correct. In a p-type semiconductor, holes are the majority carriers due to acceptor doping. In an n-type semiconductor, holes are the minority carriers because electrons are the majority carriers.",
-        "c": "This is incorrect. While holes are the majority carriers in a p-type semiconductor, electrons (not holes) are the minority carriers in an n-type semiconductor.",
-        "d": "This is incorrect. Electrons are not the majority carriers in a p-type semiconductor, and holes are not the minority carriers in an n-type semiconductor."
-      },
-      "correctAnswer": "b",
-      "difficulty": "beginner"
-    },
-    
-    {
-        "question": "2. A 1D semiconductor of length l , placed along positive x axis (0 at left and L at right), is uniformly doped with p-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What will the direction of Drift current at x=L/2 will be?",
-        "answers": {
-          "a": "Left to right",
-          "b": "Right to left ",
-          "c": "No drift current will flow",
-          "d": "Drift current direction cannot be determined "
-        },
-        "explanations": {
-          "a": "This is incorrect. The electric field points from the undoped region (positive) to the p-type region (negative). Holes, being positively charged, move in the opposite direction of the electric field, i.e., from right to left." ,
-          "b": "This is correct. The electric field points from the undoped region to the p-type region, and holes move in the opposite direction, i.e., from right to left.",
-          "c": "This is incorrect. There is an electric field at x=L/2 due to the doping gradient, and this field drives a drift current.",
-          "d": "This is incorrect. The direction of the drift current can be determined based on the doping gradient and the resulting electric field."
-        },
-        "correctAnswer": "b",
-        "difficulty": "medium"
-    },
-    {
-      "question": "3. Will the Fermi function in the semiconductor in the previous question be continuous at length x = l/2 under equilibrium?",
-      "answers": {
-        "a": "Yes, the Fermi function will drop by kt/q at the junction.",
-        "b": "No, the Fermi function will have a discontinuity at x = l/2 due to the doping change.",
-        "c": "Yes, because the Fermi level adjusts to maintain equilibrium across the boundary.",
-        "d": "No, because the undoped region has no free carriers to align the Fermi level."
-      },
-      "explanations": {
-        "a": "This is incorrect. The Fermi function is not always continuous at material boundaries when there is an abrupt change in doping or material properties.",
-        "b": "This is incorrect. While the Fermi level adjusts in equilibrium, the abrupt doping change at x = l/2 can cause a discontinuity in the Fermi function.",
-        "c": "This is correct. The Fermi function will have a discontinuity at x = l/2 because the doping changes abruptly, leading to a mismatch in the Fermi levels of the doped and undoped regions.",
-        "d": "This is incorrect. The undoped region does have some free carriers (intrinsic carriers), but the abrupt doping change still causes a discontinuity in the Fermi function."
+        "a": "Incorrect. That would be uniform doping.",
+        "b": "Incorrect. That refers to intrinsic semiconductors.",
+        "c": "Correct. Non-uniform doping means the dopant concentration varies spatially.",
+        "d": "Incorrect. Doping introduces extrinsic carriers."
       },
       "correctAnswer": "c",
-      "difficulty": "medium"
+      "difficulty": "beginner"
     },
     {
-        "question": "4. Now the same semiconductor is doped with n-type dopants from length x = l/2 to x = l. How will the net diffusion current change?",
-        "answers": {
-          "a": "The diffusion current will increase due to the higher concentration gradient of electrons.",
-          "b": "The diffusion current will decrease because the doping is now uniform.",
-          "c": "The diffusion current will remain the same as there is no change in the doping profile.",
-          "d": "The diffusion current will decrease due to the absence of holes."
-        },
-        "explanations": {
-          "a": "The rate of diffusion depends on the concentration gradient of charge carriers. Adding n-type dopants from x = l/2 to x = l creates a higher concentration gradient of electrons, increasing the rate of diffusion.",
-          "b": "This is incorrect. The doping is not uniform; there is a transition from p-type to n-type doping, creating a concentration gradient.",
-          "c": "This is incorrect. The doping profile changes significantly, as the semiconductor now has p-type doping in one region and n-type doping in the other.",
-          "d": "This is incorrect. While holes are absent in the n-type region, the rate of diffusion is determined by the concentration gradient of electrons, which increases."
-        },
-        "correctAnswer": "a",
-        "difficulty": "advanced"
+      "question": "2. What unit is typically used for doping concentration in semiconductors?",
+      "answers": {
+        "a": "V/m",
+        "b": "C/m<sup>3</sup>",
+        "c": "atoms/m<sup>3</sup>",
+        "d": "Ohm·m"
+      },
+      "explanations": {
+        "a": "Incorrect. That’s a unit of electric field.",
+        "b": "Incorrect. That’s a unit of charge density.",
+        "c": "Correct. Doping concentration is usually given in atoms per cubic meter.",
+        "d": "Incorrect. That’s a unit of resistivity."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. Which of the following is likely to change in a non-uniformly doped semiconductor?",
+      "answers": {
+        "a": "Electric field",
+        "b": "Magnetic field",
+        "c": "Temperature",
+        "d": "Lattice structure"
+      },
+      "explanations": {
+        "a": "Correct. The electric field can vary due to doping gradient.",
+        "b": "Incorrect. Magnetic field is not affected directly by doping profile.",
+        "c": "Incorrect. Temperature might be externally controlled, not due to doping.",
+        "d": "Incorrect. Doping does not alter the lattice significantly."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. What is the built-in electric field in a non-uniformly doped semiconductor primarily due to?",
+      "answers": {
+        "a": "External bias",
+        "b": "Carrier mobility",
+        "c": "Doping gradient",
+        "d": "Temperature fluctuations"
+      },
+      "explanations": {
+        "a": "Incorrect. External bias creates an applied field, not a built-in field.",
+        "b": "Incorrect. Mobility affects current, not electric field origin.",
+        "c": "Correct. Doping gradient creates a diffusion of carriers, resulting in an electric field.",
+        "d": "Incorrect. Temperature plays an indirect role."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. In a 1D semiconductor bar with increasing donor concentration from left to right, the built-in electric field will point:",
+      "answers": {
+        "a": "From right to left",
+        "b": "From left to right",
+        "c": "It will be zero",
+        "d": "Perpendicular to the bar"
+      },
+      "explanations": {
+        "a": "Correct. Electrons diffuse right, leaving negative charge behind and creating a field from right to left.",
+        "b": "Incorrect. This is the direction of diffusion, not the electric field.",
+        "c": "Incorrect. A doping gradient induces an electric field.",
+        "d": "Incorrect. That would violate boundary conditions in 1D."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. Which equation relates charge density and electric field in a semiconductor?",
+      "answers": {
+        "a": "Ohm's Law",
+        "b": "Gauss’s Law",
+        "c": "Einstein Relation",
+        "d": "Poisson’s Equation"
+      },
+      "explanations": {
+        "a": "Incorrect. Ohm's law relates current and voltage.",
+        "b": "Incorrect. Gauss's law is general form; Poisson’s law is more specific to this case.",
+        "c": "Incorrect. Einstein relation relates mobility and diffusion.",
+        "d": "Correct. Poisson’s equation relates charge density to electric field and potential."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. For a given doping profile N(x), the electric field E(x) in a semiconductor can be found using:",
+      "answers": {
+        "a": "E(x) = −dV/dx",
+        "b": "E(x) = −qN(x)/ε",
+        "c": "E(x) = J/σ",
+        "d": "E(x) = μV"
+      },
+      "explanations": {
+        "a": "Correct. Electric field is the negative gradient of potential.",
+        "b": "Incorrect. That’s Poisson’s equation in differential form.",
+        "c": "Incorrect. That is Ohm’s Law.",
+        "d": "Incorrect. That relates drift velocity and mobility."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. What happens to charge density when the doping profile changes non-linearly?",
+      "answers": {
+        "a": "It remains constant",
+        "b": "It becomes zero",
+        "c": "It changes accordingly with position",
+        "d": "It depends only on mobility"
+      },
+      "explanations": {
+        "a": "Incorrect. Non-uniform doping directly alters charge density.",
+        "b": "Incorrect. It only becomes zero in intrinsic material.",
+        "c": "Correct. Charge density varies with spatial doping profile.",
+        "d": "Incorrect. Mobility does not determine charge density."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. In a non-uniformly doped p-n junction, how is the depletion width affected?",
+      "answers": {
+        "a": "It becomes symmetric",
+        "b": "It spreads more into higher doped side",
+        "c": "It spreads more into lower doped side",
+        "d": "It does not change at all"
+      },
+      "explanations": {
+        "a": "Incorrect. Asymmetry in doping creates asymmetry in depletion width.",
+        "b": "Incorrect. Higher doping leads to smaller width.",
+        "c": "Correct. Lower doping leads to wider depletion width due to charge balance.",
+        "d": "Incorrect. It definitely changes with doping profile."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
     }
   ]
 }

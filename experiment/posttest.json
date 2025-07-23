@@ -2,72 +2,157 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. Which of the following will be true for a semiconductor where two neighboring regions have different doping concentrations of n-type dopant?",
+      "question": "1. What is one key feature of non-uniform doping that can be visualized using virtual labs?",
       "answers": {
-        "a": "Immobile dopant atoms will diffuse due to concentration gradient.",
-        "b": "A small local electric field appears between the two regions.",
-        "c": "The semiconductor gains a net negative charge.",
-        "d": "The device behaves like a battery."
+        "a": "Bandgap narrowing",
+        "b": "Instantaneous lattice collapse",
+        "c": "Change in built-in potential with doping profile",
+        "d": "Complete ionization at 0K"
       },
       "explanations": {
-        "a": "This is incorrect. Dopant atoms are immobile and do not diffuse due to concentration gradients. Only free charge carriers (electrons and holes) can diffuse.",
-        "b": "This is correct. A concentration gradient of dopants leads to a diffusion of free electrons from the higher-doped region to the lower-doped region. This creates a separation of charge, resulting in a small local electric field.",
-        "c": "This is incorrect. The semiconductor does not gain a net negative charge. The charge neutrality is maintained overall, even though there may be local charge imbalances due to the diffusion of electrons.",
-        "d": "This is incorrect. The device does not behave like a battery. While a local electric field is created, it is not sufficient to generate a voltage like a battery."
+        "a": "Incorrect. Bandgap narrowing is not visualized in this lab.",
+        "b": "Incorrect. Lattice does not collapse.",
+        "c": "Correct. Built-in potential varies with non-uniform doping and can be seen in the simulation.",
+        "d": "Incorrect. Ionization at 0K is not realistic."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "2. What does the built-in potential between two adjacent locations depend on?",
+      "question": "2. Which profile represents non-uniform doping?",
       "answers": {
-        "a": "It is independent of temperature.",
-        "b": "Ratio of doping concentration between the two regions.",
-        "c": "Difference of doping concentration between the two locations.",
-        "d": "Width of depletion region."
+        "a": "N(x) = constant",
+        "b": "N(x) = 0",
+        "c": "N(x) = 10<sup>16</sup> exp(−x/L)",
+        "d": "N(x) = infinity"
       },
       "explanations": {
-        "a": "This is incorrect. The built-in potential depends on temperature because the intrinsic carrier concentration (ni) is temperature-dependent. As temperature increases, ni increases, which affects the built-in potential.",
-        "b": "This is correct. The built-in potential depends on the ratio of doping concentrations between the two regions. It is given by the formula: V_bi = (kT/q) * ln(N_A * N_D / ni²), where N_A and N_D are the doping concentrations of the p and n regions, respectively.",
-        "c": "This is incorrect. The built-in potential depends on the ratio of doping concentrations, not the absolute difference between them. The difference in doping concentrations alone does not determine the built-in potential.",
-        "d": "This is incorrect. The width of the depletion region is a result of the built-in potential and doping concentrations, not a factor that determines the built-in potential itself."
+        "a": "Incorrect. That’s uniform doping.",
+        "b": "Incorrect. That’s intrinsic.",
+        "c": "Correct. This shows exponential variation — non-uniform.",
+        "d": "Incorrect. Infinite doping is not physical."
       },
-      "correctAnswer": "b",
+      "correctAnswer": "c",
       "difficulty": "beginner"
     },
     {
-      "question": "3. What will be built in potential value at 25 C between two locations with doping 5x10<sup>12</sup> and 2*10<sup>15</sup>?",
+      "question": "3. The built-in electric field created due to non-uniform doping opposes:",
       "answers": {
-        "a": "0.023 V",
-        "b": "0.056 V",
-        "c": "0.9 V",
-        "d": "0.7 V"
+        "a": "Thermal motion",
+        "b": "Electron drift",
+        "c": "Diffusion current",
+        "d": "Lattice vibration"
       },
       "explanations": {
-        "a": "This is correct. Refer to theory",
-        "b": "This is incorrect. Refer to theory",
-        "c": "This is incorrect. Refer to theory",
-        "d": "This is incorrect. Refer to theory"
+        "a": "Incorrect. Thermal motion is random.",
+        "b": "Incorrect. Drift current and electric field align.",
+        "c": "Correct. Built-in field balances diffusion current to reach equilibrium.",
+        "d": "Incorrect. Lattice vibration (phonons) are independent."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. In non-uniform doping, which region shows the highest electric field?",
+      "answers": {
+        "a": "Where doping is minimum",
+        "b": "Where doping is maximum",
+        "c": "At metal contact",
+        "d": "Field is constant"
+      },
+      "explanations": {
+        "a": "Correct. Electric field tends to be strongest near sharp gradients or low doping regions.",
+        "b": "Incorrect. Higher doping has more carriers, less field.",
+        "c": "Incorrect. This depends on boundary condition, not always max.",
+        "d": "Incorrect. Non-uniform doping causes field variation."
       },
       "correctAnswer": "a",
-      "difficulty": "medium"
+      "difficulty": "intermediate"
     },
     {
-      "question": "4. A 1D semiconductor of length l is uniformly doped with n-type dopants for 0 ≤ x ≤ l/2 and undoped for l/2 ≤ x ≤ l. What is the electric field E(x) in the undoped region (l/2 ≤ x ≤ l)?",
-        "answers": {
-          "a": "E(x) = (e * N_d / ε) * (l / 2)",
-          "b": "E(x) = (e * N_d / ε) * x",
-          "c": "E(x) = 0",
-          "d": "E(x) = (e * N_d / ε) * l"
-        },
-        "explanations": {
-          "a": "This is correct. In the undoped region, the electric field is constant and equal to the value at the boundary x = l/2, which is (e * N_d / ε) * (l / 2). This is because there is no charge density in the undoped region to modify the field further. Please refer to theory part for hints on deriving the answer.",
-          "b": "This is incorrect. This describes the electric field in the doped region (0 ≤ x ≤ l/2), where the field increases linearly with x. Please refer to theory part for hints on deriving the answer.",
-          "c": "This is incorrect. The electric field is not zero in the undoped region; it remains constant due to the absence of charge density. Please refer to theory part for hints on deriving the answer.",
-          "d": "This is incorrect. This is incorrect because the electric field does not depend on the total length l in the undoped region. Please refer to theory part for hints on deriving the answer."
-        },
-        "correctAnswer": "a",
-        "difficulty": "medium"
+      "question": "5. What is the mathematical relation used to extract potential from electric field?",
+      "answers": {
+        "a": "V(x) = −∫E(x) dx",
+        "b": "V(x) = E(x)/q",
+        "c": "V(x) = E(x) × x",
+        "d": "V(x) = qE(x)"
+      },
+      "explanations": {
+        "a": "Correct. Potential is the negative integral of electric field.",
+        "b": "Incorrect. This does not match units.",
+        "c": "Incorrect. Only correct for constant field.",
+        "d": "Incorrect. That’s a force expression."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. A non-uniformly doped semiconductor is biased externally. What happens to the built-in field?",
+      "answers": {
+        "a": "It disappears completely",
+        "b": "It reverses direction",
+        "c": "It adds or subtracts with applied field",
+        "d": "It becomes magnetic"
+      },
+      "explanations": {
+        "a": "Incorrect. Built-in field persists.",
+        "b": "Incorrect. Reversal depends on polarity and magnitude.",
+        "c": "Correct. Total field = built-in ± external field.",
+        "d": "Incorrect. Field is electric, not magnetic."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. In simulations, what key parameter affects the curvature of the potential profile?",
+      "answers": {
+        "a": "Carrier lifetime",
+        "b": "Electric field",
+        "c": "Doping gradient",
+        "d": "Electron mass"
+      },
+      "explanations": {
+        "a": "Incorrect. Carrier lifetime affects recombination, not potential directly.",
+        "b": "Incorrect. Field is derivative of potential.",
+        "c": "Correct. Doping gradient affects charge density → Poisson → curvature.",
+        "d": "Incorrect. Effective mass plays no direct role in potential profile."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. Which of the following correctly represents Poisson’s equation in 1D semiconductor context?",
+      "answers": {
+        "a": "∇·E = ρ",
+        "b": "d²V/dx² = −ρ(x)/ε",
+        "c": "J = σE",
+        "d": "E = −dρ/dx"
+      },
+      "explanations": {
+        "a": "Incorrect. That’s Gauss's Law.",
+        "b": "Correct. Poisson’s equation relates charge and potential.",
+        "c": "Incorrect. Ohm’s law.",
+        "d": "Incorrect. Not a valid relation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. In a graded junction with non-uniform doping, the total built-in potential is calculated using:",
+      "answers": {
+        "a": "Sum of drift and diffusion voltages",
+        "b": "Einstein relation",
+        "c": "Linear superposition of resistivities",
+        "d": "Band-to-band tunneling formula"
+      },
+      "explanations": {
+        "a": "Correct. Built-in potential balances drift and diffusion forces.",
+        "b": "Incorrect. Einstein relates D and μ.",
+        "c": "Incorrect. Not used here.",
+        "d": "Incorrect. Not applicable."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
     }
   ]
 }
