@@ -1,16 +1,26 @@
-### Einstein’s relationship
+### Thermal Voltage
+The term **kT/q** is known as the **Thermal Voltage** (V<sub>T</sub>) and is a fundamental parameter in semiconductor physics. At room temperature (300K), its value is approximately:
+
+$$
+V_{T} = \frac{kT}{q} \approx 0.026 \text{ V} = 26 \text{ mV}
+$$
+
+Where:
+- k is the Boltzmann's constant = 1.38×10<sup>-23</sup> J/K
+- T is the absolute temperature in Kelvin
+- q is the electronic charge = 1.6×10<sup>-19</sup> Coulombs
+
+The thermal voltage is used extensively in semiconductor device analysis, numeric solving, and understanding carrier behavior under various conditions. It represents the voltage equivalent of thermal energy and plays a crucial role in determining carrier distributions and current flow.
+
+### Einstein's Relationship
 This equation relates the diffusivity and mobility together.
 
 $$
-D_{n} = \frac{KT}{q} \mu _{n} = V_{T}\mu _{n} 
+D_{n} = \frac{kT}{q} \mu _{n} = V_{T}\mu _{n} 
 $$
 $$
 \tag{5.1}
 $$<br>
-
-K is the Boltzmann's constant =  1.3*10<sup>-23</sup> J/K <br>
-T temperature in K<br>
-q is charge = 1.6 * 10<sup>-19</sup> Coloumbs<br>
 
 ### Non-uniformly Doped Junctions
 Assume a semiconductor bar divided into two parts (say, part 1 & part 2) such that each part is doped with n type of dopant ( or both with p type) but at different concentrations: lets say, N<sub>D1</sub> and N<sub>D2</sub> respectively such that N<sub>D1</sub>>N<sub>D2</sub>. Whole silicon as well as each individual part is neutral (has no net charge) right after doping.<br>
@@ -34,7 +44,19 @@ $$
 \tag{5.2}
 $$<br>
  
-Where n is the electron concentration, dn/dx is the electron gradient and &phi; is the potential gradient (d&phi;/dx is the electric field). Since in equilibrium, net current is zero,
+Where:
+- n is the electron concentration
+- dn/dx is the electron concentration gradient
+- **φ (phi) is the electrostatic potential**
+- The electric field E is related to the electrostatic potential by the fundamental relation:
+
+$$
+E = -\frac{d\phi}{dx}
+$$
+
+This relationship is fundamental in semiconductor physics and shows that the electric field is the negative gradient of the electrostatic potential. Therefore, d&phi;/dx represents the negative of the electric field.
+
+Since in equilibrium, net current is zero,
 
 $$
 0 = -q \mu _{n} n \frac{d\phi}{dx}+qD_{n}\frac{dn}{dx} 
@@ -85,6 +107,31 @@ $$
 $$
 \tag{5.8}
 $$<br>
+
+### Mass Action Law
+The **Mass Action Law** is a fundamental principle in semiconductor physics that relates the electron and hole concentrations in thermal equilibrium. It states that the product of electron concentration (n) and hole concentration (p) is always equal to the square of the intrinsic carrier concentration (n<sub>i</sub>), regardless of the doping level:
+
+$$
+n \cdot p = n_{i}^{2}
+$$
+$$
+\tag{5.9}
+$$<br>
+
+This relationship holds true at thermal equilibrium for any semiconductor, whether it is:
+- **Intrinsic** (undoped): n = p = n<sub>i</sub>
+- **N-type** (donor-doped): n >> p, but n·p = n<sub>i</sub><sup>2</sup>
+- **P-type** (acceptor-doped): p >> n, but n·p = n<sub>i</sub><sup>2</sup>
+
+For example, in an N-type semiconductor with donor concentration N<sub>D</sub> >> n<sub>i</sub>:
+- Majority carrier (electrons): n ≈ N<sub>D</sub>
+- Minority carrier (holes): p = n<sub>i</sub><sup>2</sup>/N<sub>D</sub>
+
+Similarly, in a P-type semiconductor with acceptor concentration N<sub>A</sub> >> n<sub>i</sub>:
+- Majority carrier (holes): p ≈ N<sub>A</sub>
+- Minority carrier (electrons): n = n<sub>i</sub><sup>2</sup>/N<sub>A</sub>
+
+The mass action law is crucial for understanding carrier behavior in doped semiconductors and is extensively used in device analysis and simulation.
 
 ### Space Charge Region or Depletion region.
  When mobile majority carriers diffuse out from doped semiconductor, immobile charged dopant atoms remain behind. The region from where mobile carriers have diffused away is devoid of mobile charges and is called the Depletion region. Width of the depletion region will depend on doping concentration.

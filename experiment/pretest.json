@@ -87,20 +87,20 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "6. Which equation relates charge density and electric field in a semiconductor?",
+      "question": "6. What is the relationship between electric field (E) and electrostatic potential (φ)?",
       "answers": {
-        "a": "Ohm's Law",
-        "b": "Gauss’s Law",
-        "c": "Einstein Relation",
-        "d": "Poisson’s Equation"
+        "a": "E = dφ/dx",
+        "b": "E = -dφ/dx",
+        "c": "E = φ/x",
+        "d": "E = -φ"
       },
       "explanations": {
-        "a": "Incorrect. Ohm's law relates current and voltage.",
-        "b": "Incorrect. Gauss's law is general form; Poisson’s law is more specific to this case.",
-        "c": "Incorrect. Einstein relation relates mobility and diffusion.",
-        "d": "Correct. Poisson’s equation relates charge density to electric field and potential."
+        "a": "Incorrect. The electric field is the negative gradient of potential.",
+        "b": "Correct. Electric field is the negative derivative of the electrostatic potential with respect to position.",
+        "c": "Incorrect. This is not the correct mathematical relationship.",
+        "d": "Incorrect. The field depends on the gradient, not the potential itself."
       },
-      "correctAnswer": "d",
+      "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
