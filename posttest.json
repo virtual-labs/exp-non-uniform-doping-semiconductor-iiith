@@ -1,0 +1,158 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. What is one key feature of non-uniform doping that can be visualized using virtual labs?",
+      "answers": {
+        "a": "Bandgap narrowing",
+        "b": "Instantaneous lattice collapse",
+        "c": "Change in built-in potential with doping profile",
+        "d": "Complete ionization at 0K"
+      },
+      "explanations": {
+        "a": "Incorrect. Bandgap narrowing is not visualized in this lab.",
+        "b": "Incorrect. Lattice does not collapse.",
+        "c": "Correct. Built-in potential varies with non-uniform doping and can be seen in the simulation.",
+        "d": "Incorrect. Ionization at 0K is not realistic."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. Which profile represents non-uniform doping?",
+      "answers": {
+        "a": "N(x) = constant",
+        "b": "N(x) = 0",
+        "c": "N(x) = 10<sup>16</sup> exp(−x/L)",
+        "d": "N(x) = infinity"
+      },
+      "explanations": {
+        "a": "Incorrect. That’s uniform doping.",
+        "b": "Incorrect. That’s intrinsic.",
+        "c": "Correct. This shows exponential variation — non-uniform.",
+        "d": "Incorrect. Infinite doping is not physical."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. The built-in electric field created due to non-uniform doping opposes:",
+      "answers": {
+        "a": "Thermal motion",
+        "b": "Electron drift",
+        "c": "Diffusion current",
+        "d": "Lattice vibration"
+      },
+      "explanations": {
+        "a": "Incorrect. Thermal motion is random.",
+        "b": "Incorrect. Drift current and electric field align.",
+        "c": "Correct. Built-in field balances diffusion current to reach equilibrium.",
+        "d": "Incorrect. Lattice vibration (phonons) are independent."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. In non-uniform doping, which region shows the highest electric field?",
+      "answers": {
+        "a": "Where doping is minimum",
+        "b": "Where doping is maximum",
+        "c": "At metal contact",
+        "d": "Field is constant"
+      },
+      "explanations": {
+        "a": "Correct. Electric field tends to be strongest near sharp gradients or low doping regions.",
+        "b": "Incorrect. Higher doping has more carriers, less field.",
+        "c": "Incorrect. This depends on boundary condition, not always max.",
+        "d": "Incorrect. Non-uniform doping causes field variation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. What is the mathematical relation used to extract potential from electric field?",
+      "answers": {
+        "a": "V(x) = −∫E(x) dx",
+        "b": "V(x) = E(x)/q",
+        "c": "V(x) = E(x) × x",
+        "d": "V(x) = qE(x)"
+      },
+      "explanations": {
+        "a": "Correct. Potential is the negative integral of electric field.",
+        "b": "Incorrect. This does not match units.",
+        "c": "Incorrect. Only correct for constant field.",
+        "d": "Incorrect. That’s a force expression."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. A non-uniformly doped semiconductor is biased externally. What happens to the built-in field?",
+      "answers": {
+        "a": "It disappears completely",
+        "b": "It reverses direction",
+        "c": "It adds or subtracts with applied field",
+        "d": "It becomes magnetic"
+      },
+      "explanations": {
+        "a": "Incorrect. Built-in field persists.",
+        "b": "Incorrect. Reversal depends on polarity and magnitude.",
+        "c": "Correct. Total field = built-in ± external field.",
+        "d": "Incorrect. Field is electric, not magnetic."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. In simulations, what key parameter affects the curvature of the potential profile?",
+      "answers": {
+        "a": "Carrier lifetime",
+        "b": "Electric field",
+        "c": "Doping gradient",
+        "d": "Electron mass"
+      },
+      "explanations": {
+        "a": "Incorrect. Carrier lifetime affects recombination, not potential directly.",
+        "b": "Incorrect. Field is derivative of potential.",
+        "c": "Correct. Doping gradient affects charge density → Poisson → curvature.",
+        "d": "Incorrect. Effective mass plays no direct role in potential profile."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. Which of the following correctly represents Poisson’s equation in 1D semiconductor context?",
+      "answers": {
+        "a": "∇·E = ρ",
+        "b": "d²V/dx² = −ρ(x)/ε",
+        "c": "J = σE",
+        "d": "E = −dρ/dx"
+      },
+      "explanations": {
+        "a": "Incorrect. That’s Gauss's Law.",
+        "b": "Correct. Poisson’s equation relates charge and potential.",
+        "c": "Incorrect. Ohm’s law.",
+        "d": "Incorrect. Not a valid relation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. In a graded junction with non-uniform doping, the total built-in potential is calculated using:",
+      "answers": {
+        "a": "Sum of drift and diffusion voltages",
+        "b": "Einstein relation",
+        "c": "Linear superposition of resistivities",
+        "d": "Band-to-band tunneling formula"
+      },
+      "explanations": {
+        "a": "Correct. Built-in potential balances drift and diffusion forces.",
+        "b": "Incorrect. Einstein relates D and μ.",
+        "c": "Incorrect. Not used here.",
+        "d": "Incorrect. Not applicable."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    }
+  ]
+}

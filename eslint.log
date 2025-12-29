@@ -1,0 +1,15 @@
+
+/home/runner/work/exp-non-uniform-doping-semiconductor-iiith/exp-non-uniform-doping-semiconductor-iiith/experiment/simulation/mobile-detection.js
+  283:7   warning  'mobileDetection' is assigned a value but never used  no-unused-vars
+  286:38  warning  'module' is not defined                               no-undef
+  287:3   warning  'module' is not defined                               no-undef
+
+/home/runner/work/exp-non-uniform-doping-semiconductor-iiith/exp-non-uniform-doping-semiconductor-iiith/experiment/simulation/old/js/em.js
+   50:23  warning  'Chart' is not defined                no-undef
+  189:10  warning  'drawLine' is defined but never used  no-unused-vars
+
+/home/runner/work/exp-non-uniform-doping-semiconductor-iiith/exp-non-uniform-doping-semiconductor-iiith/experiment/simulation/old/js/main.js
+  52:9  warning  'Chart' is not defined  no-undef
+
+✖ 6 problems (0 errors, 6 warnings)
+

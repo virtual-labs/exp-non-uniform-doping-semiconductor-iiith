@@ -1,0 +1,298 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  .container {
+    margin: 20px auto;
+    max-width: 600px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  
+  .column1 {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    
+  }
+  
+  .left-column{
+    margin-top: 10px;
+    margin-right: 10px;
+    position: relative;
+  }
+
+  .right-column {
+    flex: 1;
+    margin-top: 30%;
+    align-items: flex-start; /* Align to the top-left */
+    position: relative; /* Allow finer control of placement */
+    padding:20px;
+  }
+  .right-column li {
+    width: 180px; /* Fixed width for each list item */
+    margin: 10px auto; /* Center the items inside the column */
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensures padding doesn't increase width */
+  }
+  
+  canvas {
+    margin: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px;
+    padding: 50px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  li.selected {
+    background-color: #d0f0c0;
+    border-color: #4caf50;
+  }
+  
+  li.matched {
+    background-color: #e0e0e0;
+    border-color: #aaa;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  
+  svg#lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+.match-container {
+    position: relative; /* This is important for absolute positioning of SVG */
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+  .v-collapsible {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .instruction-list{
+    text-align: left; 
+    padding-left: 10%; 
+    padding-right: 10%;
+  }
+
+  
+/* Add this to your main.css file or in a <style> block in the <head> */
+.button-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Add space between buttons */
+  margin-top: 20px; /* Add some top margin */
+}
+
+#result-message {
+  text-align: center; /* Center the result message */
+  margin-top: 20px; /* Add some top margin */
+  font-size: 1.2em; /* Adjust font size */
+  color: #333; /* Set text color */
+}
+/* General Styles */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Match Container */
+.match-container {
+  display: flex;
+  flex-direction: row; /* Ensure side-by-side layout */
+  gap: 20px; /* Space between plots and text boxes */
+}
+
+/* Plots Section */
+.plots {
+  flex: 1; /* Take up available space */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between plots */
+}
+
+.plots canvas {
+  max-width: 100%; /* Ensure plots don't overflow */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Text Boxes Section */
+.text-boxes {
+  flex: 1; /* Take up available space */
+  margin-top: 40%;
+}
+
+.text-boxes ul {
+  list-style: none;
+  padding: 0;
+  
+}
+
+.text-boxes li {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.text-boxes li:hover {
+  background-color: #e0e0e0;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .match-container {
+      flex-direction: row; /* Ensure side-by-side layout even on small screens */
+  }
+
+  .plots {
+      flex: 1; /* Plots take up half the width */
+  }
+
+  .text-boxes {
+      flex: 1; /* Text boxes take up half the width */
+  }
+}
+
+/* Match Container */
+.match-container {
+  display: flex;
+  flex-direction: row; /* Always row, even on mobile */
+  gap: 10px; /* Reduce gap on mobile */
+  position: relative;
+  width: 100%;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+
+/* Plots Section */
+.plots {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reduce gap between plots */
+  min-width: 0; /* Prevent flex overflow */
+}
+
+.plots canvas {
+  width: 100%; /* Make canvases responsive */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 150px; /* Smaller height on mobile */
+  border: 1px solid #ddd;
+}
+
+/* Text Boxes Section */
+.text-boxes {
+  flex: 1;
+  min-width: 120px; /* Minimum width for text boxes */
+}
+
+.text-boxes ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  justify-content: center; /* Vertically center the items */
+  margin-top: -30%;
+}
+
+.text-boxes li {
+  padding: 8px;
+  margin: 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+  font-size: 14px; /* Smaller font on mobile */
+}
+
+/* SVG Lines */
+svg#lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Media Query for very small screens */
+@media (max-width: 480px) {
+  .plots {
+    max-width: 200px; /* Even smaller on very small screens */
+    height:"auto";
+  }
+  
+  .text-boxes li {
+    padding: 6px;
+    font-size: 10px;
+    width: 70px;
+  }
+}
